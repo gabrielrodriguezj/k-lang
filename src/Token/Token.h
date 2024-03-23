@@ -5,17 +5,15 @@
 #ifndef K_LANG_TOKEN_H
 #define K_LANG_TOKEN_H
 
-#include "TokenName.h"
+#include "TToken.h"
 
-class Token {
+class Token : virtual public TToken {
 private:
-    TokenName nombre;
 
 public:
     Token(TokenName nombre);
-    TokenName getNombre();
 
-    std::string to_string();
+    std::string toString();
 };
 
 

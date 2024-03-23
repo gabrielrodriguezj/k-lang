@@ -1,4 +1,5 @@
 #include "Scanner.h"
+#include "Token/Token.h"
 #include "Token/IdToken.h"
 #include "Token/StringToken.h"
 #include "Token/NumberToken.h"
@@ -80,7 +81,7 @@ char  Scanner::peekNext() {
     return c;
 }
 
-Token Scanner::identifier() {
+TToken* Scanner::identifier() {
     int begin = this->current - 1;
     while (isalpha(peek()) || isdigit(peek())) advance();
     int end = this->current - 1;
@@ -88,9 +89,9 @@ Token Scanner::identifier() {
     TokenName nt = identifierType(lexem);
 
     if(nt == TokenName::IDENTIFIER){
-        return IdToken(nt, lexem);
+        return new IdToken(nt, lexem);
     }
-    return Token(nt);
+    return new Token(nt);
 }
 
 TokenName Scanner::identifierType(const std::string lexem){
@@ -114,7 +115,7 @@ TokenName Scanner::identifierType(const std::string lexem){
     return TokenName::IDENTIFIER;
 }
 
-Token Scanner::number() {
+TToken* Scanner::number() {
     int begin = current-1;
     while (isdigit(peek())) advance();
 
@@ -139,17 +140,17 @@ Token Scanner::number() {
 
     //std::cout<<this->source.substr(begin, end-begin + 1);
     double value = std::stod(source.substr(begin, end-begin + 1));
-    return NumberToken(TokenName::NUMBER, value);
+    return new NumberToken(TokenName::NUMBER, value);
 }
 
-Token Scanner::string() {
+TToken* Scanner::string() {
     int begin = current-1;
 
     while (peek() != '"' && !isAtEnd()) {
         if (peek() == '\n') linea++;
         advance();
     }
-    if (isAtEnd()) return Token(TokenName::ERROR);
+    if (isAtEnd()) return new Token(TokenName::ERROR);
 
     // La comilla que cierra.
     advance();
@@ -157,13 +158,13 @@ Token Scanner::string() {
     int end = current - 1;
 
     //std::cout<<this->source.substr(begin, end-begin + 1);
-    return  StringToken(TokenName::STRING, source.substr(begin + 1, end - begin));
+    return  new StringToken(TokenName::STRING, source.substr(begin + 1, end - begin - 1));
 }
 
-Token Scanner::next() {
+TToken* Scanner::next() {
     skipWhitespace();
 
-    if (isAtEnd()) return Token(TokenName::END);
+    if (isAtEnd()) return new Token(TokenName::END);
 
     char c = advance();
 
@@ -171,31 +172,29 @@ Token Scanner::next() {
     else if(isdigit(c)) return number();
 
     switch (c) {
-        case '(': return Token(TokenName::LEFT_PAREN);
-        case ')': return Token(TokenName::RIGHT_PAREN);
-        case '{': return Token(TokenName::LEFT_BRACE);
-        case '}': return Token(TokenName::RIGHT_BRACE);
-        case ';': return Token(TokenName::SEMICOLON);
-        case ',': return Token(TokenName::COMMA);
-        case '.': return Token(TokenName::DOT);
-        case '-': return Token(TokenName::MINUS);
-        case '+': return Token(TokenName::PLUS);
-        case '/': return Token(TokenName::SLASH);
-        case '*': return Token(TokenName::STAR);
+        case '(': return new Token(TokenName::LEFT_PAREN);
+        case ')': return new Token(TokenName::RIGHT_PAREN);
+        case '{': return new Token(TokenName::LEFT_BRACE);
+        case '}': return new Token(TokenName::RIGHT_BRACE);
+        case ';': return new Token(TokenName::SEMICOLON);
+        case ',': return new Token(TokenName::COMMA);
+        case '.': return new Token(TokenName::DOT);
+        case '-': return new Token(TokenName::MINUS);
+        case '+': return new Token(TokenName::PLUS);
+        case '/': return new Token(TokenName::SLASH);
+        case '*': return new Token(TokenName::STAR);
         case '!':
-            return Token(
+            return new Token(
                     match('=') ? TokenName::BANG_EQUAL : TokenName::BANG);
         case '=':
-            return Token(
+            return new Token(
                     match('=') ? TokenName::EQUAL_EQUAL : TokenName::EQUAL);
         case '<':
-            return Token(
+            return new Token(
                     match('=') ? TokenName::LESS_EQUAL : TokenName::LESS);
         case '>':
-            return Token(
+            return new Token(
                     match('=') ? TokenName::GREATER_EQUAL : TokenName::GREATER);
         case '"': return string();
     }
-
-
 }

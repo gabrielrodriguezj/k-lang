@@ -8,14 +8,14 @@
 
 #include "Token.h"
 
-class NumberToken: public Token{
+class NumberToken: virtual public TToken{
 private:
     double value;
 public:
     NumberToken(TokenName nombre, double value);
 
     double getValue();
-    std::string to_string();
+    std::string toString();
 };
 
 

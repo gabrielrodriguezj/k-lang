@@ -8,13 +8,13 @@
 
 #include "Token.h"
 
-class StringToken : public Token{
+class StringToken : virtual public TToken{
 private:
     const std::string value;
 public:
     StringToken(TokenName nombre, const std::string &value);
     std::string getValue();
-    std::string to_string();
+    std::string toString();
 };
 
 

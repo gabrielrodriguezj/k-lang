@@ -44,9 +44,10 @@ void repl() {
 void ejecutar(std::string source){
     Scanner scanner = Scanner(source);
     while (true){
-        Token t = scanner.next();
-        std::cout << t.to_string() << std::endl;
-        if(t.getNombre() == TokenName::ERROR || t.getNombre() == TokenName::END)
+        TToken* t = scanner.next();
+
+        std::cout << t->toString() << std::endl;
+        if(t->getName() == TokenName::ERROR || t->getName() == TokenName::END)
             break;
     }
 

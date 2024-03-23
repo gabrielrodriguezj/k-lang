@@ -4,7 +4,7 @@
 
 #include <string>
 #include <cctype>
-#include "Token/Token.h"
+#include "Token/TToken.h"
 
 class Scanner {
 private:
@@ -19,14 +19,14 @@ private:
     char advance();
     char peekNext();
 
-    Token identifier();
+    TToken* identifier();
     TokenName identifierType(const std::string);
-    Token number();
-    Token string();
+    TToken* number();
+    TToken* string();
 
 public:
     explicit Scanner(const std::string &source);
-    Token next();
+    TToken* next();
 };
 
 

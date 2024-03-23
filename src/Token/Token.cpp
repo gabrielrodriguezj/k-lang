@@ -5,17 +5,13 @@
 #include <sstream>
 #include "Token.h"
 
-TokenName Token::getNombre() {
-    return nombre;
-}
+Token::Token(TokenName name) : TToken(name) {}
 
-Token::Token(TokenName nombre) : nombre(nombre) {}
-
-std::string Token::to_string() {
+std::string Token::toString() {
     std::stringstream ss;
     ss << "<";
 
-    switch (nombre) {
+    switch (TToken::getName()) {
         case TokenName::LEFT_PAREN:
             ss << "(";
             break;

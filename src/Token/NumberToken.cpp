@@ -4,13 +4,13 @@
 #include <sstream>
 #include "NumberToken.h"
 
-NumberToken::NumberToken(TokenName nombre, double value) : Token(nombre), value(value) {}
+NumberToken::NumberToken(TokenName nombre, double value) : TToken(nombre), value(value) {}
 
 double NumberToken::getValue(){
     return value;
 }
-std::string NumberToken::to_string(){
+std::string NumberToken::toString(){
     std::stringstream ss;
-    ss << "<NUMBER , " << this->getValue() << " >";
+    ss << "<NUMBER , " << this->getValue() << ">";
     return ss.str();;
 }

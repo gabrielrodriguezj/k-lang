@@ -3,8 +3,9 @@
 
 
 #include "Token.h"
+#include "TToken.h"
 
-class IdToken : public Token{
+class IdToken : virtual public TToken{
 private:
     const std::string identifier;
 
@@ -12,7 +13,7 @@ public:
     IdToken(TokenName nombre, const std::string &lexem);
 
     std::string getIdentifier();
-    std::string to_string();
+    std::string toString();
 };
 
 
