@@ -197,4 +197,6 @@ TToken* Scanner::next() {
                     match('=') ? TokenName::GREATER_EQUAL : TokenName::GREATER);
         case '"': return string();
     }
+
+    return new Token(TokenName::ERROR);
 }
