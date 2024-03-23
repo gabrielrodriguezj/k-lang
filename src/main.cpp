@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "Scanner.h"
 
 void ejecutarArchivo(std::string path);
 void repl();
@@ -24,9 +25,6 @@ void ejecutarArchivo(std::string path) {
     std::ifstream fs{ path };
     std::string source((std::istreambuf_iterator<char>(fs)),
                     std::istreambuf_iterator<char>());
-
-    std::cout<<source;
-
     ejecutar(source);
 }
 
@@ -38,14 +36,18 @@ void repl() {
         std::cout << " ";
         std::cin >> linea;
         if(!linea.empty()) {
-            // std::cout<< linea <<std::endl;
             ejecutar(linea);
         }
-
     }
 }
 
 void ejecutar(std::string source){
-    //Token t = Token(NombreToken::LEFT_PAREN, "and");
-    //std::cout << t;
+    Scanner scanner = Scanner(source);
+    while (true){
+        Token t = scanner.next();
+        std::cout << t.to_string() << std::endl;
+        if(t.getNombre() == TokenName::ERROR || t.getNombre() == TokenName::END)
+            break;
+    }
+
 }

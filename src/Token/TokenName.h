@@ -1,6 +1,6 @@
 #include <iostream>
 
-enum class NombreToken {
+enum class TokenName {
     // Tokens de un solo caracter
     LEFT_PAREN, RIGHT_PAREN, LEFT_BRACE, RIGHT_BRACE,
     COMMA, DOT, MINUS, PLUS, SEMICOLON, SLASH, STAR,
@@ -18,5 +18,5 @@ enum class NombreToken {
     AND, CLASS, ELSE, FALSE, FUN, FOR, IF, NULL_VALUE, OR,
     PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE, EXTENDS,
 
-    END
+    END, ERROR
 };
