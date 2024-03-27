@@ -1,7 +1,3 @@
-//
-// Created by gabri on 26/03/2024.
-//
-
 #ifndef K_LANG_SCANNEREXCEPTION_H
 #define K_LANG_SCANNEREXCEPTION_H
 
