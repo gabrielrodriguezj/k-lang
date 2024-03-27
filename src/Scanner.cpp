@@ -6,7 +6,7 @@
 
 Scanner::Scanner(const std::string &source) : source(source) {
     this->source.append(" ");
-    linea = 1;
+    line = 1;
     current = 0;
 }
 
@@ -31,7 +31,7 @@ void Scanner::skipWhitespace() {
                 advance();
                 break;
             case '\n':
-                linea++;
+                line++;
                 advance();
                 break;
             case '/':
@@ -89,9 +89,9 @@ TToken* Scanner::identifier() {
     TokenName nt = identifierType(lexem);
 
     if(nt == TokenName::IDENTIFIER){
-        return new IdToken(nt, lexem);
+        return new IdToken(nt, lexem, line);
     }
-    return new Token(nt);
+    return new Token(nt, line);
 }
 
 TokenName Scanner::identifierType(const std::string lexem){
@@ -140,17 +140,17 @@ TToken* Scanner::number() {
 
     //std::cout<<this->source.substr(begin, end-begin + 1);
     double value = std::stod(source.substr(begin, end-begin + 1));
-    return new NumberToken(TokenName::NUMBER, value);
+    return new NumberToken(TokenName::NUMBER, value, line);
 }
 
 TToken* Scanner::string() {
     int begin = current-1;
 
     while (peek() != '"' && !isAtEnd()) {
-        if (peek() == '\n') linea++;
+        if (peek() == '\n') line++;
         advance();
     }
-    if (isAtEnd()) return new Token(TokenName::ERROR);
+    if (isAtEnd()) return new Token(TokenName::ERROR, line);
 
     // La comilla que cierra.
     advance();
@@ -158,13 +158,13 @@ TToken* Scanner::string() {
     int end = current - 1;
 
     //std::cout<<this->source.substr(begin, end-begin + 1);
-    return  new StringToken(TokenName::STRING, source.substr(begin + 1, end - begin - 1));
+    return  new StringToken(TokenName::STRING, source.substr(begin + 1, end - begin - 1), line);
 }
 
 TToken* Scanner::next() {
     skipWhitespace();
 
-    if (isAtEnd()) return new Token(TokenName::END);
+    if (isAtEnd()) return new Token(TokenName::END, line);
 
     char c = advance();
 
@@ -172,31 +172,31 @@ TToken* Scanner::next() {
     else if(isdigit(c)) return number();
 
     switch (c) {
-        case '(': return new Token(TokenName::LEFT_PAREN);
-        case ')': return new Token(TokenName::RIGHT_PAREN);
-        case '{': return new Token(TokenName::LEFT_BRACE);
-        case '}': return new Token(TokenName::RIGHT_BRACE);
-        case ';': return new Token(TokenName::SEMICOLON);
-        case ',': return new Token(TokenName::COMMA);
-        case '.': return new Token(TokenName::DOT);
-        case '-': return new Token(TokenName::MINUS);
-        case '+': return new Token(TokenName::PLUS);
-        case '/': return new Token(TokenName::SLASH);
-        case '*': return new Token(TokenName::STAR);
+        case '(': return new Token(TokenName::LEFT_PAREN, line);
+        case ')': return new Token(TokenName::RIGHT_PAREN, line);
+        case '{': return new Token(TokenName::LEFT_BRACE, line);
+        case '}': return new Token(TokenName::RIGHT_BRACE, line);
+        case ';': return new Token(TokenName::SEMICOLON, line);
+        case ',': return new Token(TokenName::COMMA, line);
+        case '.': return new Token(TokenName::DOT, line);
+        case '-': return new Token(TokenName::MINUS, line);
+        case '+': return new Token(TokenName::PLUS, line);
+        case '/': return new Token(TokenName::SLASH, line);
+        case '*': return new Token(TokenName::STAR, line);
         case '!':
             return new Token(
-                    match('=') ? TokenName::BANG_EQUAL : TokenName::BANG);
+                    match('=') ? TokenName::BANG_EQUAL : TokenName::BANG, line);
         case '=':
             return new Token(
-                    match('=') ? TokenName::EQUAL_EQUAL : TokenName::EQUAL);
+                    match('=') ? TokenName::EQUAL_EQUAL : TokenName::EQUAL, line);
         case '<':
             return new Token(
-                    match('=') ? TokenName::LESS_EQUAL : TokenName::LESS);
+                    match('=') ? TokenName::LESS_EQUAL : TokenName::LESS, line);
         case '>':
             return new Token(
-                    match('=') ? TokenName::GREATER_EQUAL : TokenName::GREATER);
+                    match('=') ? TokenName::GREATER_EQUAL : TokenName::GREATER, line);
         case '"': return string();
     }
 
-    return new Token(TokenName::ERROR);
+    return new Token(TokenName::ERROR, line);
 }

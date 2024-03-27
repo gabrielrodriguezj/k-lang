@@ -9,7 +9,7 @@
 class Scanner {
 private:
     std::string source;
-    int linea;
+    int line;
     int current;
 
     bool match(char);

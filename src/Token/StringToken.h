@@ -12,7 +12,7 @@ class StringToken : virtual public TToken{
 private:
     const std::string value;
 public:
-    StringToken(TokenName nombre, const std::string &value);
+    StringToken(TokenName, const std::string &, int);
     std::string getValue();
     std::string toString();
 };

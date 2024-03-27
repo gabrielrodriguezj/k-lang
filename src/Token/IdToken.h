@@ -10,7 +10,7 @@ private:
     const std::string identifier;
 
 public:
-    IdToken(TokenName nombre, const std::string &lexem);
+    IdToken(TokenName, const std::string &, int);
 
     std::string getIdentifier();
     std::string toString();

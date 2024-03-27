@@ -11,7 +11,7 @@ class Token : virtual public TToken {
 private:
 
 public:
-    Token(TokenName nombre);
+    Token(TokenName, int);
 
     std::string toString();
 };

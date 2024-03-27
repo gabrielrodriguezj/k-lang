@@ -5,11 +5,11 @@
 #include <sstream>
 #include "Token.h"
 
-Token::Token(TokenName name) : TToken(name) {}
+Token::Token(TokenName name, int line) : TToken(name, line) {}
 
 std::string Token::toString() {
     std::stringstream ss;
-    ss << "<";
+    ss << "< ";
 
     switch (TToken::getName()) {
         case TokenName::LEFT_PAREN:
@@ -137,6 +137,6 @@ std::string Token::toString() {
             break;
     }
 
-    ss << ">";
+    ss << " , line:" << TToken::getLine() << " >";
     return ss.str();;
 }

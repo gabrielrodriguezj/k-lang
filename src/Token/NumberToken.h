@@ -12,7 +12,7 @@ class NumberToken: virtual public TToken{
 private:
     double value;
 public:
-    NumberToken(TokenName nombre, double value);
+    NumberToken(TokenName, double, int);
 
     double getValue();
     std::string toString();
