@@ -9,7 +9,6 @@
 class Parser {
 private:
     Scanner* scanner;
-    bool error = false;
     TToken* preanalysis;
 
     void match(TokenName);

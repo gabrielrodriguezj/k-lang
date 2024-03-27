@@ -1,7 +1,8 @@
 #include <sstream>
 #include "Parser.h"
 #include "Scanner.h"
-#include "Exceptions/ScannerException.h"
+#include "Exceptions/ParserException.h"
+#include "Token/TokenUtil.h"
 
 Parser::Parser(const std::string source) {
     preanalysis = nullptr;
@@ -32,8 +33,11 @@ void Parser::match(TokenName name) {
     }
     else{
         std::stringstream ss;
-        ss<<"Error en el token";
-        std::cout<<ss.str();
+        ss<<"Error: Se esperaba el token '"<< tokennameToString(name);
+        ss<<"' pero se recibio el token '" << tokennameToString(preanalysis->getName());
+        ss<<"'. Linea: " << preanalysis->getLine();
+        std::cout<<ss.str()<<std::endl;
+        throw new ParserException(ss.str());
     }
 }
 

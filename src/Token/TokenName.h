@@ -1,3 +1,7 @@
+#ifndef K_LANG_TOKENNAME_H
+#define K_LANG_TOKENNAME_H
+
+
 #include <iostream>
 
 enum class TokenName {
@@ -20,3 +24,6 @@ enum class TokenName {
 
     END, ERROR
 };
+
+
+#endif //K_LANG_TOKENNAME_H

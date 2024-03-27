@@ -43,6 +43,5 @@ void repl() {
 
 void ejecutar(std::string source){
     Parser parser = Parser(source);
-    bool res = parser.parse();
-    std::cout<<res;
+    parser.parse();
 }

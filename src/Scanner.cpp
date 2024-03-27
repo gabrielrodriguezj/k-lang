@@ -4,7 +4,7 @@
 #include "Token/IdToken.h"
 #include "Token/StringToken.h"
 #include "Token/NumberToken.h"
-#include "Exceptions/ParserException.h"
+#include "Exceptions/ScannerException.h"
 
 Scanner::Scanner(const std::string &source) : source(source) {
     this->source.append(" ");
@@ -156,7 +156,7 @@ TToken* Scanner::string() {
         //return new Token(TokenName::ERROR, line);
         std::stringstream ss;
         ss << "Error: La cadena no se cerró apropiadamente. Linea: " << line;
-        throw new ParserException(ss.str());
+        throw new ScannerException(ss.str());
     }
 
     // La comilla que cierra.
@@ -208,6 +208,6 @@ TToken* Scanner::next() {
     //return new Token(TokenName::ERROR, line);
     std::stringstream ss;
     ss<<"Error: caracter '" << peek() << "' no válido. Linea: " << line;
-    throw new ParserException(ss.str());
+    throw new ScannerException(ss.str());
 
 }
