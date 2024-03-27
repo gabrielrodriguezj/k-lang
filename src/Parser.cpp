@@ -1,6 +1,7 @@
 #include <sstream>
 #include "Parser.h"
 #include "Scanner.h"
+#include "Exceptions/ScannerException.h"
 
 Parser::Parser(const std::string source) {
     preanalysis = nullptr;

@@ -1,8 +1,10 @@
+#include <sstream>
 #include "Scanner.h"
 #include "Token/Token.h"
 #include "Token/IdToken.h"
 #include "Token/StringToken.h"
 #include "Token/NumberToken.h"
+#include "Exceptions/ParserException.h"
 
 Scanner::Scanner(const std::string &source) : source(source) {
     this->source.append(" ");
@@ -150,7 +152,12 @@ TToken* Scanner::string() {
         if (peek() == '\n') line++;
         advance();
     }
-    if (isAtEnd()) return new Token(TokenName::ERROR, line);
+    if (isAtEnd()) {
+        //return new Token(TokenName::ERROR, line);
+        std::stringstream ss;
+        ss << "Error: La cadena no se cerró apropiadamente. Linea: " << line;
+        throw new ParserException(ss.str());
+    }
 
     // La comilla que cierra.
     advance();
@@ -198,5 +205,9 @@ TToken* Scanner::next() {
         case '"': return string();
     }
 
-    return new Token(TokenName::ERROR, line);
+    //return new Token(TokenName::ERROR, line);
+    std::stringstream ss;
+    ss<<"Error: caracter '" << peek() << "' no válido. Linea: " << line;
+    throw new ParserException(ss.str());
+
 }
