@@ -1,7 +1,3 @@
-//
-// Created by gabri on 17/03/2024.
-//
-
 #include <sstream>
 #include "Token.h"
 

@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "Scanner.h"
 #include "Parser.h"
 
 void ejecutarArchivo(std::string path);

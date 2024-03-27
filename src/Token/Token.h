@@ -1,7 +1,3 @@
-//
-// Created by gabri on 17/03/2024.
-//
-
 #ifndef K_LANG_TOKEN_H
 #define K_LANG_TOKEN_H
 

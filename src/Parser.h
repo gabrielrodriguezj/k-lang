@@ -1,7 +1,3 @@
-//
-// Created by gabri on 22/03/2024.
-//
-
 #ifndef K_LANG_PARSER_H
 #define K_LANG_PARSER_H
 
