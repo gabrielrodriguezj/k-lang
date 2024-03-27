@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include "Scanner.h"
+#include "Parser.h"
 
 void ejecutarArchivo(std::string path);
 void repl();
@@ -42,13 +43,7 @@ void repl() {
 }
 
 void ejecutar(std::string source){
-    Scanner scanner = Scanner(source);
-    while (true){
-        TToken* t = scanner.next();
-
-        std::cout << t->toString() << std::endl;
-        if(t->getName() == TokenName::ERROR || t->getName() == TokenName::END)
-            break;
-    }
-
+    Parser parser = Parser(source);
+    bool res = parser.parse();
+    std::cout<<res;
 }
