@@ -160,8 +160,10 @@ void Parser::statement() {
             break;
         default:
             std::stringstream ss;
-            ss<<"Error in statement()";
-            //throw new ParserException(message);
+            ss<<"Error: No se esperaba el token '"<< tokennameToString(preanalysis->getName());
+            ss<<"'. Linea: " << preanalysis->getLine();
+            std::cout<<ss.str()<<std::endl;
+            throw new ParserException(ss.str());
     }
 }
 
@@ -203,7 +205,10 @@ void Parser::forStatement1() {
             break;
         default:
             std::stringstream ss;
-            ss << "Error in forStatement1()";
+            ss<<"Error: Expresion no valida, no se esperaba el token '"<< tokennameToString(preanalysis->getName());
+            ss<<"'. Linea: " << preanalysis->getLine();
+            std::cout<<ss.str()<<std::endl;
+            throw new ParserException(ss.str());
     }
 }
 
@@ -228,7 +233,10 @@ void Parser::forStatement2() {
             break;
         default:
             std::stringstream ss;
-            ss << "Error in forStatement2()";
+            ss<<"Error: Expresion no valida, no se esperaba el token '"<< tokennameToString(preanalysis->getName());
+            ss<<"'. Linea: " << preanalysis->getLine();
+            std::cout<<ss.str()<<std::endl;
+            throw new ParserException(ss.str());
     }
 }
 
@@ -489,7 +497,10 @@ void Parser::primary() {
     }
     else{
         std::stringstream ss;
-        ss<<"Error in primary()";
+        ss<<"Error: Expresion no valida, no se esperaba el token '"<< tokennameToString(preanalysis->getName());
+        ss<<"'. Linea: " << preanalysis->getLine();
+        std::cout<<ss.str()<<std::endl;
+        throw new ParserException(ss.str());
     }
 }
 
@@ -516,8 +527,9 @@ void Parser::parameters() {
 void Parser::parameters2() {
     if(preanalysis->getName() == TokenName::COMMA){
         match(TokenName::COMMA);
-        match(TokenName::IDENTIFIER);
-        parameters2();
+        //match(TokenName::IDENTIFIER);
+        //parameters2();
+        parameters();
     }
 }
 
@@ -543,8 +555,9 @@ void Parser::argumentsOptional() {
 void Parser::arguments() {
     if(preanalysis->getName() == TokenName::COMMA){
         match(TokenName::COMMA);
-        expression();
-        arguments();
+        //expression();
+        //arguments();
+        argumentsOptional();
     }
 }
 
