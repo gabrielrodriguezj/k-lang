@@ -89,7 +89,7 @@ void Parser::classDeclaration() {
     match(TokenName::IDENTIFIER);
     classInheritance();
     match(TokenName::LEFT_BRACE);
-    functions();
+    classElement();
     match(TokenName::RIGHT_BRACE);
 }
 
@@ -97,6 +97,17 @@ void Parser::classInheritance() {
     if(preanalysis->getName() == TokenName::EXTENDS){
         match(TokenName::EXTENDS);
         match(TokenName::IDENTIFIER);
+    }
+}
+
+void Parser::classElement() {
+    if(preanalysis->getName() == TokenName::VAR){
+        variableDeclaration();
+        classElement();
+    }
+    else if(preanalysis->getName() == TokenName::FUN){
+        functionDeclaration();
+        classElement();
     }
 }
 
@@ -506,13 +517,6 @@ void Parser::primary() {
 
 // Auxiliary:
 
-void Parser::functions() {
-    if(preanalysis->getName() == TokenName::FUN){
-        functionDeclaration();
-        functions();
-    }
-}
-
 void Parser::parametersOptional() {
     if(preanalysis->getName() == TokenName::IDENTIFIER){
         parameters();
@@ -560,6 +564,7 @@ void Parser::arguments() {
         argumentsOptional();
     }
 }
+
 
 
 

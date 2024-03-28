@@ -18,6 +18,7 @@ private:
     void declaration();
     void classDeclaration();
     void classInheritance();
+    void classElement();
     void functionDeclaration();
     void variableDeclaration();
     void variableInitialization();
@@ -59,7 +60,6 @@ private:
     void primary();
 
     //Auxiliary
-    void functions();
     void parametersOptional();
     void parameters();
     void parameters2();
