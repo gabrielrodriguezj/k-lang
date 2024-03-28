@@ -9,7 +9,7 @@
 class Parser {
 private:
     Scanner* scanner;
-    TToken* preanalysis;
+    TToken* preanalysis{};
 
     void match(TokenName);
 
@@ -66,7 +66,7 @@ private:
     void argumentsOptional();
     void arguments();
 public:
-    Parser(std::string);
+    explicit Parser(const std::string&);
     bool parse();
 };
 

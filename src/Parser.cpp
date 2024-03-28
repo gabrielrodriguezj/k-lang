@@ -4,8 +4,7 @@
 #include "Token/TokenUtil.h"
 #include "Exceptions/ParserException.h"
 
-Parser::Parser(const std::string source) {
-    preanalysis = nullptr;
+Parser::Parser(const std::string& source) {
     scanner = new Scanner(source);
 }
 
