@@ -2,6 +2,8 @@
 #include <fstream>
 #include <string>
 #include "Parser.h"
+#include "Exceptions/ParserException.h"
+#include "Exceptions/ScannerException.h"
 
 void ejecutarArchivo(std::string path);
 void repl();
@@ -43,5 +45,17 @@ void repl() {
 
 void ejecutar(std::string source){
     Parser parser = Parser(source);
-    parser.parse();
+    try {
+        bool res = parser.parse();
+
+        if(res){
+            std::cout << "Programa valido";
+        }
+    }
+    catch (ParserException e){
+        std::cout<< e.what();
+    }
+    catch (ScannerException e){
+        std::cout<< e.what();
+    }
 }

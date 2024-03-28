@@ -2,6 +2,7 @@
 #include "Parser.h"
 #include "Scanner.h"
 #include "Token/TokenUtil.h"
+#include "Exceptions/ParserException.h"
 
 Parser::Parser(const std::string source) {
     preanalysis = nullptr;
@@ -10,30 +11,21 @@ Parser::Parser(const std::string source) {
 
 bool Parser::parse() {
     preanalysis = scanner->next();
-    while (true){
-        try {
-            program();
-        }
-        catch (ParserException* e){
-            std::cout<< e->what();
-            return false;
-        }
+    while (true) {
+        program();
 
-
-        if(preanalysis->getName() != TokenName::END) {
+        if (preanalysis->getName() != TokenName::END) {
             std::stringstream ss;
-            ss << "Error en el programa";
-            std::cout<<ss.str();
-            return false;
-        } else{
-            break;
+            ss<<"Error: Expresion no valida, no se esperaba el token '"<< tokennameToString(preanalysis->getName());
+            ss<<"'. Linea: " << preanalysis->getLine();
+            throw ParserException(ss.str());
+        } else {
+            return true;
         }
     }
-
-    return true;
 }
 
-void Parser::match(TokenName name) noexcept(false) {
+void Parser::match(TokenName name) {
     if(preanalysis->getName() == name){
         preanalysis = scanner->next();
     }
@@ -42,18 +34,17 @@ void Parser::match(TokenName name) noexcept(false) {
         ss<<"Error: Se esperaba el token '"<< tokennameToString(name);
         ss<<"' pero se recibio el token '" << tokennameToString(preanalysis->getName());
         ss<<"'. Linea: " << preanalysis->getLine();
-        // std::cout<<ss.str()<<std::endl;
-        throw new ParserException(ss.str());
+        throw ParserException(ss.str());
     }
 }
 
 // Declarations:
 
-void Parser::program() noexcept(false) {
+void Parser::program() {
     declaration();
 }
 
-void Parser::declaration() noexcept(false) {
+void Parser::declaration() {
     switch (preanalysis->getName()) {
         case TokenName::CLASS:
             classDeclaration();
@@ -90,7 +81,7 @@ void Parser::declaration() noexcept(false) {
     }
 }
 
-void Parser::classDeclaration() noexcept(false) {
+void Parser::classDeclaration() {
     match(TokenName::CLASS);
     match(TokenName::IDENTIFIER);
     classInheritance();
@@ -99,14 +90,14 @@ void Parser::classDeclaration() noexcept(false) {
     match(TokenName::RIGHT_BRACE);
 }
 
-void Parser::classInheritance() noexcept(false) {
+void Parser::classInheritance() {
     if(preanalysis->getName() == TokenName::EXTENDS){
         match(TokenName::EXTENDS);
         match(TokenName::IDENTIFIER);
     }
 }
 
-void Parser::classElement() noexcept(false) {
+void Parser::classElement() {
     if(preanalysis->getName() == TokenName::VAR){
         variableDeclaration();
         classElement();
@@ -117,7 +108,7 @@ void Parser::classElement() noexcept(false) {
     }
 }
 
-void Parser::functionDeclaration() noexcept(false) {
+void Parser::functionDeclaration() {
     match(TokenName::FUN);
     match(TokenName::IDENTIFIER);
     match(TokenName::LEFT_PAREN);
@@ -126,14 +117,14 @@ void Parser::functionDeclaration() noexcept(false) {
     block();
 }
 
-void Parser::variableDeclaration() noexcept(false) {
+void Parser::variableDeclaration() {
     match(TokenName::VAR);
     match(TokenName::IDENTIFIER);
     variableInitialization();
     match(TokenName::SEMICOLON);
 }
 
-void Parser::variableInitialization() noexcept(false) {
+void Parser::variableInitialization() {
     if(preanalysis->getName()==TokenName::EQUAL){
         match(TokenName::EQUAL);
         expression();
@@ -142,7 +133,7 @@ void Parser::variableInitialization() noexcept(false) {
 
 // Statements:
 
-void Parser::statement() noexcept(false) {
+void Parser::statement() {
     switch (preanalysis->getName()) {
         case TokenName::BANG:
         case TokenName::MINUS:
@@ -179,17 +170,16 @@ void Parser::statement() noexcept(false) {
             std::stringstream ss;
             ss<<"Error: No se esperaba el token '"<< tokennameToString(preanalysis->getName());
             ss<<"'. Linea: " << preanalysis->getLine();
-            // std::cout<<ss.str()<<std::endl;
-            throw new ParserException(ss.str());
+            throw ParserException(ss.str());
     }
 }
 
-void Parser::expressionStatement() noexcept(false) {
+void Parser::expressionStatement() {
     expression();
     match(TokenName::SEMICOLON);
 }
 
-void Parser::forStatement() noexcept(false) {
+void Parser::forStatement() {
     match(TokenName::FOR);
     match(TokenName::LEFT_PAREN);
     forStatement1();
@@ -199,7 +189,7 @@ void Parser::forStatement() noexcept(false) {
     statement();
 }
 
-void Parser::forStatement1() noexcept(false) {
+void Parser::forStatement1() {
     switch (preanalysis->getName()) {
         case TokenName::VAR:
             variableDeclaration();
@@ -224,12 +214,11 @@ void Parser::forStatement1() noexcept(false) {
             std::stringstream ss;
             ss<<"Error: Expresion no valida, no se esperaba el token '"<< tokennameToString(preanalysis->getName());
             ss<<"'. Linea: " << preanalysis->getLine();
-            // std::cout<<ss.str()<<std::endl;
-            throw new ParserException(ss.str());
+            throw ParserException(ss.str());
     }
 }
 
-void Parser::forStatement2() noexcept(false) {
+void Parser::forStatement2() {
     switch (preanalysis->getName()) {
         case TokenName::BANG:
         case TokenName::MINUS:
@@ -252,12 +241,11 @@ void Parser::forStatement2() noexcept(false) {
             std::stringstream ss;
             ss<<"Error: Expresion no valida, no se esperaba el token '"<< tokennameToString(preanalysis->getName());
             ss<<"'. Linea: " << preanalysis->getLine();
-            // std::cout<<ss.str()<<std::endl;
-            throw new ParserException(ss.str());
+            throw ParserException(ss.str());
     }
 }
 
-void Parser::forStatement3() noexcept(false) {
+void Parser::forStatement3() {
     switch (preanalysis->getName()) {
         case TokenName::BANG:
         case TokenName::MINUS:
@@ -275,7 +263,7 @@ void Parser::forStatement3() noexcept(false) {
     }
 }
 
-void Parser::ifStatement() noexcept(false) {
+void Parser::ifStatement() {
     match(TokenName::IF);
     match(TokenName::LEFT_PAREN);
     expression();
@@ -284,26 +272,26 @@ void Parser::ifStatement() noexcept(false) {
     elseStatement();
 }
 
-void Parser::elseStatement() noexcept(false) {
+void Parser::elseStatement() {
     if (preanalysis->getName() == TokenName::ELSE) {
         match(TokenName::ELSE);
         statement();
     }
 }
 
-void Parser::printStatement() noexcept(false) {
+void Parser::printStatement() {
     match(TokenName::PRINT);
     expression();
     match(TokenName::SEMICOLON);
 }
 
-void Parser::returnStatement() noexcept(false) {
+void Parser::returnStatement() {
     match(TokenName::RETURN);
     returnExpressionOptional();
     match(TokenName::SEMICOLON);
 }
 
-void Parser::returnExpressionOptional() noexcept(false) {
+void Parser::returnExpressionOptional() {
     switch (preanalysis->getName()) {
         case TokenName::BANG:
         case TokenName::MINUS:
@@ -321,7 +309,7 @@ void Parser::returnExpressionOptional() noexcept(false) {
     }
 }
 
-void Parser::whileStatement() noexcept(false) {
+void Parser::whileStatement() {
     match(TokenName::WHILE);
     match(TokenName::LEFT_PAREN);
     expression();
@@ -329,7 +317,7 @@ void Parser::whileStatement() noexcept(false) {
     statement();
 }
 
-void Parser::block() noexcept(false) {
+void Parser::block() {
     match(TokenName::LEFT_BRACE);
     declaration();
     match(TokenName::RIGHT_BRACE);
@@ -337,52 +325,52 @@ void Parser::block() noexcept(false) {
 
 // Expressions:
 
-void Parser::expression() noexcept(false) {
+void Parser::expression() {
     assignament();
 }
 
-void Parser::assignament() noexcept(false) {
+void Parser::assignament() {
     logicOr();
     assignamentOptional();
 }
 
-void Parser::assignamentOptional() noexcept(false) {
+void Parser::assignamentOptional() {
     if(preanalysis->getName() == TokenName::EQUAL){
         match(TokenName::EQUAL);
         expression();
     }
 }
 
-void Parser::logicOr() noexcept(false) {
+void Parser::logicOr() {
     logicAnd();
     logicOr2();
 }
 
-void Parser::logicOr2() noexcept(false) {
+void Parser::logicOr2() {
     if (preanalysis->getName() == TokenName::OR) {
         match(TokenName::OR);
         logicOr();
     }
 }
 
-void Parser::logicAnd() noexcept(false) {
+void Parser::logicAnd() {
     equality();
     logicAnd2();
 }
 
-void Parser::logicAnd2() noexcept(false) {
+void Parser::logicAnd2() {
     if (preanalysis->getName() == TokenName::AND) {
         match(TokenName::AND);
         logicAnd();
     }
 }
 
-void Parser::equality() noexcept(false) {
+void Parser::equality() {
     comparison();
     equality2();
 }
 
-void Parser::equality2() noexcept(false) {
+void Parser::equality2() {
     if(preanalysis->getName() == TokenName::BANG_EQUAL){
         match(TokenName::BANG_EQUAL);
         equality();
@@ -393,12 +381,12 @@ void Parser::equality2() noexcept(false) {
     }
 }
 
-void Parser::comparison() noexcept(false) {
+void Parser::comparison() {
     term();
     comparison2();
 }
 
-void Parser::comparison2() noexcept(false) {
+void Parser::comparison2() {
     if(preanalysis->getName() == TokenName::GREATER){
         match(TokenName::GREATER);
         comparison();
@@ -417,12 +405,12 @@ void Parser::comparison2() noexcept(false) {
     }
 }
 
-void Parser::term() noexcept(false) {
+void Parser::term() {
     factor();
     term2();
 }
 
-void Parser::term2() noexcept(false) {
+void Parser::term2() {
     if(preanalysis->getName() == TokenName::MINUS){
         match(TokenName::MINUS);
         term();
@@ -433,12 +421,12 @@ void Parser::term2() noexcept(false) {
     }
 }
 
-void Parser::factor() noexcept(false) {
+void Parser::factor() {
     unary();
     factor2();
 }
 
-void Parser::factor2() noexcept(false) {
+void Parser::factor2() {
     if(preanalysis->getName() == TokenName::SLASH){
         match(TokenName::SLASH);
         factor();
@@ -449,7 +437,7 @@ void Parser::factor2() noexcept(false) {
     }
 }
 
-void Parser::unary() noexcept(false) {
+void Parser::unary() {
     if(preanalysis->getName() == TokenName::BANG){
         match(TokenName::BANG);
         unary();
@@ -462,12 +450,12 @@ void Parser::unary() noexcept(false) {
     }
 }
 
-void Parser::call() noexcept(false) {
+void Parser::call() {
     primary();
     call2();
 }
 
-void Parser::call2() noexcept(false) {
+void Parser::call2() {
     if(preanalysis->getName() == TokenName::LEFT_PAREN){
         match(TokenName::LEFT_PAREN);
         argumentsOptional();
@@ -480,7 +468,7 @@ void Parser::call2() noexcept(false) {
     }
 }
 
-void Parser::primary() noexcept(false) {
+void Parser::primary() {
     if(preanalysis->getName() == TokenName::TRUE){
         match(TokenName::TRUE);
     }
@@ -516,25 +504,24 @@ void Parser::primary() noexcept(false) {
         std::stringstream ss;
         ss<<"Error: Expresion no valida, no se esperaba el token '"<< tokennameToString(preanalysis->getName());
         ss<<"'. Linea: " << preanalysis->getLine();
-        // std::cout<<ss.str()<<std::endl;
-        throw new ParserException(ss.str());
+        throw ParserException(ss.str());
     }
 }
 
 // Auxiliary:
 
-void Parser::parametersOptional() noexcept(false) {
+void Parser::parametersOptional() {
     if(preanalysis->getName() == TokenName::IDENTIFIER){
         parameters();
     }
 }
 
-void Parser::parameters() noexcept(false) {
+void Parser::parameters() {
     match(TokenName::IDENTIFIER);
     parameters2();
 }
 
-void Parser::parameters2() noexcept(false) {
+void Parser::parameters2() {
     if(preanalysis->getName() == TokenName::COMMA){
         match(TokenName::COMMA);
         //match(TokenName::IDENTIFIER);
@@ -543,7 +530,7 @@ void Parser::parameters2() noexcept(false) {
     }
 }
 
-void Parser::argumentsOptional() noexcept(false) {
+void Parser::argumentsOptional() {
     switch (preanalysis->getName()) {
         case TokenName::BANG:
         case TokenName::MINUS:
@@ -562,7 +549,7 @@ void Parser::argumentsOptional() noexcept(false) {
     }
 }
 
-void Parser::arguments() noexcept(false) {
+void Parser::arguments() {
     if(preanalysis->getName() == TokenName::COMMA){
         match(TokenName::COMMA);
         //expression();
