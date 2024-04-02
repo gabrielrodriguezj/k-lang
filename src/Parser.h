@@ -18,15 +18,16 @@ private:
     Scanner* scanner;
     TToken* preanalysis{};
     TToken* previous{};
+    std::list<Statement*> stmts{};
 
     void match(TokenName);
 
     //Declarations:
-    void program();
-    void declaration(std::list<Statement*>);
+    std::list<Statement*> program();
+    void declaration(std::list<Statement*>&);
     Statement* classDeclaration();
     ExprVariable* classInheritance();
-    void classElement(std::list<StmtFunction*>, std::list<StmtVariable*>);
+    void classElement(std::list<StmtFunction*>&, std::list<StmtVariable*>&);
     StmtFunction* functionDeclaration();
     StmtVariable* variableDeclaration();
     Expression* variableInitialization();
@@ -69,13 +70,14 @@ private:
 
     //Auxiliary
     std::list<IdToken*> parametersOptional();
-    void parameters(std::list<IdToken*>);
-    void parameters2(std::list<IdToken*>);
-    void argumentsOptional(std::list<Expression*>);
-    void arguments(std::list<Expression*>);
+    void parameters(std::list<IdToken*>&);
+    void parameters2(std::list<IdToken*>&);
+    void argumentsOptional(std::list<Expression*>&);
+    void arguments(std::list<Expression*>&);
 public:
     explicit Parser(const std::string&);
     bool parse();
+    std::list<Statement*> getStatements();
 };
 
 #endif //K_LANG_PARSER_H
