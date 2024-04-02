@@ -4,6 +4,6 @@ StmtClass::StmtClass(IdToken *name, ExprVariable *superclass, const std::list<St
                      const std::list<StmtVariable *> &variables) : name(name), superclass(superclass), methods(methods),
                                                                    variables(variables) {}
 
-void StmtClass::execute() {
+void StmtClass::execute(Environment* environment) {
 
 }

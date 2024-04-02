@@ -12,7 +12,7 @@ private:
     Expression* initializer;
 public:
     StmtVariable(IdToken *name, Expression *initializer);
-    void execute() override;
+    void execute(Environment*) override;
 };
 
 

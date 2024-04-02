@@ -20,7 +20,7 @@ public:
     StmtClass(IdToken *name, ExprVariable *superclass, const std::list<StmtFunction *> &methods,
               const std::list<StmtVariable *> &variables);
 
-    void execute() override;
+    void execute(Environment*) override;
 };
 
 

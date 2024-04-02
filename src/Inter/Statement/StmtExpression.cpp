@@ -2,6 +2,6 @@
 
 StmtExpression::StmtExpression(Expression *expression) : expression(expression) {}
 
-void StmtExpression::execute() {
+void StmtExpression::execute(Environment* environment) {
 
 }

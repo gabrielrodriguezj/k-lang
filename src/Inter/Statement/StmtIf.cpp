@@ -4,6 +4,6 @@ StmtIf::StmtIf(Expression *condition, Statement *thenBranch, Statement *elseBran
                                                                                       thenBranch(thenBranch),
                                                                                       elseBranch(elseBranch) {}
 
-void StmtIf::execute() {
+void StmtIf::execute(Environment* environment) {
 
 }

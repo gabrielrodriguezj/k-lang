@@ -11,7 +11,7 @@ private:
 public:
     explicit StmtReturn(Expression *expression);
 
-    void execute() override;
+    void execute(Environment*) override;
 };
 
 

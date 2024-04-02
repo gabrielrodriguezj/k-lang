@@ -2,6 +2,6 @@
 
 StmtReturn::StmtReturn(Expression *expression) : expression(expression) {}
 
-void StmtReturn::execute() {
+void StmtReturn::execute(Environment* environment) {
     // Not implemented yet
 }

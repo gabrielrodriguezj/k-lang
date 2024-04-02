@@ -4,6 +4,7 @@
 
 #include <list>
 #include "Statement.h"
+#include "../Environment.h"
 
 class StmtBlock: public Statement{
 private:
@@ -12,7 +13,7 @@ private:
 public:
     explicit StmtBlock(const std::list<Statement *> &statements);
 
-    void execute() override;
+    void execute(Environment*) override;
 };
 
 

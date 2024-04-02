@@ -2,8 +2,8 @@
 #define K_LANG_STMTEXPRESSION_H
 
 
-#include "Inter/Statement/Statement.h"
-#include "Inter/Expression/Expression.h"
+#include "Statement.h"
+#include "../Expression/Expression.h"
 
 class StmtExpression: public Statement{
 private:
@@ -11,7 +11,7 @@ private:
 public:
     explicit StmtExpression(Expression *expression);
 
-    void execute() override;
+    void execute(Environment*) override;
 };
 
 

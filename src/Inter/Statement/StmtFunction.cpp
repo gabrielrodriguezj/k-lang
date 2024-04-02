@@ -4,6 +4,6 @@ StmtFunction::StmtFunction(IdToken *name, const std::list<IdToken *> &params, St
                                                                                                  params(params),
                                                                                                  body(body) {}
 
-void StmtFunction::execute() {
+void StmtFunction::execute(Environment* environment) {
 
 }

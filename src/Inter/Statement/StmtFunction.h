@@ -14,7 +14,7 @@ private:
     StmtBlock* body;
 public:
     StmtFunction(IdToken *name, const std::list<IdToken *> &params, StmtBlock *body);
-    void execute() override;
+    void execute(Environment*) override;
 };
 
 

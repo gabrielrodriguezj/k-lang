@@ -2,6 +2,6 @@
 
 StmtVariable::StmtVariable(IdToken *name, Expression *initializer) : name(name), initializer(initializer) {}
 
-void StmtVariable::execute() {
+void StmtVariable::execute(Environment* environment) {
 
 }

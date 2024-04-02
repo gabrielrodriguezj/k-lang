@@ -11,7 +11,7 @@ private:
 public:
     explicit StmtPrint(Expression *expression);
 
-    void execute() override;
+    void execute(Environment*) override;
 };
 
 
