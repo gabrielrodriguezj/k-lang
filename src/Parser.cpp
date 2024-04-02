@@ -21,6 +21,10 @@
 #include "Inter/ExprSet.h"
 #include "Inter/Statement.h"
 #include "Inter/StmtClass.h"
+#include "Inter/StmtLoop.h"
+#include "Inter/StmtIf.h"
+#include "Inter/StmtPrint.h"
+#include "Inter/StmtReturn.h"
 
 Parser::Parser(const std::string& source) {
     scanner = new Scanner(source);
@@ -195,22 +199,22 @@ Statement* Parser::statement() {
             return expressionStatement();
             break;
         case TokenName::FOR:
-            forStatement();
+            return forStatement();
             break;
         case TokenName::IF:
-            ifStatement();
+            return ifStatement();
             break;
         case TokenName::WHILE:
-            whileStatement();
+            return whileStatement();
             break;
         case TokenName::PRINT:
-            printStatement();
+            return printStatement();
             break;
         case TokenName::RETURN:
-            returnStatement();
+            return returnStatement();
             break;
         case TokenName::LEFT_BRACE:
-            block();
+            return block();
             break;
         default:
             std::stringstream ss;
@@ -226,20 +230,38 @@ StmtExpression* Parser::expressionStatement() {
     return new StmtExpression(expr);
 }
 
-void Parser::forStatement() {
+Statement* Parser::forStatement() {
     match(TokenName::FOR);
     match(TokenName::LEFT_PAREN);
-    forStatement1();
-    forStatement2();
-    forStatement3();
+    Statement* initializer = forStatementInit();
+    Expression* condition = forStatementCondition();
+    Expression* increment = forStatementIncrease();
     match(TokenName::RIGHT_PAREN);
-    statement();
+    Statement* body = statement();
+
+    // Syntactic sugar:
+    if(increment != nullptr){
+        std::list<Statement*> newBody {body, new StmtExpression(increment)};
+        body = new StmtBlock(newBody);
+    }
+
+    if(condition == nullptr){
+        condition = new ExprLiteral(true);
+    }
+    body = new StmtLoop(condition, body);
+
+    if (initializer != nullptr) {
+        std::list<Statement*> newBody {initializer, body};
+        body = new StmtBlock(newBody);
+    }
+
+    return body;
 }
 
-void Parser::forStatement1() {
+Statement* Parser::forStatementInit() {
     switch (preanalysis->getName()) {
         case TokenName::VAR:
-            variableDeclaration();
+            return variableDeclaration();
             break;
         case TokenName::BANG:
         case TokenName::MINUS:
@@ -252,10 +274,11 @@ void Parser::forStatement1() {
         case TokenName::LEFT_PAREN:
         case TokenName::SUPER:
         case TokenName::THIS:
-            expressionStatement();
+            return expressionStatement();
             break;
         case TokenName::SEMICOLON:
             match(TokenName::SEMICOLON);
+            return nullptr;
             break;
         default:
             std::stringstream ss;
@@ -265,7 +288,8 @@ void Parser::forStatement1() {
     }
 }
 
-void Parser::forStatement2() {
+Expression* Parser::forStatementCondition() {
+    Expression* expr;
     switch (preanalysis->getName()) {
         case TokenName::BANG:
         case TokenName::MINUS:
@@ -278,11 +302,13 @@ void Parser::forStatement2() {
         case TokenName::LEFT_PAREN:
         case TokenName::SUPER:
         case TokenName::THIS:
-            expression();
+            expr = expression();
             match(TokenName::SEMICOLON);
+            return expr;
             break;
         case TokenName::SEMICOLON:
             match(TokenName::SEMICOLON);
+            return nullptr;
             break;
         default:
             std::stringstream ss;
@@ -292,7 +318,7 @@ void Parser::forStatement2() {
     }
 }
 
-void Parser::forStatement3() {
+Expression* Parser::forStatementIncrease() {
     switch (preanalysis->getName()) {
         case TokenName::BANG:
         case TokenName::MINUS:
@@ -305,40 +331,46 @@ void Parser::forStatement3() {
         case TokenName::LEFT_PAREN:
         case TokenName::SUPER:
         case TokenName::THIS:
-            expression();
+            return expression();
             break;
     }
+    return nullptr;
 }
 
-void Parser::ifStatement() {
+Statement* Parser::ifStatement() {
     match(TokenName::IF);
     match(TokenName::LEFT_PAREN);
-    expression();
+    Expression* condition = expression();
     match(TokenName::RIGHT_PAREN);
-    statement();
-    elseStatement();
+    Statement* thenBranch = statement();
+    Statement* elseBranch = elseStatement();
+
+    return new StmtIf(condition, thenBranch, elseBranch);
 }
 
-void Parser::elseStatement() {
+Statement* Parser::elseStatement() {
     if (preanalysis->getName() == TokenName::ELSE) {
         match(TokenName::ELSE);
-        statement();
+        return statement();
     }
+    return nullptr;
 }
 
-void Parser::printStatement() {
+Statement* Parser::printStatement() {
     match(TokenName::PRINT);
-    expression();
+    Expression* expr = expression();
     match(TokenName::SEMICOLON);
+    return new StmtPrint(expr);
 }
 
-void Parser::returnStatement() {
+Statement* Parser::returnStatement() {
     match(TokenName::RETURN);
-    returnExpressionOptional();
+    Expression* returnExpr = returnExpressionOptional();
     match(TokenName::SEMICOLON);
+    return new StmtReturn(returnExpr);
 }
 
-void Parser::returnExpressionOptional() {
+Expression* Parser::returnExpressionOptional() {
     switch (preanalysis->getName()) {
         case TokenName::BANG:
         case TokenName::MINUS:
@@ -351,17 +383,20 @@ void Parser::returnExpressionOptional() {
         case TokenName::LEFT_PAREN:
         case TokenName::SUPER:
         case TokenName::THIS:
-            expression();
+            return expression();
             break;
     }
+    return nullptr;
 }
 
-void Parser::whileStatement() {
+Statement* Parser::whileStatement() {
     match(TokenName::WHILE);
     match(TokenName::LEFT_PAREN);
-    expression();
+    Expression* condition = expression();
     match(TokenName::RIGHT_PAREN);
-    statement();
+    Statement* body = statement();
+
+    return new StmtLoop(condition, body);
 }
 
 StmtBlock* Parser::block() {

@@ -2,5 +2,6 @@
 
 StmtExpression::StmtExpression(Expression *expression) : expression(expression) {}
 
-TData StmtExpression::solve() {
+void StmtExpression::execute() {
+
 }

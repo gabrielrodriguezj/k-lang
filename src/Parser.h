@@ -34,16 +34,16 @@ private:
     //Statements
     Statement* statement();
     StmtExpression* expressionStatement();
-    void forStatement();
-    void forStatement1();
-    void forStatement2();
-    void forStatement3();
-    void ifStatement();
-    void elseStatement();
-    void printStatement();
-    void returnStatement();
-    void returnExpressionOptional();
-    void whileStatement();
+    Statement* forStatement();
+    Statement* forStatementInit();
+    Expression* forStatementCondition();
+    Expression* forStatementIncrease();
+    Statement* ifStatement();
+    Statement* elseStatement();
+    Statement* printStatement();
+    Statement* returnStatement();
+    Expression* returnExpressionOptional();
+    Statement* whileStatement();
     StmtBlock* block();
 
     //Expressions

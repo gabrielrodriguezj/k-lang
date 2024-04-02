@@ -2,14 +2,16 @@
 #define K_LANG_STMTEXPRESSION_H
 
 
+#include "Inter/Statement.h"
 #include "Inter/Expression.h"
 
-class StmtExpression: public Expression{
+class StmtExpression: public Statement{
 private:
     Expression* expression;
 public:
     explicit StmtExpression(Expression *expression);
-    TData solve() override;
+
+    void execute() override;
 };
 
 
