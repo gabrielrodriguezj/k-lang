@@ -13,7 +13,7 @@ private:
 public:
     ExprSet(Expression *object, Token *name, Expression *value);
 
-    TData solve() override;
+    TData solve(Environment*) override;
 };
 
 

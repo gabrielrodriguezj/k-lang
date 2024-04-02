@@ -2,6 +2,6 @@
 
 ExprThis::ExprThis() {}
 
-TData ExprThis::solve() {
+TData ExprThis::solve(Environment* environment) {
     // Not implemented yet
 }

@@ -5,10 +5,11 @@
 #include <variant>
 #include <string>
 #include "../TData.h"
+#include "../Environment.h"
 
 class Expression {
 public:
-    virtual TData solve() = 0;
+    virtual TData solve(Environment*) = 0;
 };
 
 

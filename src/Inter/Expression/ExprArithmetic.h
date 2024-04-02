@@ -12,7 +12,7 @@ private:
     Expression* right;
 public:
     ExprArithmetic(Expression *left, Token *oper, Expression *right);
-    TData solve() override;
+    TData solve(Environment*) override;
 };
 
 

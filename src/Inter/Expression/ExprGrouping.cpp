@@ -2,6 +2,6 @@
 
 ExprGrouping::ExprGrouping(Expression* expression) : expression(expression){}
 
-TData ExprGrouping::solve() {
-    return expression->solve();
+TData ExprGrouping::solve(Environment* environment) {
+    return expression->solve(environment);
 }

@@ -10,7 +10,7 @@ private:
 public:
     ExprThis();
 
-    TData solve() override;
+    TData solve(Environment*) override;
 };
 
 

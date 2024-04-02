@@ -10,7 +10,7 @@ private:
 public:
     ExprLiteral(std::variant<std::monostate, int, double, bool, std::string>);
     ExprLiteral();
-    TData solve() override;
+    TData solve(Environment*) override;
 };
 
 

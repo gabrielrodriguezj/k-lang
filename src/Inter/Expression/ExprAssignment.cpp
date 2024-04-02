@@ -2,7 +2,7 @@
 
 ExprAssignment::ExprAssignment(IdToken *name, Expression *expression) : name(name), expression(expression) {}
 
-TData ExprAssignment::solve() {
+TData ExprAssignment::solve(Environment* environment) {
     // Not implemented yet
-    return expression->solve();
+    return expression->solve(environment);
 }

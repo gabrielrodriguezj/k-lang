@@ -2,6 +2,6 @@
 
 ExprArithmetic::ExprArithmetic(Expression *left, Token *oper, Expression *right) : left(left), oper(oper), right(right) {}
 
-TData ExprArithmetic::solve() {
+TData ExprArithmetic::solve(Environment* environment) {
     // Not implemented yet
 }

@@ -11,7 +11,7 @@ private:
 public:
     explicit ExprVariable(IdToken *name);
 
-    TData solve() override;
+    TData solve(Environment*) override;
     IdToken* getName();
 };
 
