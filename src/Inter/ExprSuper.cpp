@@ -1,8 +1,7 @@
 #include "ExprSuper.h"
 
-ExprSuper::ExprSuper(Token *method) : method(method) {}
+ExprSuper::ExprSuper(TToken *method) : method(method) {}
 
-std::variant<std::monostate, int, double, bool, std::string> ExprSuper::solve() {
+Object ExprSuper::solve() {
     // Not implemented yet
-    return 0;
 }

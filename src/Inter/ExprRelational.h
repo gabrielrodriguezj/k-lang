@@ -13,7 +13,7 @@ private:
 public:
     ExprRelational(Expression *left, Token *oper, Expression *right);
 
-    std::variant<std::monostate, int, double, bool, std::string> solve() override;
+    Object solve() override;
 };
 
 

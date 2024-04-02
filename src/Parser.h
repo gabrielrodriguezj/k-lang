@@ -3,6 +3,7 @@
 
 
 #include <string>
+#include <list>
 #include "Token/TToken.h"
 #include "Scanner.h"
 #include "Inter/Expression.h"
@@ -11,6 +12,7 @@ class Parser {
 private:
     Scanner* scanner;
     TToken* preanalysis{};
+    TToken* previous{};
 
     void match(TokenName);
 
@@ -40,31 +42,31 @@ private:
     void block();
 
     //Expressions
-    void expression();
-    void assignament();
-    void assignamentOptional();
-    void logicOr();
-    void logicOr2();
-    void logicAnd();
-    void logicAnd2();
-    void equality();
-    void equality2();
-    void comparison();
-    void comparison2();
-    void term();
-    void term2();
-    void factor();
-    void factor2();
-    void unary();
-    void call();
-    void call2();
+    Expression* expression();
+    Expression* assignament();
+    Expression* assignamentOptional(Expression*);
+    Expression*  logicOr();
+    Expression*  logicOr2(Expression*);
+    Expression* logicAnd();
+    Expression* logicAnd2(Expression*);
+    Expression* equality();
+    Expression* equality2(Expression*);
+    Expression* comparison();
+    Expression* comparison2(Expression*);
+    Expression* term();
+    Expression* term2( Expression*);
+    Expression* factor();
+    Expression* factor2(Expression*);
+    Expression* unary();
+    Expression* call();
+    Expression* call2(Expression*);
     Expression* primary();
 
     //Auxiliary
     void parametersOptional();
     void parameters();
     void parameters2();
-    void argumentsOptional();
+    std::list<Expression*> argumentsOptional();
     void arguments();
 public:
     explicit Parser(const std::string&);

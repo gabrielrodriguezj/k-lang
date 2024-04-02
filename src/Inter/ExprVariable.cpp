@@ -1,8 +1,11 @@
 #include "ExprVariable.h"
 
-ExprVariable::ExprVariable(TToken *name) : name(name) {}
+ExprVariable::ExprVariable(Token *name) : name(name) {}
 
-std::variant<std::monostate, int, double, bool, std::string> ExprVariable::solve() {
+Object ExprVariable::solve() {
     // Not implemented yet
-    return 0;
+}
+
+Token* ExprVariable::getName() {
+    return name;
 }

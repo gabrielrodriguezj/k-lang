@@ -3,16 +3,16 @@
 
 
 #include "Expression.h"
-#include "../Token/Token.h"
+#include "../Token/TToken.h"
 
 class ExprSuper: public Expression{
 private:
     // Token* keyword;
-    Token* method;
+    TToken* method;
 public:
-    explicit ExprSuper(Token *method);
+    explicit ExprSuper(TToken *method);
 
-    std::variant<std::monostate, int, double, bool, std::string> solve() override;
+    Object solve() override;
 };
 
 

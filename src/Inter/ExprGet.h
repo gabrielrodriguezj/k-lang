@@ -11,7 +11,10 @@ private:
     Token* name;
 public:
     ExprGet(Expression *object, Token *name);
-    std::variant<std::monostate, int, double, bool, std::string> solve() override;
+    Object solve() override;
+
+    Expression* getObject();
+    Token* getName();
 };
 
 

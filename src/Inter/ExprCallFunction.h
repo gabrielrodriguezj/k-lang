@@ -8,11 +8,11 @@ class ExprCallFunction: public Expression{
 private:
     Expression* callee;
     // Token* paren;
-    std::list<Expression>* arguments;
+    std::list<Expression*> arguments;
 public:
-    ExprCallFunction(Expression *callee, std::list<Expression> *arguments);
+    ExprCallFunction(Expression *callee, std::list<Expression*> arguments);
 
-    std::variant<std::monostate, int, double, bool, std::string> solve() override;
+    Object solve() override;
 };
 
 

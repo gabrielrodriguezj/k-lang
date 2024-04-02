@@ -4,16 +4,21 @@
 #include "Token/TokenUtil.h"
 #include "Exceptions/ParserException.h"
 #include "Inter/ExprLiteral.h"
-#include "Inter/Type/TBool.h"
-#include "Inter/Type/TNull.h"
 #include "Inter/ExprThis.h"
-#include "Token/Token.h"
 #include "Token/NumberToken.h"
-#include "Inter/Type/TInteger.h"
-#include "Inter/Type/TDouble.h"
 #include "Token/StringToken.h"
-#include "Inter/Type/TString.h"
 #include "Inter/ExprVariable.h"
+#include "Token/IdToken.h"
+#include "Inter/ExprSuper.h"
+#include "Inter/ExprGrouping.h"
+#include "Inter/ExprCallFunction.h"
+#include "Inter/ExprGet.h"
+#include "Inter/ExprUnary.h"
+#include "Inter/ExprArithmetic.h"
+#include "Inter/ExprRelational.h"
+#include "Inter/ExprLogical.h"
+#include "Inter/ExprAssignment.h"
+#include "Inter/ExprSet.h"
 
 Parser::Parser(const std::string& source) {
     scanner = new Scanner(source);
@@ -37,6 +42,7 @@ bool Parser::parse() {
 
 void Parser::match(TokenName name) {
     if(preanalysis->getName() == name){
+        previous = preanalysis;
         preanalysis = scanner->next();
     }
     else{
@@ -137,7 +143,8 @@ void Parser::variableDeclaration() {
 void Parser::variableInitialization() {
     if(preanalysis->getName()==TokenName::EQUAL){
         match(TokenName::EQUAL);
-        expression();
+        Expression* expr = expression();
+        int a = 0;
     }
 }
 
@@ -335,147 +342,160 @@ void Parser::block() {
 
 // Expressions:
 
-void Parser::expression() {
-    assignament();
+Expression* Parser::expression() {
+    return assignament();
 }
 
-void Parser::assignament() {
-    logicOr();
-    assignamentOptional();
+Expression* Parser::assignament() {
+    Expression* izq = logicOr();
+    return assignamentOptional(izq);
 }
 
-void Parser::assignamentOptional() {
+Expression* Parser::assignamentOptional(Expression* izq) {
     if(preanalysis->getName() == TokenName::EQUAL){
         match(TokenName::EQUAL);
-        expression();
+        Expression* value = expression();
+
+        if(dynamic_cast<ExprVariable*>(izq)){
+            Token* name = (dynamic_cast<ExprVariable*>(izq))->getName();
+            return new ExprAssignment(name, value);
+        }
+        else if(dynamic_cast<ExprGet*>(izq)){
+            ExprGet* get = dynamic_cast<ExprGet*>(izq);
+            return new ExprSet(get->getObject(), get->getName(), value);
+        }
+
+        std::stringstream ss;
+        ss<<"Error: Expresion no valida, no se esperaba el token '"<< tokennameToString(preanalysis->getName());
+        ss<<"'. Linea: " << preanalysis->getLine();
+        throw ParserException(ss.str());
     }
+    return izq;
 }
 
-void Parser::logicOr() {
-    logicAnd();
-    logicOr2();
+Expression*  Parser::logicOr() {
+    Expression* left = logicAnd();
+    return logicOr2(left);
 }
 
-void Parser::logicOr2() {
+Expression*  Parser::logicOr2(Expression* left) {
     if (preanalysis->getName() == TokenName::OR) {
         match(TokenName::OR);
-        logicOr();
+        Token* oper = dynamic_cast<Token *>(previous);
+        Expression* right = logicOr();
+        return new ExprLogical(left, oper, right);
     }
+    return left;
 }
 
-void Parser::logicAnd() {
-    equality();
-    logicAnd2();
+Expression* Parser::logicAnd() {
+    Expression* left = equality();
+    return logicAnd2(left);
 }
 
-void Parser::logicAnd2() {
+Expression* Parser::logicAnd2(Expression* left) {
     if (preanalysis->getName() == TokenName::AND) {
         match(TokenName::AND);
-        logicAnd();
+        Token* oper = dynamic_cast<Token *>(previous);
+        Expression* right = logicAnd();
+        return new ExprLogical(left, oper, right);
+    }
+    return left;
+}
+
+Expression* Parser::equality() {
+    Expression* left = comparison();
+    return equality2(left);
+}
+
+Expression* Parser::equality2(Expression* left) {
+    if(preanalysis->getName() == TokenName::BANG_EQUAL || preanalysis->getName() == TokenName::EQUAL_EQUAL){
+        match(preanalysis->getName());
+        Token *oper = dynamic_cast<Token *>(previous);
+        Expression* right = equality();
+        return new ExprRelational(left, oper, right);
+    }
+    return left;
+}
+
+Expression* Parser::comparison() {
+    Expression* left = term();
+    return comparison2(left);
+}
+
+Expression* Parser::comparison2(Expression* left) {
+    if(preanalysis->getName() == TokenName::GREATER || preanalysis->getName() == TokenName::GREATER_EQUAL ||
+            preanalysis->getName() == TokenName::LESS || preanalysis->getName() == TokenName::LESS_EQUAL){
+        match(preanalysis->getName());
+        Token* oper = dynamic_cast<Token *>(previous);
+        Expression* right = comparison();
+        return new ExprRelational(left, oper, right);
+    }
+    return left;
+}
+
+Expression* Parser::term() {
+    Expression* left = factor();
+    return term2(left);
+}
+
+Expression* Parser::term2(Expression* left) {
+    if(preanalysis->getName() == TokenName::MINUS || preanalysis->getName() == TokenName::PLUS){
+        match(preanalysis->getName());
+        Token* oper = dynamic_cast<Token *>(previous);
+        Expression* right = term();
+        return new ExprArithmetic(left, oper, right);
+    }
+    return left;
+}
+
+Expression* Parser::factor() {
+    Expression* expr = unary();
+    return factor2(expr);
+}
+
+Expression* Parser::factor2(Expression* left) {
+    if(preanalysis->getName() == TokenName::SLASH || preanalysis->getName() == TokenName::STAR ){
+        match(preanalysis->getName());
+        Token* oper = dynamic_cast<Token *>(previous);
+        Expression* rigth = factor();
+        return new ExprArithmetic(left, oper, rigth);
+    }
+    return left;
+}
+
+Expression* Parser::unary() {
+    if(preanalysis->getName() == TokenName::BANG || preanalysis->getName() == TokenName::MINUS){
+        match(preanalysis->getName());
+        Token *oper = dynamic_cast<Token *>(previous);
+        Expression* expr = unary();
+        return new ExprUnary(expr, oper);
+    }
+    else{
+        return call();
     }
 }
 
-void Parser::equality() {
-    comparison();
-    equality2();
-}
-
-void Parser::equality2() {
-    if(preanalysis->getName() == TokenName::BANG_EQUAL){
-        match(TokenName::BANG_EQUAL);
-        equality();
-    }
-    else if(preanalysis->getName() == TokenName::EQUAL_EQUAL){
-        match(TokenName::EQUAL_EQUAL);
-        equality();
-    }
-}
-
-void Parser::comparison() {
-    term();
-    comparison2();
-}
-
-void Parser::comparison2() {
-    if(preanalysis->getName() == TokenName::GREATER){
-        match(TokenName::GREATER);
-        comparison();
-    }
-    else if(preanalysis->getName() == TokenName::GREATER_EQUAL){
-        match(TokenName::GREATER_EQUAL);
-        comparison();
-    }
-    else if(preanalysis->getName() == TokenName::LESS){
-        match(TokenName::LESS);
-        comparison();
-    }
-    else if(preanalysis->getName() == TokenName::LESS_EQUAL){
-        match(TokenName::LESS_EQUAL);
-        comparison();
-    }
-}
-
-void Parser::term() {
-    factor();
-    term2();
-}
-
-void Parser::term2() {
-    if(preanalysis->getName() == TokenName::MINUS){
-        match(TokenName::MINUS);
-        term();
-    }
-    else if(preanalysis->getName() == TokenName::PLUS){
-        match(TokenName::PLUS);
-        term();
-    }
-}
-
-void Parser::factor() {
-    unary();
-    factor2();
-}
-
-void Parser::factor2() {
-    if(preanalysis->getName() == TokenName::SLASH){
-        match(TokenName::SLASH);
-        factor();
-    }
-    else if(preanalysis->getName() == TokenName::STAR){
-        match(TokenName::STAR);
-        factor();
-    }
-}
-
-void Parser::unary() {
-    if(preanalysis->getName() == TokenName::BANG){
-        match(TokenName::BANG);
-        unary();
-    }
-    else if(preanalysis->getName() == TokenName::MINUS){
-        match(TokenName::MINUS);
-        unary();
-    } else{
-        call();
-    }
-}
-
-void Parser::call() {
+Expression* Parser::call() {
     Expression* expression = primary();
-    call2();
+    return call2(expression);
 }
 
-void Parser::call2() {
+Expression* Parser::call2(Expression* expr) {
     if(preanalysis->getName() == TokenName::LEFT_PAREN){
         match(TokenName::LEFT_PAREN);
-        argumentsOptional();
-        call2();
+        std::list<Expression*> args = argumentsOptional();
+        Expression* exprCall = new ExprCallFunction(expr, args);
+        return call2(exprCall);
     }
     else if(preanalysis->getName() == TokenName::DOT){
         match(TokenName::DOT);
         match(TokenName::IDENTIFIER);
-        call2();
+        Token *name = dynamic_cast<Token *>(previous);
+        Expression* exprGet = new ExprGet(expr, name);
+        return call2(exprGet);
     }
+    return expr;
 }
 
 Expression* Parser::primary() {
@@ -504,7 +524,6 @@ Expression* Parser::primary() {
             return new ExprLiteral(std::get<int>(value));
         }
         else{
-            TDouble tdouble = TDouble(std::get<double>(value));
             return new ExprLiteral(std::get<double>(value));
         }
     }
@@ -514,19 +533,22 @@ Expression* Parser::primary() {
         return new ExprLiteral(t->getValue());
     }
     else if(preanalysis->getName() == TokenName::IDENTIFIER){
-        TToken* t = preanalysis;
+        Token* t = dynamic_cast<Token *>(preanalysis);
         match(TokenName::IDENTIFIER);
         return new ExprVariable(t);
     }
     else if(preanalysis->getName() == TokenName::LEFT_PAREN){
         match(TokenName::LEFT_PAREN);
-        expression();
+        Expression* expression1 = expression();
         match(TokenName::RIGHT_PAREN);
+        return new ExprGrouping(expression1);
     }
-    else if(preanalysis->getName() == TokenName::SUPER){
+    else if(preanalysis->getName() == TokenName::SUPER) {
         match(TokenName::SUPER);
         match(TokenName::DOT);
         match(TokenName::IDENTIFIER);
+        IdToken* t = dynamic_cast<IdToken *>(previous);
+        return new ExprSuper(t);
     }
     else{
         std::stringstream ss;
@@ -558,7 +580,7 @@ void Parser::parameters2() {
     }
 }
 
-void Parser::argumentsOptional() {
+std::list<Expression*> Parser::argumentsOptional() {
     switch (preanalysis->getName()) {
         case TokenName::BANG:
         case TokenName::MINUS:
@@ -573,6 +595,8 @@ void Parser::argumentsOptional() {
         case TokenName::THIS:
             expression();
             arguments();
+            std::list<Expression*> arguments;
+            return arguments;
             break;
     }
 }

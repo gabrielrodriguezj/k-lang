@@ -2,7 +2,14 @@
 
 ExprGet::ExprGet(Expression *object, Token *name) : object(object), name(name) {}
 
-std::variant<std::monostate, int, double, bool, std::string> ExprGet::solve() {
+Object ExprGet::solve() {
     // Not implemented yet
-    return 0;
+}
+
+Expression* ExprGet::getObject(){
+    return object;
+}
+
+Token* ExprGet::getName(){
+    return name;
 }

@@ -9,7 +9,7 @@ private:
     Expression* expression;
 public:
     ExprGrouping(Expression*);
-    std::variant<std::monostate, int, double, bool, std::string> solve() override;
+    Object solve() override;
 };
 
 

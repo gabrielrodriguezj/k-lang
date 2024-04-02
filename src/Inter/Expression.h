@@ -4,10 +4,11 @@
 
 #include <variant>
 #include <string>
+#include "Object.h"
 
 class Expression {
 public:
-    virtual std::variant<std::monostate, int, double, bool, std::string> solve() = 0;
+    virtual Object solve() = 0;
 };
 
 

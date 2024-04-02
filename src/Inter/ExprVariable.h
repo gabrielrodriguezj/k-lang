@@ -3,15 +3,16 @@
 
 
 #include "Expression.h"
-#include "../Token/TToken.h"
+#include "../Token/Token.h"
 
 class ExprVariable: public Expression{
 private:
-    TToken* name;
+    Token* name;
 public:
-    explicit ExprVariable(TToken *name);
+    explicit ExprVariable(Token *name);
 
-    std::variant<std::monostate, int, double, bool, std::string> solve() override;
+    Object solve() override;
+    Token* getName();
 };
 
 

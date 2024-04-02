@@ -10,7 +10,7 @@ private:
 public:
     ExprThis();
 
-    std::variant<std::monostate, int, double, bool, std::string> solve() override;
+    Object solve() override;
 };
 
 
