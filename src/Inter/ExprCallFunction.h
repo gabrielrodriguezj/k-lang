@@ -12,7 +12,7 @@ private:
 public:
     ExprCallFunction(Expression *callee, std::list<Expression> *arguments);
 
-    TType solve() override;
+    std::variant<std::monostate, int, double, bool, std::string> solve() override;
 };
 
 

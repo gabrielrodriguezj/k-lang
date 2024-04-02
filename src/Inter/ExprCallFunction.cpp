@@ -3,8 +3,8 @@
 ExprCallFunction::ExprCallFunction(Expression *callee, std::list<Expression> *arguments) : callee(callee),
                                                                                            arguments(arguments) {}
 
-TType ExprCallFunction::solve() {
+std::variant<std::monostate, int, double, bool, std::string> ExprCallFunction::solve() {
     // Not implemented yet
-    return TType();
+    return 0;
 }
 

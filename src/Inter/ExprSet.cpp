@@ -2,7 +2,7 @@
 
 ExprSet::ExprSet(Expression *object, Token *name, Expression *value) : object(object), name(name), value(value) {}
 
-TType ExprSet::solve() {
+std::variant<std::monostate, int, double, bool, std::string> ExprSet::solve() {
     //Not implemented yet
-    return TType();
+    return 0;
 }

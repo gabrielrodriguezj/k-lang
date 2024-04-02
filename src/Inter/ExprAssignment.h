@@ -12,7 +12,7 @@ private:
 public:
     ExprAssignment(Token *name, Expression *expression);
 
-    TType solve() override;
+    std::variant<std::monostate, int, double, bool, std::string> solve() override;
 };
 
 

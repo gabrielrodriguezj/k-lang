@@ -2,11 +2,12 @@
 #define K_LANG_EXPRESSION_H
 
 
-#include "Type/TType.h"
+#include <variant>
+#include <string>
 
 class Expression {
 public:
-    virtual TType solve() = 0;
+    virtual std::variant<std::monostate, int, double, bool, std::string> solve() = 0;
 };
 
 

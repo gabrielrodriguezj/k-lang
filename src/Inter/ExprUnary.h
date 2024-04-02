@@ -12,7 +12,7 @@ private:
 public:
     ExprUnary(Expression *left, Token *oper);
 
-    TType solve() override;
+    std::variant<std::monostate, int, double, bool, std::string> solve() override;
 };
 
 

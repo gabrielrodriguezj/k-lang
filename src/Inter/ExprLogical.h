@@ -13,7 +13,7 @@ private:
 public:
     ExprLogical(Expression *left, Token *oper, Expression *right);
 
-    TType solve() override;
+    std::variant<std::monostate, int, double, bool, std::string> solve() override;
 };
 
 

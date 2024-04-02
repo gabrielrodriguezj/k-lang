@@ -2,7 +2,7 @@
 
 ExprRelational::ExprRelational(Expression *left, Token *oper, Expression *right) : left(left), oper(oper), right(right) {}
 
-TType ExprRelational::solve() {
+std::variant<std::monostate, int, double, bool, std::string> ExprRelational::solve() {
     // Not implemented yet
-    return TType();
+    return 0;
 }

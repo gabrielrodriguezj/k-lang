@@ -2,7 +2,7 @@
 
 ExprUnary::ExprUnary(Expression *left, Token *oper) : left(left), oper(oper) {}
 
-TType ExprUnary::solve() {
+std::variant<std::monostate, int, double, bool, std::string> ExprUnary::solve() {
     // Not implemented yet
-    return TType();
+    return 0;
 }

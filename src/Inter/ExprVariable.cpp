@@ -2,7 +2,7 @@
 
 ExprVariable::ExprVariable(TToken *name) : name(name) {}
 
-TType ExprVariable::solve() {
+std::variant<std::monostate, int, double, bool, std::string> ExprVariable::solve() {
     // Not implemented yet
-    return TType();
+    return 0;
 }

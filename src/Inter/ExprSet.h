@@ -13,7 +13,7 @@ private:
 public:
     ExprSet(Expression *object, Token *name, Expression *value);
 
-    TType solve() override;
+    std::variant<std::monostate, int, double, bool, std::string> solve() override;
 };
 
 

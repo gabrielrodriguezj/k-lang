@@ -2,7 +2,7 @@
 
 ExprArithmetic::ExprArithmetic(Expression *left, Token *oper, Expression *right) : left(left), oper(oper), right(right) {}
 
-TType ExprArithmetic::solve() {
+std::variant<std::monostate, int, double, bool, std::string> ExprArithmetic::solve() {
     // Not implemented yet
-    return TType();
+    return 0;
 }

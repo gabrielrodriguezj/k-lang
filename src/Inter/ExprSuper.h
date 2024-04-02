@@ -12,7 +12,7 @@ private:
 public:
     explicit ExprSuper(Token *method);
 
-    TType solve() override;
+    std::variant<std::monostate, int, double, bool, std::string> solve() override;
 };
 
 

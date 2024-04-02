@@ -2,7 +2,7 @@
 
 ExprLogical::ExprLogical(Expression *left, Token *oper, Expression *right) : left(left), oper(oper), right(right) {}
 
-TType ExprLogical::solve() {
+std::variant<std::monostate, int, double, bool, std::string> ExprLogical::solve() {
     // Not implemented yet
-    return TType();
+    return 0;
 }

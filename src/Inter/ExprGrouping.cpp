@@ -2,6 +2,6 @@
 
 ExprGrouping::ExprGrouping(Expression* expression) : expression(expression){}
 
-TType ExprGrouping::solve() {
+std::variant<std::monostate, int, double, bool, std::string> ExprGrouping::solve() {
     return expression->solve();
 }

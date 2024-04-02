@@ -481,17 +481,15 @@ void Parser::call2() {
 Expression* Parser::primary() {
     if(preanalysis->getName() == TokenName::TRUE){
         match(TokenName::TRUE);
-        TBool tbool = TBool(true);
-        return new ExprLiteral(tbool);
+        return new ExprLiteral(true);
     }
     else if(preanalysis->getName() == TokenName::FALSE){
         match(TokenName::FALSE);
-        TBool tbool = TBool(true);
-        return new ExprLiteral(tbool);
+        return new ExprLiteral(false);
     }
     else if(preanalysis->getName() == TokenName::NULL_VALUE){
         match(TokenName::NULL_VALUE);
-        return new ExprLiteral(TNull());
+        return new ExprLiteral();
     }
     else if(preanalysis->getName() == TokenName::THIS){
         match(TokenName::THIS);
@@ -503,19 +501,17 @@ Expression* Parser::primary() {
 
         std::variant value = t->getValue();
         if (std::holds_alternative<int>(value)) {
-            TInteger tinteger = TInteger(std::get<int>(value));
-            return new ExprLiteral(tinteger);
+            return new ExprLiteral(std::get<int>(value));
         }
         else{
             TDouble tdouble = TDouble(std::get<double>(value));
-            return new ExprLiteral(tdouble);
+            return new ExprLiteral(std::get<double>(value));
         }
     }
     else if(preanalysis->getName() == TokenName::STRING){
         StringToken* t = dynamic_cast<StringToken *>(preanalysis);
         match(TokenName::STRING);
-        TString tstring = TString(t->getValue());
-        return new ExprLiteral(tstring);
+        return new ExprLiteral(t->getValue());
     }
     else if(preanalysis->getName() == TokenName::IDENTIFIER){
         TToken* t = preanalysis;

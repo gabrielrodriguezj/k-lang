@@ -11,7 +11,7 @@ private:
 public:
     explicit ExprVariable(TToken *name);
 
-    TType solve() override;
+    std::variant<std::monostate, int, double, bool, std::string> solve() override;
 };
 
 

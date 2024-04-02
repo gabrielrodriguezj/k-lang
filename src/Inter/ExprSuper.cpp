@@ -2,7 +2,7 @@
 
 ExprSuper::ExprSuper(Token *method) : method(method) {}
 
-TType ExprSuper::solve() {
+std::variant<std::monostate, int, double, bool, std::string> ExprSuper::solve() {
     // Not implemented yet
-    return TType();
+    return 0;
 }
