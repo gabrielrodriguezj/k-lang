@@ -71,8 +71,8 @@ private:
     std::list<IdToken*> parametersOptional();
     void parameters(std::list<IdToken*>);
     void parameters2(std::list<IdToken*>);
-    std::list<Expression*> argumentsOptional();
-    void arguments();
+    void argumentsOptional(std::list<Expression*>);
+    void arguments(std::list<Expression*>);
 public:
     explicit Parser(const std::string&);
     bool parse();

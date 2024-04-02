@@ -551,7 +551,8 @@ Expression* Parser::call() {
 Expression* Parser::call2(Expression* expr) {
     if(preanalysis->getName() == TokenName::LEFT_PAREN){
         match(TokenName::LEFT_PAREN);
-        std::list<Expression*> args = argumentsOptional();
+        std::list<Expression*> args;
+        argumentsOptional(args);
         Expression* exprCall = new ExprCallFunction(expr, args);
         return call2(exprCall);
     }
@@ -649,7 +650,7 @@ void Parser::parameters2(std::list<IdToken*> params) {
     }
 }
 
-std::list<Expression*> Parser::argumentsOptional() {
+void Parser::argumentsOptional(std::list<Expression*> args) {
     switch (preanalysis->getName()) {
         case TokenName::BANG:
         case TokenName::MINUS:
@@ -662,19 +663,16 @@ std::list<Expression*> Parser::argumentsOptional() {
         case TokenName::LEFT_PAREN:
         case TokenName::SUPER:
         case TokenName::THIS:
-            expression();
-            arguments();
-            std::list<Expression*> arguments;
-            return arguments;
+            Expression* argument = expression();
+            args.push_back(argument);
+            arguments(args);
             break;
     }
 }
 
-void Parser::arguments() {
+void Parser::arguments(std::list<Expression*> args) {
     if(preanalysis->getName() == TokenName::COMMA){
         match(TokenName::COMMA);
-        //expression();
-        //arguments();
-        argumentsOptional();
+        argumentsOptional(args);
     }
 }
