@@ -3,13 +3,13 @@
 
 
 #include "Expression.h"
-#include "../Token/Token.h"
+#include "../Token/TToken.h"
 
 class ExprVariable: public Expression{
 private:
-    Token* name;
+    TToken* name;
 public:
-    explicit ExprVariable(Token *name);
+    explicit ExprVariable(TToken *name);
 
     TType solve() override;
 };

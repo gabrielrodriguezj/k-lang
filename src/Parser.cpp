@@ -3,6 +3,17 @@
 #include "Scanner.h"
 #include "Token/TokenUtil.h"
 #include "Exceptions/ParserException.h"
+#include "Inter/ExprLiteral.h"
+#include "Inter/Type/TBool.h"
+#include "Inter/Type/TNull.h"
+#include "Inter/ExprThis.h"
+#include "Token/Token.h"
+#include "Token/NumberToken.h"
+#include "Inter/Type/TInteger.h"
+#include "Inter/Type/TDouble.h"
+#include "Token/StringToken.h"
+#include "Inter/Type/TString.h"
+#include "Inter/ExprVariable.h"
 
 Parser::Parser(const std::string& source) {
     scanner = new Scanner(source);
@@ -450,7 +461,7 @@ void Parser::unary() {
 }
 
 void Parser::call() {
-    primary();
+    Expression* expression = primary();
     call2();
 }
 
@@ -467,27 +478,49 @@ void Parser::call2() {
     }
 }
 
-void Parser::primary() {
+Expression* Parser::primary() {
     if(preanalysis->getName() == TokenName::TRUE){
         match(TokenName::TRUE);
+        TBool tbool = TBool(true);
+        return new ExprLiteral(tbool);
     }
     else if(preanalysis->getName() == TokenName::FALSE){
         match(TokenName::FALSE);
+        TBool tbool = TBool(true);
+        return new ExprLiteral(tbool);
     }
     else if(preanalysis->getName() == TokenName::NULL_VALUE){
         match(TokenName::NULL_VALUE);
+        return new ExprLiteral(TNull());
     }
     else if(preanalysis->getName() == TokenName::THIS){
         match(TokenName::THIS);
+        return new ExprThis();
     }
     else if(preanalysis->getName() == TokenName::NUMBER){
+        NumberToken* t = dynamic_cast<NumberToken *>(preanalysis);
         match(TokenName::NUMBER);
+
+        std::variant value = t->getValue();
+        if (std::holds_alternative<int>(value)) {
+            TInteger tinteger = TInteger(std::get<int>(value));
+            return new ExprLiteral(tinteger);
+        }
+        else{
+            TDouble tdouble = TDouble(std::get<double>(value));
+            return new ExprLiteral(tdouble);
+        }
     }
     else if(preanalysis->getName() == TokenName::STRING){
+        StringToken* t = dynamic_cast<StringToken *>(preanalysis);
         match(TokenName::STRING);
+        TString tstring = TString(t->getValue());
+        return new ExprLiteral(tstring);
     }
     else if(preanalysis->getName() == TokenName::IDENTIFIER){
+        TToken* t = preanalysis;
         match(TokenName::IDENTIFIER);
+        return new ExprVariable(t);
     }
     else if(preanalysis->getName() == TokenName::LEFT_PAREN){
         match(TokenName::LEFT_PAREN);

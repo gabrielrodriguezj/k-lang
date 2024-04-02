@@ -5,6 +5,7 @@
 #include <string>
 #include "Token/TToken.h"
 #include "Scanner.h"
+#include "Inter/Expression.h"
 
 class Parser {
 private:
@@ -57,7 +58,7 @@ private:
     void unary();
     void call();
     void call2();
-    void primary();
+    Expression* primary();
 
     //Auxiliary
     void parametersOptional();

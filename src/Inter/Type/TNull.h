@@ -4,7 +4,7 @@
 
 #include "TType.h"
 
-class TNull: TType{
+class TNull: public TType{
 public:
     TNull();
     void get();
