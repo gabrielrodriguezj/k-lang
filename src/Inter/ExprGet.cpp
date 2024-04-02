@@ -2,7 +2,7 @@
 
 ExprGet::ExprGet(Expression *object, Token *name) : object(object), name(name) {}
 
-Object ExprGet::solve() {
+TData ExprGet::solve() {
     // Not implemented yet
 }
 

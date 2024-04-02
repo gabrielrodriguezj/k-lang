@@ -11,7 +11,7 @@ private:
     Token* name;
 public:
     ExprGet(Expression *object, Token *name);
-    Object solve() override;
+    TData solve() override;
 
     Expression* getObject();
     Token* getName();

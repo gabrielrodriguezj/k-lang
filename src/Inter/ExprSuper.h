@@ -12,7 +12,7 @@ private:
 public:
     explicit ExprSuper(TToken *method);
 
-    Object solve() override;
+    TData solve() override;
 };
 
 

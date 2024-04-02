@@ -12,7 +12,7 @@ private:
 public:
     ExprAssignment(Token *name, Expression *expression);
 
-    Object solve() override;
+    TData solve() override;
 };
 
 

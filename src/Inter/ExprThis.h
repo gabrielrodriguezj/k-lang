@@ -10,7 +10,7 @@ private:
 public:
     ExprThis();
 
-    Object solve() override;
+    TData solve() override;
 };
 
 

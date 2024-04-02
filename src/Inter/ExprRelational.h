@@ -13,7 +13,7 @@ private:
 public:
     ExprRelational(Expression *left, Token *oper, Expression *right);
 
-    Object solve() override;
+    TData solve() override;
 };
 
 

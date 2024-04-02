@@ -9,7 +9,7 @@ private:
     Expression* expression;
 public:
     ExprGrouping(Expression*);
-    Object solve() override;
+    TData solve() override;
 };
 
 

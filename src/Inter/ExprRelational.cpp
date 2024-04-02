@@ -2,6 +2,6 @@
 
 ExprRelational::ExprRelational(Expression *left, Token *oper, Expression *right) : left(left), oper(oper), right(right) {}
 
-Object ExprRelational::solve() {
+TData ExprRelational::solve() {
     // Not implemented yet
 }

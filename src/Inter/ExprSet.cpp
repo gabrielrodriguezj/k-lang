@@ -2,6 +2,6 @@
 
 ExprSet::ExprSet(Expression *object, Token *name, Expression *value) : object(object), name(name), value(value) {}
 
-Object ExprSet::solve() {
+TData ExprSet::solve() {
     //Not implemented yet
 }

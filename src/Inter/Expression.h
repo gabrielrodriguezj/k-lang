@@ -4,11 +4,11 @@
 
 #include <variant>
 #include <string>
-#include "Object.h"
+#include "TData.h"
 
 class Expression {
 public:
-    virtual Object solve() = 0;
+    virtual TData solve() = 0;
 };
 
 

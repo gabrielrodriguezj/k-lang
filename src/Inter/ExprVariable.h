@@ -11,7 +11,7 @@ private:
 public:
     explicit ExprVariable(Token *name);
 
-    Object solve() override;
+    TData solve() override;
     Token* getName();
 };
 

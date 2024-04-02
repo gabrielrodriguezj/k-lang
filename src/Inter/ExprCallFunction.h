@@ -12,7 +12,7 @@ private:
 public:
     ExprCallFunction(Expression *callee, std::list<Expression*> arguments);
 
-    Object solve() override;
+    TData solve() override;
 };
 
 

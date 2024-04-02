@@ -2,7 +2,7 @@
 
 ExprAssignment::ExprAssignment(Token *name, Expression *expression) : name(name), expression(expression) {}
 
-Object ExprAssignment::solve() {
+TData ExprAssignment::solve() {
     // Not implemented yet
     return expression->solve();
 }

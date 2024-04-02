@@ -2,6 +2,6 @@
 
 ExprThis::ExprThis() {}
 
-Object ExprThis::solve() {
+TData ExprThis::solve() {
     // Not implemented yet
 }

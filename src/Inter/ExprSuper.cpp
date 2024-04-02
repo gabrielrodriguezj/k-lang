@@ -2,6 +2,6 @@
 
 ExprSuper::ExprSuper(TToken *method) : method(method) {}
 
-Object ExprSuper::solve() {
+TData ExprSuper::solve() {
     // Not implemented yet
 }

@@ -2,7 +2,7 @@
 
 ExprVariable::ExprVariable(Token *name) : name(name) {}
 
-Object ExprVariable::solve() {
+TData ExprVariable::solve() {
     // Not implemented yet
 }
 

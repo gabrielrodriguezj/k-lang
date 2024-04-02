@@ -2,6 +2,6 @@
 
 ExprUnary::ExprUnary(Expression *left, Token *oper) : left(left), oper(oper) {}
 
-Object ExprUnary::solve() {
+TData ExprUnary::solve() {
     // Not implemented yet
 }

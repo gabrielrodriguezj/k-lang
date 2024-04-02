@@ -12,7 +12,7 @@ private:
 public:
     ExprUnary(Expression *left, Token *oper);
 
-    Object solve() override;
+    TData solve() override;
 };
 
 

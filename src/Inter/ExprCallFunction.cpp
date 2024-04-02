@@ -3,7 +3,7 @@
 ExprCallFunction::ExprCallFunction(Expression *callee, std::list<Expression*> arguments) : callee(callee),
                                                                                            arguments(arguments) {}
 
-Object ExprCallFunction::solve() {
+TData ExprCallFunction::solve() {
     // Not implemented yet
 }
 
