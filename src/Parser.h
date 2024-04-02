@@ -11,6 +11,7 @@
 #include "Inter/ExprVariable.h"
 #include "Inter/StmtFunction.h"
 #include "Inter/StmtVariable.h"
+#include "StmtExpression.h"
 
 class Parser {
 private:
@@ -32,7 +33,7 @@ private:
 
     //Statements
     Statement* statement();
-    void expressionStatement();
+    StmtExpression* expressionStatement();
     void forStatement();
     void forStatement1();
     void forStatement2();

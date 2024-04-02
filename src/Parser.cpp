@@ -192,7 +192,7 @@ Statement* Parser::statement() {
         case TokenName::LEFT_PAREN:
         case TokenName::SUPER:
         case TokenName::THIS:
-            expressionStatement();
+            return expressionStatement();
             break;
         case TokenName::FOR:
             forStatement();
@@ -220,9 +220,10 @@ Statement* Parser::statement() {
     }
 }
 
-void Parser::expressionStatement() {
-    expression();
+StmtExpression* Parser::expressionStatement() {
+    Expression* expr = expression();
     match(TokenName::SEMICOLON);
+    return new StmtExpression(expr);
 }
 
 void Parser::forStatement() {
