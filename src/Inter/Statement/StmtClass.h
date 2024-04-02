@@ -3,12 +3,12 @@
 
 
 #include <list>
-#include "../Token/Token.h"
-#include "ExprVariable.h"
+#include "../../Token/Token.h"
+#include "../Expression/ExprVariable.h"
 #include "Statement.h"
 #include "StmtFunction.h"
 #include "StmtVariable.h"
-#include "../Token/IdToken.h"
+#include "../../Token/IdToken.h"
 
 class StmtClass: public Statement{
 private:

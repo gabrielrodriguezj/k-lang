@@ -6,11 +6,11 @@
 #include <list>
 #include "Token/TToken.h"
 #include "Scanner.h"
-#include "Inter/Expression.h"
-#include "Inter/Statement.h"
-#include "Inter/ExprVariable.h"
-#include "Inter/StmtFunction.h"
-#include "Inter/StmtVariable.h"
+#include "Inter/Expression/Expression.h"
+#include "Inter/Statement/Statement.h"
+#include "Inter/Expression/ExprVariable.h"
+#include "Inter/Statement/StmtFunction.h"
+#include "Inter/Statement/StmtVariable.h"
 #include "StmtExpression.h"
 
 class Parser {

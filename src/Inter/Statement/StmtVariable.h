@@ -3,8 +3,8 @@
 
 
 #include "Statement.h"
-#include "../Token/IdToken.h"
-#include "Expression.h"
+#include "../../Token/IdToken.h"
+#include "../Expression/Expression.h"
 
 class StmtVariable: public Statement{
 private:

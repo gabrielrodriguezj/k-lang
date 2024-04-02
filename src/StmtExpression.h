@@ -2,8 +2,8 @@
 #define K_LANG_STMTEXPRESSION_H
 
 
-#include "Inter/Statement.h"
-#include "Inter/Expression.h"
+#include "Inter/Statement/Statement.h"
+#include "Inter/Expression/Expression.h"
 
 class StmtExpression: public Statement{
 private:
