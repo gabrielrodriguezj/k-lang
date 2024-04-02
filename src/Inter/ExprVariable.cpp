@@ -1,11 +1,11 @@
 #include "ExprVariable.h"
 
-ExprVariable::ExprVariable(Token *name) : name(name) {}
+ExprVariable::ExprVariable(IdToken *name) : name(name) {}
 
 TData ExprVariable::solve() {
     // Not implemented yet
 }
 
-Token* ExprVariable::getName() {
+IdToken* ExprVariable::getName() {
     return name;
 }

@@ -19,6 +19,8 @@
 #include "Inter/ExprLogical.h"
 #include "Inter/ExprAssignment.h"
 #include "Inter/ExprSet.h"
+#include "Inter/Statement.h"
+#include "Inter/StmtClass.h"
 
 Parser::Parser(const std::string& source) {
     scanner = new Scanner(source);
@@ -57,22 +59,27 @@ void Parser::match(TokenName name) {
 // Declarations:
 
 void Parser::program() {
-    declaration();
+    std::list<Statement*> statements;
+    declaration(statements);
 }
 
-void Parser::declaration() {
+void Parser::declaration(std::list<Statement*> statements) {
+    Statement* stmt;
     switch (preanalysis->getName()) {
         case TokenName::CLASS:
-            classDeclaration();
-            declaration();
+            stmt = classDeclaration();
+            statements.push_back(stmt);
+            declaration(statements);
             break;
         case TokenName::FUN:
-            functionDeclaration();
-            declaration();
+            stmt = functionDeclaration();
+            statements.push_back(stmt);
+            declaration(statements);
             break;
         case TokenName::VAR:
-            variableDeclaration();
-            declaration();
+            stmt = variableDeclaration();
+            statements.push_back(stmt);
+            declaration(statements);
             break;
         case TokenName::FOR:
         case TokenName::IF:
@@ -91,66 +98,88 @@ void Parser::declaration() {
         case TokenName::LEFT_PAREN:
         case TokenName::SUPER:
         case TokenName::THIS:
-            statement();
-            declaration();
+            stmt = statement();
+            statements.push_back(stmt);
+            declaration(statements);
             break;
     }
 }
 
-void Parser::classDeclaration() {
+Statement* Parser::classDeclaration() {
+    std::list<StmtFunction*> methods;
+    std::list<StmtVariable*> variables;
+
     match(TokenName::CLASS);
     match(TokenName::IDENTIFIER);
-    classInheritance();
+    IdToken* name = dynamic_cast<IdToken *>(previous);
+    ExprVariable* superClass = classInheritance();
     match(TokenName::LEFT_BRACE);
-    classElement();
+    classElement(methods, variables);
     match(TokenName::RIGHT_BRACE);
+
+    return new StmtClass(name, superClass, methods, variables);
 }
 
-void Parser::classInheritance() {
+ExprVariable* Parser::classInheritance() {
     if(preanalysis->getName() == TokenName::EXTENDS){
         match(TokenName::EXTENDS);
         match(TokenName::IDENTIFIER);
+        IdToken* nameSuperClass = dynamic_cast<IdToken *>(previous);
+        return new ExprVariable(nameSuperClass);
     }
+    return nullptr;
 }
 
-void Parser::classElement() {
+void Parser::classElement(std::list<StmtFunction*> methods, std::list<StmtVariable*> variables) {
     if(preanalysis->getName() == TokenName::VAR){
-        variableDeclaration();
-        classElement();
+        StmtVariable* var = variableDeclaration();
+        variables.push_back(var);
+        classElement(methods, variables);
     }
     else if(preanalysis->getName() == TokenName::FUN){
-        functionDeclaration();
-        classElement();
+        StmtFunction* method = functionDeclaration();
+        methods.push_back(method);
+        classElement(methods, variables);
     }
 }
 
-void Parser::functionDeclaration() {
+StmtFunction* Parser::functionDeclaration() {
     match(TokenName::FUN);
     match(TokenName::IDENTIFIER);
+    IdToken* name = dynamic_cast<IdToken *>(previous);
+
     match(TokenName::LEFT_PAREN);
-    parametersOptional();
+    std::list<IdToken*> params = parametersOptional();
     match(TokenName::RIGHT_PAREN);
-    block();
+    StmtBlock* stmtBlock = block();
+
+    return new StmtFunction(name, params, stmtBlock);
 }
 
-void Parser::variableDeclaration() {
+StmtVariable* Parser::variableDeclaration() {
     match(TokenName::VAR);
     match(TokenName::IDENTIFIER);
-    variableInitialization();
+    IdToken* name = dynamic_cast<IdToken *>(previous);
+
+    Expression* initialization = variableInitialization();
     match(TokenName::SEMICOLON);
+
+    return new StmtVariable(name, initialization);
 }
 
-void Parser::variableInitialization() {
+Expression* Parser::variableInitialization() {
     if(preanalysis->getName()==TokenName::EQUAL){
         match(TokenName::EQUAL);
         Expression* expr = expression();
-        int a = 0;
+        return expr;
     }
+
+    return nullptr;
 }
 
 // Statements:
 
-void Parser::statement() {
+Statement* Parser::statement() {
     switch (preanalysis->getName()) {
         case TokenName::BANG:
         case TokenName::MINUS:
@@ -334,10 +363,12 @@ void Parser::whileStatement() {
     statement();
 }
 
-void Parser::block() {
+StmtBlock* Parser::block() {
     match(TokenName::LEFT_BRACE);
-    declaration();
+    std::list<Statement*> statements;
+    declaration(statements);
     match(TokenName::RIGHT_BRACE);
+    return new StmtBlock(statements);
 }
 
 // Expressions:
@@ -357,7 +388,7 @@ Expression* Parser::assignamentOptional(Expression* izq) {
         Expression* value = expression();
 
         if(dynamic_cast<ExprVariable*>(izq)){
-            Token* name = (dynamic_cast<ExprVariable*>(izq))->getName();
+            IdToken* name = (dynamic_cast<ExprVariable*>(izq))->getName();
             return new ExprAssignment(name, value);
         }
         else if(dynamic_cast<ExprGet*>(izq)){
@@ -533,7 +564,7 @@ Expression* Parser::primary() {
         return new ExprLiteral(t->getValue());
     }
     else if(preanalysis->getName() == TokenName::IDENTIFIER){
-        Token* t = dynamic_cast<Token *>(preanalysis);
+        IdToken* t = dynamic_cast<IdToken *>(preanalysis);
         match(TokenName::IDENTIFIER);
         return new ExprVariable(t);
     }
@@ -560,23 +591,25 @@ Expression* Parser::primary() {
 
 // Auxiliary:
 
-void Parser::parametersOptional() {
+std::list<IdToken*> Parser::parametersOptional() {
+    std::list<IdToken*> params;
     if(preanalysis->getName() == TokenName::IDENTIFIER){
-        parameters();
+        parameters(params);
     }
+    return params;
 }
 
-void Parser::parameters() {
+void Parser::parameters(std::list<IdToken*> params) {
     match(TokenName::IDENTIFIER);
-    parameters2();
+    IdToken* name = dynamic_cast<IdToken *>(previous);
+    params.push_back(name);
+    parameters2(params);
 }
 
-void Parser::parameters2() {
+void Parser::parameters2(std::list<IdToken*> params) {
     if(preanalysis->getName() == TokenName::COMMA){
         match(TokenName::COMMA);
-        //match(TokenName::IDENTIFIER);
-        //parameters2();
-        parameters();
+        parameters(params);
     }
 }
 

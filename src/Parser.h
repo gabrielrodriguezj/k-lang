@@ -7,6 +7,10 @@
 #include "Token/TToken.h"
 #include "Scanner.h"
 #include "Inter/Expression.h"
+#include "Inter/Statement.h"
+#include "Inter/ExprVariable.h"
+#include "Inter/StmtFunction.h"
+#include "Inter/StmtVariable.h"
 
 class Parser {
 private:
@@ -18,16 +22,16 @@ private:
 
     //Declarations:
     void program();
-    void declaration();
-    void classDeclaration();
-    void classInheritance();
-    void classElement();
-    void functionDeclaration();
-    void variableDeclaration();
-    void variableInitialization();
+    void declaration(std::list<Statement*>);
+    Statement* classDeclaration();
+    ExprVariable* classInheritance();
+    void classElement(std::list<StmtFunction*>, std::list<StmtVariable*>);
+    StmtFunction* functionDeclaration();
+    StmtVariable* variableDeclaration();
+    Expression* variableInitialization();
 
     //Statements
-    void statement();
+    Statement* statement();
     void expressionStatement();
     void forStatement();
     void forStatement1();
@@ -39,14 +43,14 @@ private:
     void returnStatement();
     void returnExpressionOptional();
     void whileStatement();
-    void block();
+    StmtBlock* block();
 
     //Expressions
     Expression* expression();
     Expression* assignament();
     Expression* assignamentOptional(Expression*);
-    Expression*  logicOr();
-    Expression*  logicOr2(Expression*);
+    Expression* logicOr();
+    Expression* logicOr2(Expression*);
     Expression* logicAnd();
     Expression* logicAnd2(Expression*);
     Expression* equality();
@@ -63,9 +67,9 @@ private:
     Expression* primary();
 
     //Auxiliary
-    void parametersOptional();
-    void parameters();
-    void parameters2();
+    std::list<IdToken*> parametersOptional();
+    void parameters(std::list<IdToken*>);
+    void parameters2(std::list<IdToken*>);
     std::list<Expression*> argumentsOptional();
     void arguments();
 public:

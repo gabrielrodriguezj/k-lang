@@ -4,13 +4,14 @@
 
 #include "../Token/Token.h"
 #include "Expression.h"
+#include "../Token/IdToken.h"
 
 class ExprAssignment: public Expression{
 private:
-    Token* name;
+    IdToken* name;
     Expression* expression;
 public:
-    ExprAssignment(Token *name, Expression *expression);
+    ExprAssignment(IdToken *name, Expression *expression);
 
     TData solve() override;
 };
