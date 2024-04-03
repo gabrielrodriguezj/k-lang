@@ -21,5 +21,5 @@ void StmtIf::execute(Environment* environment) {
     if(elseBranch != nullptr){
         elseBranch->execute(environment);
     }
-    
+
 }
