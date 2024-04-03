@@ -49,7 +49,11 @@ void ejecutar(std::string source){
         bool res = parser.parse();
 
         if(res){
-            std::cout << "Programa valido";
+            Environment* globalEnvironment = new Environment(nullptr);
+            std::list<Statement*> statements = parser.getStatements();
+            for(Statement* statement : statements){
+                statement->execute(globalEnvironment);
+            }
         }
     }
     catch (ParserException e){
