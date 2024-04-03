@@ -17,7 +17,7 @@ TData* Environment::get(IdToken* name ) {
 
     std::stringstream ss;
     ss << "Variable '" << name->getIdentifier() << "' no definida";
-    throw new RuntimeException(ss.str());
+    throw RuntimeException(ss.str());
 }
 
 void Environment::assign(IdToken* name, TData* value) {
@@ -35,7 +35,7 @@ void Environment::assign(IdToken* name, TData* value) {
 
     std::stringstream ss;
     ss << "Variable '" << name->getIdentifier() << "' no definida";
-    throw new RuntimeException(ss.str());
+    throw RuntimeException(ss.str());
 }
 
 void Environment::define(IdToken* name, TData* value) {
@@ -47,5 +47,5 @@ void Environment::define(IdToken* name, TData* value) {
 
     std::stringstream ss;
     ss << "Variable '" << name->getIdentifier() << "' ya se encuentra definida";
-    throw new RuntimeException(ss.str());
+    throw RuntimeException(ss.str());
 }

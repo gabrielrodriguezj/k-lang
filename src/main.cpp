@@ -4,6 +4,7 @@
 #include "Parser.h"
 #include "Exceptions/ParserException.h"
 #include "Exceptions/ScannerException.h"
+#include "Exceptions/RuntimeException.h"
 
 void ejecutarArchivo(std::string path);
 void repl();
@@ -60,6 +61,9 @@ void ejecutar(std::string source){
         std::cout<< e.what();
     }
     catch (ScannerException e){
+        std::cout<< e.what();
+    }
+    catch (RuntimeException e){
         std::cout<< e.what();
     }
 }
