@@ -1,8 +1,9 @@
 #include "ExprAssignment.h"
-#include "../../Exceptions/NotImplementedYetException.h"
 
 ExprAssignment::ExprAssignment(IdToken *name, Expression *expression) : name(name), expression(expression) {}
 
 TData ExprAssignment::solve(Environment* environment) {
-    throw NotImplementedYetException("Not implemented yet");
+    TData value = expression->solve(environment);
+    environment->assign(name, value);
+    return TData();
 }
