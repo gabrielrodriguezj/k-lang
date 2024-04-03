@@ -1,7 +1,8 @@
 #include "ExprSuper.h"
+#include "../../Exceptions/NotImplementedYetException.h"
 
 ExprSuper::ExprSuper(TToken *method) : method(method) {}
 
 TData ExprSuper::solve(Environment* environment) {
-    // Not implemented yet
+    throw NotImplementedYetException("Not implemented yet");
 }

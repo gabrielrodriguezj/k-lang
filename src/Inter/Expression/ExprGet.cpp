@@ -1,9 +1,10 @@
 #include "ExprGet.h"
+#include "../../Exceptions/NotImplementedYetException.h"
 
 ExprGet::ExprGet(Expression *object, Token *name) : object(object), name(name) {}
 
 TData ExprGet::solve(Environment* environment) {
-    // Not implemented yet
+    throw NotImplementedYetException("Not implemented yet");
 }
 
 Expression* ExprGet::getObject(){

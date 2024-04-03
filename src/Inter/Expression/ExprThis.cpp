@@ -1,7 +1,8 @@
 #include "ExprThis.h"
+#include "../../Exceptions/NotImplementedYetException.h"
 
 ExprThis::ExprThis() {}
 
 TData ExprThis::solve(Environment* environment) {
-    // Not implemented yet
+    throw NotImplementedYetException("Not implemented yet");
 }
