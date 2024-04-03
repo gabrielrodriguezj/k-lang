@@ -3,7 +3,7 @@
 ExprVariable::ExprVariable(IdToken *name) : name(name) {}
 
 TData ExprVariable::solve(Environment* environment) {
-    // Not implemented yet
+    return *environment->get(name);
 }
 
 IdToken* ExprVariable::getName() {
