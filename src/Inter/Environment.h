@@ -10,12 +10,12 @@
 class Environment {
 private:
     Environment* enclosing{};
-    std::map<std::string, TData*> values;
+    std::map<std::string, TData> values;
 public:
     explicit Environment(Environment *enclosing);
-    TData* get(IdToken*);
-    void assign(IdToken*, TData*);
-    void define(IdToken*, TData*);
+    TData get(IdToken*);
+    void assign(IdToken*, TData);
+    void define(IdToken*, TData);
 };
 
 

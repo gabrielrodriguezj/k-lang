@@ -4,10 +4,11 @@
 
 Environment::Environment(Environment *enclosing) : enclosing(enclosing) {}
 
-TData* Environment::get(IdToken* name ) {
+TData Environment::get(IdToken* name ) {
     // check if key is present
     if(values.find(name->getIdentifier()) != values.end()){
-        return values.at(name->getIdentifier());
+        TData data= values[name->getIdentifier()];
+        return data;
     }
 
     // uso del enclosing para usar variables declaradas en un "scope" previo
@@ -20,7 +21,7 @@ TData* Environment::get(IdToken* name ) {
     throw RuntimeException(ss.str());
 }
 
-void Environment::assign(IdToken* name, TData* value) {
+void Environment::assign(IdToken* name, TData value) {
     // check if key is present
     if (values.find(name->getIdentifier()) != values.end()) {
         values[name->getIdentifier()] = value;
@@ -38,7 +39,7 @@ void Environment::assign(IdToken* name, TData* value) {
     throw RuntimeException(ss.str());
 }
 
-void Environment::define(IdToken* name, TData* value) {
+void Environment::define(IdToken* name, TData value) {
     // check if key is not present
     if (values.find(name->getIdentifier()) == values.end()) {
         values[name->getIdentifier()] = value;
