@@ -3,6 +3,10 @@
 
 TData::TData(const std::variant<std::monostate, int, double, bool, std::string> &value) : value(value) {}
 
+TData::TData() {
+    value = {};
+}
+
 std::variant<std::monostate, int, double, bool, std::string> TData::getValue() {
     return value;
 }

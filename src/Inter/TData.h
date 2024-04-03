@@ -10,6 +10,7 @@ private:
     std::variant<std::monostate, int, double, bool, std::string> value;
 public:
     explicit TData(const std::variant<std::monostate, int, double, bool, std::string> &value);
+    explicit TData();
     std::variant<std::monostate, int, double, bool, std::string> getValue();
 
     // Sobrecarga de operadores
