@@ -3,5 +3,14 @@
 ExprLogical::ExprLogical(Expression *left, Token *oper, Expression *right) : left(left), oper(oper), right(right) {}
 
 TData ExprLogical::solve(Environment* environment) {
-    // Not implemented yet
+    TData valueLeft = left->solve(environment);
+    TData valueRight = right->solve(environment);
+
+    if(oper->getName() == TokenName::OR){
+        return valueLeft || valueRight;
+    }
+
+    if(oper->getName() == TokenName::AND){
+        return valueLeft && valueRight;
+    }
 }

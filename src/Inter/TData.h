@@ -13,10 +13,23 @@ public:
     std::variant<std::monostate, int, double, bool, std::string> getValue();
 
     // Sobrecarga de operadores
+    TData operator - ();
+    TData operator ! ();
+
     TData operator + (TData&);
     TData operator - (TData&);
     TData operator * (TData&);
     TData operator / (TData&);
+
+    TData operator < (TData&);
+    TData operator <= (TData&);
+    TData operator > (TData&);
+    TData operator >= (TData&);
+    TData operator != (TData&);
+    TData operator == (TData&);
+
+    TData operator || (TData&);
+    TData operator && (TData&);
 };
 
 
