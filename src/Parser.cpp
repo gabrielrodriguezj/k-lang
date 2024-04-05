@@ -558,6 +558,11 @@ Expression* Parser::call2(Expression* expr) {
         match(TokenName::LEFT_PAREN);
         std::list<Expression*> args;
         argumentsOptional(args);
+
+        if(args.size() > 255){
+            throw new ParserException("Error. La funcion no puede tener mas de 255 argumentos");
+        }
+
         Expression* exprCall = new ExprCallFunction(expr, args);
         return call2(exprCall);
     }
