@@ -17,9 +17,7 @@ public:
 
     TData call(Environment *environment, std::vector<TData> arguments) override;
 
-    //public String toString() {
-    //    return "<fn " + declaration.name.lexeme + ">";
-    //  }
+    std::string toString();
 };
 
 

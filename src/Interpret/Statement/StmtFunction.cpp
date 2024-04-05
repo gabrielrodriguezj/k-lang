@@ -18,3 +18,7 @@ std::vector<IdToken *> StmtFunction::getParams() {
 StmtBlock* StmtFunction::getBody(){
     return body;
 }
+
+IdToken* StmtFunction::getName(){
+    return name;
+}

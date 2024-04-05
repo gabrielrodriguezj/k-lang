@@ -17,6 +17,7 @@ public:
     void execute(Environment*) override;
     std::vector<IdToken*> getParams();
     StmtBlock* getBody();
+    IdToken* getName();
 };
 
 

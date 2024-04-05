@@ -37,3 +37,7 @@ TData KFunction::call(Environment* environment, std::vector<TData> arguments) {
 
     return TData();
 }
+
+std::string KFunction::toString() {
+    return "<fn " + declaration->getName()->getIdentifier() + ">";
+}

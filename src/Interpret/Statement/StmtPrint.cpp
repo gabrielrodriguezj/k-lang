@@ -1,4 +1,5 @@
 #include "StmtPrint.h"
+#include "../KFunction.h"
 
 StmtPrint::StmtPrint(Expression *expression) : expression(expression) {}
 
@@ -21,5 +22,12 @@ void StmtPrint::execute(Environment* environment) {
     }
     else if (std::holds_alternative<std::string>(value)) {
         std::cout<<std::get<std::string>(value)<<std::endl;
+    }
+    else if (std::holds_alternative<KCallable*>(value)) {
+        KCallable *callable = std::get<KCallable*>(value) ;
+        if(dynamic_cast<KFunction*>(callable)){
+            KFunction *function = dynamic_cast<KFunction*>(callable);
+            std::cout<<function->toString()<<std::endl;
+        }
     }
 }
