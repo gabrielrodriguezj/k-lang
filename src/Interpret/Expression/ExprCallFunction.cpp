@@ -17,7 +17,7 @@ TData ExprCallFunction::solve(Environment* environment) {
 
     // Check if it's callable
     if (!std::holds_alternative<KCallable*>(calleeResult.getValue()) ) {
-        throw new RuntimeException("La expresion no corresponde a una llamada valida.");
+        throw RuntimeException("La expresion no corresponde a una llamada valida.");
     }
     KCallable *function = std::get<KCallable*>(calleeResult.getValue());
 
