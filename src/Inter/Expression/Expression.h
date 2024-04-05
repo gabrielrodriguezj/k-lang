@@ -7,6 +7,9 @@
 #include "../TData.h"
 #include "../Environment.h"
 
+class TData;
+class Environment;
+
 class Expression {
 public:
     virtual TData solve(Environment*) = 0;

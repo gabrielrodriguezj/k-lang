@@ -7,6 +7,9 @@
 #include "Expression/Expression.h"
 #include "Statement/Statement.h"
 
+class Expression;
+class Statement;
+
 class Interpreter {
 private:
     Environment* globals;

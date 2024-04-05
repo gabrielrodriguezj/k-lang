@@ -4,8 +4,10 @@
 
 #include <string>
 #include <map>
-#include "TData.h"
 #include "../Token/IdToken.h"
+#include "TData.h"
+
+class TData;
 
 class Environment {
 private:

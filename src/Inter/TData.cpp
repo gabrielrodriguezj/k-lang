@@ -1,13 +1,13 @@
 #include "TData.h"
 #include "../Exceptions/RuntimeException.h"
 
-TData::TData(const std::variant<std::monostate, int, double, bool, std::string> &value) : value(value) {}
+TData::TData(const std::variant<std::monostate, int, double, bool, std::string, KCallable*> &value) : value(value) {}
 
 TData::TData() {
     value = {};
 }
 
-std::variant<std::monostate, int, double, bool, std::string> TData::getValue() {
+std::variant<std::monostate, int, double, bool, std::string, KCallable*> TData::getValue() {
     return value;
 }
 
@@ -46,7 +46,7 @@ TData TData::operator+(TData &other) {
         int res = lvalue + rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<int>(value) && std::holds_alternative<double>(rightValue)) {
+    if (std::holds_alternative<int>(value) && std::holds_alternative<double>(rightValue)) {
         int lvalue = std::get<int>(value);
         double rvalue = std::get<double>(rightValue);
         double res = lvalue + rvalue;
@@ -58,13 +58,13 @@ TData TData::operator+(TData &other) {
         double res = lvalue + rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<double>(value) && std::holds_alternative<double>(rightValue)) {
+    if (std::holds_alternative<double>(value) && std::holds_alternative<double>(rightValue)) {
         double lvalue = std::get<double>(value);
         double rvalue = std::get<double>(rightValue);
         double res = lvalue + rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<std::string>(value) && std::holds_alternative<std::string>(rightValue)) {
+    if (std::holds_alternative<std::string>(value) && std::holds_alternative<std::string>(rightValue)) {
         std::string lvalue = std::get<std::string>(value);
         std::string rvalue = std::get<std::string>(rightValue);
         std::string res = lvalue + rvalue;
@@ -83,19 +83,19 @@ TData TData::operator-(TData &other) {
         int res = lvalue - rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<int>(value) && std::holds_alternative<double>(rightValue)) {
+    if (std::holds_alternative<int>(value) && std::holds_alternative<double>(rightValue)) {
         int lvalue = std::get<int>(value);
         double rvalue = std::get<double>(rightValue);
         double res = lvalue - rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<double>(value) && std::holds_alternative<int>(rightValue)) {
+    if (std::holds_alternative<double>(value) && std::holds_alternative<int>(rightValue)) {
         double lvalue = std::get<double>(value);
         int rvalue = std::get<int>(rightValue);
         double res = lvalue - rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<double>(value) && std::holds_alternative<double>(rightValue)) {
+    if (std::holds_alternative<double>(value) && std::holds_alternative<double>(rightValue)) {
         double lvalue = std::get<double>(value);
         double rvalue = std::get<double>(rightValue);
         double res = lvalue - rvalue;
@@ -114,19 +114,19 @@ TData TData::operator*(TData &other) {
         int res = lvalue * rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<int>(value) && std::holds_alternative<double>(rightValue)) {
+    if (std::holds_alternative<int>(value) && std::holds_alternative<double>(rightValue)) {
         int lvalue = std::get<int>(value);
         double rvalue = std::get<double>(rightValue);
         double res = lvalue * rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<double>(value) && std::holds_alternative<int>(rightValue)) {
+    if (std::holds_alternative<double>(value) && std::holds_alternative<int>(rightValue)) {
         double lvalue = std::get<double>(value);
         int rvalue = std::get<int>(rightValue);
         double res = lvalue * rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<double>(value) && std::holds_alternative<double>(rightValue)) {
+    if (std::holds_alternative<double>(value) && std::holds_alternative<double>(rightValue)) {
         double lvalue = std::get<double>(value);
         double rvalue = std::get<double>(rightValue);
         double res = lvalue * rvalue;
@@ -150,7 +150,7 @@ TData TData::operator/(TData &other) {
         int res = lvalue / rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<int>(value) && std::holds_alternative<double>(rightValue)) {
+    if (std::holds_alternative<int>(value) && std::holds_alternative<double>(rightValue)) {
         int lvalue = std::get<int>(value);
         double rvalue = std::get<double>(rightValue);
 
@@ -161,7 +161,7 @@ TData TData::operator/(TData &other) {
         double res = lvalue / rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<double>(value) && std::holds_alternative<int>(rightValue)) {
+    if (std::holds_alternative<double>(value) && std::holds_alternative<int>(rightValue)) {
         double lvalue = std::get<double>(value);
         int rvalue = std::get<int>(rightValue);
 
@@ -172,7 +172,7 @@ TData TData::operator/(TData &other) {
         double res = lvalue / rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<double>(value) && std::holds_alternative<double>(rightValue)) {
+    if (std::holds_alternative<double>(value) && std::holds_alternative<double>(rightValue)) {
         double lvalue = std::get<double>(value);
         double rvalue = std::get<double>(rightValue);
 
@@ -196,19 +196,19 @@ TData TData::operator<(TData &other) {
         bool res = lvalue < rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<int>(value) && std::holds_alternative<double>(rightValue)) {
+    if (std::holds_alternative<int>(value) && std::holds_alternative<double>(rightValue)) {
         int lvalue = std::get<int>(value);
         double rvalue = std::get<double>(rightValue);
         bool res = lvalue < rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<double>(value) && std::holds_alternative<int>(rightValue)) {
+    if (std::holds_alternative<double>(value) && std::holds_alternative<int>(rightValue)) {
         double lvalue = std::get<double>(value);
         int rvalue = std::get<int>(rightValue);
         bool res = lvalue < rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<double>(value) && std::holds_alternative<double>(rightValue)) {
+    if (std::holds_alternative<double>(value) && std::holds_alternative<double>(rightValue)) {
         double lvalue = std::get<double>(value);
         double rvalue = std::get<double>(rightValue);
         bool res = lvalue < rvalue;
@@ -227,19 +227,19 @@ TData TData::operator<=(TData &other) {
         bool res = lvalue <= rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<int>(value) && std::holds_alternative<double>(rightValue)) {
+    if (std::holds_alternative<int>(value) && std::holds_alternative<double>(rightValue)) {
         int lvalue = std::get<int>(value);
         double rvalue = std::get<double>(rightValue);
         bool res = lvalue <= rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<double>(value) && std::holds_alternative<int>(rightValue)) {
+    if (std::holds_alternative<double>(value) && std::holds_alternative<int>(rightValue)) {
         double lvalue = std::get<double>(value);
         int rvalue = std::get<int>(rightValue);
         bool res = lvalue <= rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<double>(value) && std::holds_alternative<double>(rightValue)) {
+    if (std::holds_alternative<double>(value) && std::holds_alternative<double>(rightValue)) {
         double lvalue = std::get<double>(value);
         double rvalue = std::get<double>(rightValue);
         bool res = lvalue <= rvalue;
@@ -258,19 +258,19 @@ TData TData::operator>(TData &other) {
         bool res = lvalue > rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<int>(value) && std::holds_alternative<double>(rightValue)) {
+    if (std::holds_alternative<int>(value) && std::holds_alternative<double>(rightValue)) {
         int lvalue = std::get<int>(value);
         double rvalue = std::get<double>(rightValue);
         bool res = lvalue > rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<double>(value) && std::holds_alternative<int>(rightValue)) {
+    if (std::holds_alternative<double>(value) && std::holds_alternative<int>(rightValue)) {
         double lvalue = std::get<double>(value);
         int rvalue = std::get<int>(rightValue);
         bool res = lvalue > rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<double>(value) && std::holds_alternative<double>(rightValue)) {
+    if (std::holds_alternative<double>(value) && std::holds_alternative<double>(rightValue)) {
         double lvalue = std::get<double>(value);
         double rvalue = std::get<double>(rightValue);
         bool res = lvalue > rvalue;
@@ -289,19 +289,19 @@ TData TData::operator>=(TData &other) {
         bool res = lvalue >= rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<int>(value) && std::holds_alternative<double>(rightValue)) {
+    if (std::holds_alternative<int>(value) && std::holds_alternative<double>(rightValue)) {
         int lvalue = std::get<int>(value);
         double rvalue = std::get<double>(rightValue);
         bool res = lvalue >= rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<double>(value) && std::holds_alternative<int>(rightValue)) {
+    if (std::holds_alternative<double>(value) && std::holds_alternative<int>(rightValue)) {
         double lvalue = std::get<double>(value);
         int rvalue = std::get<int>(rightValue);
         bool res = lvalue >= rvalue;
         return TData(res);
     }
-    else if (std::holds_alternative<double>(value) && std::holds_alternative<double>(rightValue)) {
+    if (std::holds_alternative<double>(value) && std::holds_alternative<double>(rightValue)) {
         double lvalue = std::get<double>(value);
         double rvalue = std::get<double>(rightValue);
         bool res = lvalue >= rvalue;

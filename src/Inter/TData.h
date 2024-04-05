@@ -4,14 +4,15 @@
 
 #include <variant>
 #include <string>
+#include "KCallable.h"
 
 class TData {
 private:
-    std::variant<std::monostate, int, double, bool, std::string> value;
+    std::variant<std::monostate, int, double, bool, std::string, KCallable*> value;
 public:
-    explicit TData(const std::variant<std::monostate, int, double, bool, std::string> &value);
+    explicit TData(const std::variant<std::monostate, int, double, bool, std::string, KCallable*> &value);
     explicit TData();
-    std::variant<std::monostate, int, double, bool, std::string> getValue();
+    std::variant<std::monostate, int, double, bool, std::string, KCallable*> getValue();
 
     // Sobrecarga de operadores
     TData operator - ();
