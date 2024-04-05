@@ -10,12 +10,16 @@ private:
     Environment closure;
     bool isInitializer;
 public:
-    KFunction(StmtFunction *declaration, const Environment &closure, bool isInitializer);
+    KFunction(StmtFunction *declaration, Environment *closure, bool isInitializer);
     KFunction* bind();
 
     int arity() override;
 
     TData call(Environment *environment, std::vector<TData> arguments) override;
+
+    //public String toString() {
+    //    return "<fn " + declaration.name.lexeme + ">";
+    //  }
 };
 
 

@@ -16,6 +16,7 @@ public:
     StmtFunction(IdToken *name, const std::vector<IdToken *> &params, StmtBlock *body);
     void execute(Environment*) override;
     std::vector<IdToken*> getParams();
+    StmtBlock* getBody();
 };
 
 

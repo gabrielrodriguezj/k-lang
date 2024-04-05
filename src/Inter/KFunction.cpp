@@ -1,6 +1,6 @@
 #include "KFunction.h"
 
-KFunction::KFunction(StmtFunction *declaration, const Environment &closure, bool isInitializer) : declaration(
+KFunction::KFunction(StmtFunction *declaration, Environment *closure, bool isInitializer) : declaration(
         declaration), closure(closure), isInitializer(isInitializer) {}
 
 int KFunction::arity() {
@@ -14,6 +14,19 @@ TData KFunction::call(Environment* environment, std::vector<TData> arguments) {
     for (int i = 0; i < declaration->getParams().size(); i++) {
         localEenvironment->define(declaration->getParams().at(i), arguments.at(i));
     }
+
+    declaration->getBody()->execute(localEenvironment);
+    // Pendiente atrapar el return;
+
+    /*try {
+        interpreter.executeBlock(declaration.body, environment);
+    } catch (Return returnValue) {
+        if (isInitializer) return closure.getAt(0, "this");
+        return returnValue.value;
+    }
+
+    if (isInitializer) return closure.getAt(0, "this");
+    return null;*/
 
     return TData();
 }
