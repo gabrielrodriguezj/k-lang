@@ -566,7 +566,9 @@ Expression* Parser::call2(Expression* expr) {
 
         match(TokenName::RIGHT_PAREN);
 
-        Expression* exprCall = new ExprCallFunction(expr, args);
+        Token* paren = dynamic_cast<Token *>(previous);
+
+        Expression* exprCall = new ExprCallFunction(expr, paren, args);
         return call2(exprCall);
     }
     else if(preanalysis->getName() == TokenName::DOT){
@@ -594,7 +596,8 @@ Expression* Parser::primary() {
     }
     else if(preanalysis->getName() == TokenName::THIS){
         match(TokenName::THIS);
-        return new ExprThis();
+        Token *keyword = dynamic_cast<Token *>(previous);
+        return new ExprThis(keyword);
     }
     else if(preanalysis->getName() == TokenName::NUMBER){
         NumberToken* t = dynamic_cast<NumberToken *>(preanalysis);
@@ -626,10 +629,11 @@ Expression* Parser::primary() {
     }
     else if(preanalysis->getName() == TokenName::SUPER) {
         match(TokenName::SUPER);
+        Token *keyword = dynamic_cast<Token *>(previous);
         match(TokenName::DOT);
         match(TokenName::IDENTIFIER);
-        IdToken* t = dynamic_cast<IdToken *>(previous);
-        return new ExprSuper(t);
+        IdToken* method = dynamic_cast<IdToken *>(previous);
+        return new ExprSuper(keyword, method);
     }
     else{
         std::stringstream ss;

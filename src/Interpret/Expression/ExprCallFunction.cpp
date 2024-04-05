@@ -2,7 +2,8 @@
 #include "ExprCallFunction.h"
 #include "../../Exceptions/RuntimeException.h"
 
-ExprCallFunction::ExprCallFunction(Expression *callee, std::vector<Expression*> arguments) : callee(callee),
+ExprCallFunction::ExprCallFunction(Expression *callee, Token* paren, std::vector<Expression*> arguments) : callee(callee),
+                                                                                            paren(paren),
                                                                                            arguments(arguments) {}
 
 TData ExprCallFunction::solve(Environment* environment) {

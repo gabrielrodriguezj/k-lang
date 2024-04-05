@@ -6,9 +6,9 @@
 
 class ExprThis: public Expression{
 private:
-    // Token* keyword;
+    Token* keyword;
 public:
-    ExprThis();
+    ExprThis(Token* keyword);
 
     TData solve(Environment*) override;
 };

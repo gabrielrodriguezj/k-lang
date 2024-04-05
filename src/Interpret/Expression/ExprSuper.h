@@ -7,10 +7,10 @@
 
 class ExprSuper: public Expression{
 private:
-    // Token* keyword;
+    Token* keyword;
     TToken* method;
 public:
-    explicit ExprSuper(TToken *method);
+    explicit ExprSuper(Token *keyword, TToken *method);
 
     TData solve(Environment*) override;
 };

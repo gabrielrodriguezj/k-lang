@@ -7,10 +7,10 @@
 class ExprCallFunction: public Expression{
 private:
     Expression* callee;
-    // Token* paren;
+    Token* paren;
     std::vector<Expression*> arguments;
 public:
-    ExprCallFunction(Expression *callee, std::vector<Expression*> arguments);
+    ExprCallFunction(Expression *callee, Token* paren, std::vector<Expression*> arguments);
 
     TData solve(Environment*) override;
 };
