@@ -3,7 +3,7 @@
 
 
 #include <string>
-#include <list>
+#include <vector>
 #include "Token/TToken.h"
 #include "Scanner.h"
 #include "Inter/Expression/Expression.h"
@@ -18,16 +18,16 @@ private:
     Scanner* scanner;
     TToken* preanalysis{};
     TToken* previous{};
-    std::list<Statement*> stmts{};
+    std::vector<Statement*> stmts{};
 
     void match(TokenName);
 
     //Declarations:
-    std::list<Statement*> program();
-    void declaration(std::list<Statement*>&);
+    std::vector<Statement*> program();
+    void declaration(std::vector<Statement*>&);
     Statement* classDeclaration();
     ExprVariable* classInheritance();
-    void classElement(std::list<StmtFunction*>&, std::list<StmtVariable*>&);
+    void classElement(std::vector<StmtFunction*>&, std::vector<StmtVariable*>&);
     StmtFunction* functionDeclaration();
     StmtVariable* variableDeclaration();
     Expression* variableInitialization();
@@ -69,15 +69,15 @@ private:
     Expression* primary();
 
     //Auxiliary
-    std::list<IdToken*> parametersOptional();
-    void parameters(std::list<IdToken*>&);
-    void parameters2(std::list<IdToken*>&);
-    void argumentsOptional(std::list<Expression*>&);
-    void arguments(std::list<Expression*>&);
+    std::vector<IdToken*> parametersOptional();
+    void parameters(std::vector<IdToken*>&);
+    void parameters2(std::vector<IdToken*>&);
+    void argumentsOptional(std::vector<Expression*>&);
+    void arguments(std::vector<Expression*>&);
 public:
     explicit Parser(const std::string&);
     bool parse();
-    std::list<Statement*> getStatements();
+    std::vector<Statement*> getStatements();
 };
 
 #endif //K_LANG_PARSER_H

@@ -15,7 +15,7 @@ public:
 
     int arity() override;
 
-    TData call(Environment *environment, std::list<TData> arguments) override;
+    TData call(Environment *environment, std::vector<TData> arguments) override;
 };
 
 

@@ -2,16 +2,16 @@
 #define K_LANG_STMTBLOCK_H
 
 
-#include <list>
+#include <vector>
 #include "Statement.h"
 #include "../Environment.h"
 
 class StmtBlock: public Statement{
 private:
-    std::list<Statement*> statements;
+    std::vector<Statement*> statements;
 
 public:
-    explicit StmtBlock(const std::list<Statement *> &statements);
+    explicit StmtBlock(const std::vector<Statement *> &statements);
 
     void execute(Environment*) override;
 };

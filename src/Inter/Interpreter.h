@@ -2,7 +2,7 @@
 #define K_LANG_INTERPRETER_H
 
 
-#include <list>
+#include <vector>
 #include "Environment.h"
 #include "Expression/Expression.h"
 #include "Statement/Statement.h"
@@ -18,7 +18,7 @@ private:
 
 public:
     Interpreter();
-    void interpret(std::list<Statement*> statements);
+    void interpret(std::vector<Statement*> statements);
 };
 
 

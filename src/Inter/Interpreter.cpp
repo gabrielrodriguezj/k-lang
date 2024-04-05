@@ -6,7 +6,7 @@ Interpreter::Interpreter() {
     environment = globals;
 }
 
-void Interpreter::interpret(std::list<Statement *> statements) {
+void Interpreter::interpret(std::vector<Statement *> statements) {
     try {
         for (Statement *statement: statements) {
             statement->execute(environment);

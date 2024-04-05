@@ -2,7 +2,7 @@
 #define K_LANG_STMTCLASS_H
 
 
-#include <list>
+#include <vector>
 #include "../../Token/Token.h"
 #include "../Expression/ExprVariable.h"
 #include "Statement.h"
@@ -14,11 +14,11 @@ class StmtClass: public Statement{
 private:
     IdToken* name;
     ExprVariable* superclass;
-    std::list<StmtFunction*> methods;
-    std::list<StmtVariable*> variables;
+    std::vector<StmtFunction*> methods;
+    std::vector<StmtVariable*> variables;
 public:
-    StmtClass(IdToken *name, ExprVariable *superclass, const std::list<StmtFunction *> &methods,
-              const std::list<StmtVariable *> &variables);
+    StmtClass(IdToken *name, ExprVariable *superclass, const std::vector<StmtFunction *> &methods,
+              const std::vector<StmtVariable *> &variables);
 
     void execute(Environment*) override;
 };

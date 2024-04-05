@@ -50,7 +50,7 @@ void ejecutar(std::string source){
         bool res = parser.parse();
 
         if(res){
-            std::list<Statement*> statements = parser.getStatements();
+            std::vector<Statement*> statements = parser.getStatements();
 
             Interpreter interpreter = Interpreter();
             interpreter.interpret(statements);

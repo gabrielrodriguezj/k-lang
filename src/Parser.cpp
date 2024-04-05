@@ -46,7 +46,7 @@ bool Parser::parse() {
     }
 }
 
-std::list<Statement*> Parser::getStatements(){
+std::vector<Statement*> Parser::getStatements(){
     return stmts;
 }
 
@@ -66,13 +66,13 @@ void Parser::match(TokenName name) {
 
 // Declarations:
 
-std::list<Statement*> Parser::program() {
-    std::list<Statement*> stmts;
+std::vector<Statement*> Parser::program() {
+    std::vector<Statement*> stmts;
     declaration(stmts);
     return stmts;
 }
 
-void Parser::declaration(std::list<Statement*>& statements) {
+void Parser::declaration(std::vector<Statement*>& statements) {
     Statement* stmt;
     switch (preanalysis->getName()) {
         case TokenName::CLASS:
@@ -115,8 +115,8 @@ void Parser::declaration(std::list<Statement*>& statements) {
 }
 
 Statement* Parser::classDeclaration() {
-    std::list<StmtFunction*> methods;
-    std::list<StmtVariable*> variables;
+    std::vector<StmtFunction*> methods;
+    std::vector<StmtVariable*> variables;
 
     match(TokenName::CLASS);
     match(TokenName::IDENTIFIER);
@@ -139,7 +139,7 @@ ExprVariable* Parser::classInheritance() {
     return nullptr;
 }
 
-void Parser::classElement(std::list<StmtFunction*>& methods, std::list<StmtVariable*>& variables) {
+void Parser::classElement(std::vector<StmtFunction*>& methods, std::vector<StmtVariable*>& variables) {
     if(preanalysis->getName() == TokenName::VAR){
         StmtVariable* var = variableDeclaration();
         variables.push_back(var);
@@ -158,7 +158,7 @@ StmtFunction* Parser::functionDeclaration() {
     IdToken* name = dynamic_cast<IdToken *>(previous);
 
     match(TokenName::LEFT_PAREN);
-    std::list<IdToken*> params = parametersOptional();
+    std::vector<IdToken*> params = parametersOptional();
     match(TokenName::RIGHT_PAREN);
     StmtBlock* stmtBlock = block();
 
@@ -246,7 +246,7 @@ Statement* Parser::forStatement() {
 
     // Syntactic sugar:
     if(increment != nullptr){
-        std::list<Statement*> newBody {body, new StmtExpression(increment)};
+        std::vector<Statement*> newBody {body, new StmtExpression(increment)};
         body = new StmtBlock(newBody);
     }
 
@@ -256,7 +256,7 @@ Statement* Parser::forStatement() {
     body = new StmtLoop(condition, body);
 
     if (initializer != nullptr) {
-        std::list<Statement*> newBody {initializer, body};
+        std::vector<Statement*> newBody {initializer, body};
         body = new StmtBlock(newBody);
     }
 
@@ -406,7 +406,7 @@ Statement* Parser::whileStatement() {
 
 StmtBlock* Parser::block() {
     match(TokenName::LEFT_BRACE);
-    std::list<Statement*> statements;
+    std::vector<Statement*> statements;
     declaration(statements);
     match(TokenName::RIGHT_BRACE);
     return new StmtBlock(statements);
@@ -556,7 +556,7 @@ Expression* Parser::call() {
 Expression* Parser::call2(Expression* expr) {
     if(preanalysis->getName() == TokenName::LEFT_PAREN){
         match(TokenName::LEFT_PAREN);
-        std::list<Expression*> args;
+        std::vector<Expression*> args;
         argumentsOptional(args);
 
         if(args.size() > 255){
@@ -638,29 +638,29 @@ Expression* Parser::primary() {
 
 // Auxiliary:
 
-std::list<IdToken*> Parser::parametersOptional() {
-    std::list<IdToken*> params;
+std::vector<IdToken*> Parser::parametersOptional() {
+    std::vector<IdToken*> params;
     if(preanalysis->getName() == TokenName::IDENTIFIER){
         parameters(params);
     }
     return params;
 }
 
-void Parser::parameters(std::list<IdToken*>& params) {
+void Parser::parameters(std::vector<IdToken*>& params) {
     match(TokenName::IDENTIFIER);
     IdToken* name = dynamic_cast<IdToken *>(previous);
     params.push_back(name);
     parameters2(params);
 }
 
-void Parser::parameters2(std::list<IdToken*>& params) {
+void Parser::parameters2(std::vector<IdToken*>& params) {
     if(preanalysis->getName() == TokenName::COMMA){
         match(TokenName::COMMA);
         parameters(params);
     }
 }
 
-void Parser::argumentsOptional(std::list<Expression*>& args) {
+void Parser::argumentsOptional(std::vector<Expression*>& args) {
     switch (preanalysis->getName()) {
         case TokenName::BANG:
         case TokenName::MINUS:
@@ -680,7 +680,7 @@ void Parser::argumentsOptional(std::list<Expression*>& args) {
     }
 }
 
-void Parser::arguments(std::list<Expression*>& args) {
+void Parser::arguments(std::vector<Expression*>& args) {
     if(preanalysis->getName() == TokenName::COMMA){
         match(TokenName::COMMA);
         argumentsOptional(args);
