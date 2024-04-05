@@ -4,7 +4,7 @@
 #include "Parser.h"
 #include "Exceptions/ParserException.h"
 #include "Exceptions/ScannerException.h"
-#include "Exceptions/RuntimeException.h"
+#include "Inter/Interpreter.h"
 
 void ejecutarArchivo(std::string path);
 void repl();
@@ -50,20 +50,16 @@ void ejecutar(std::string source){
         bool res = parser.parse();
 
         if(res){
-            Environment* globalEnvironment = new Environment(nullptr);
             std::list<Statement*> statements = parser.getStatements();
-            for(Statement* statement : statements){
-                statement->execute(globalEnvironment);
-            }
+
+            Interpreter interpreter = Interpreter();
+            interpreter.interpret(statements);
         }
     }
     catch (ParserException e){
         std::cout<< e.what();
     }
     catch (ScannerException e){
-        std::cout<< e.what();
-    }
-    catch (RuntimeException e){
         std::cout<< e.what();
     }
 }
