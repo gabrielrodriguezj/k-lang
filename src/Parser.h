@@ -6,12 +6,12 @@
 #include <vector>
 #include "Token/TToken.h"
 #include "Scanner.h"
-#include "Inter/Expression/Expression.h"
-#include "Inter/Statement/Statement.h"
-#include "Inter/Expression/ExprVariable.h"
-#include "Inter/Statement/StmtFunction.h"
-#include "Inter/Statement/StmtVariable.h"
-#include "Inter/Statement/StmtExpression.h"
+#include "Interpret/Expression/Expression.h"
+#include "Interpret/Statement/Statement.h"
+#include "Interpret/Expression/ExprVariable.h"
+#include "Interpret/Statement/StmtFunction.h"
+#include "Interpret/Statement/StmtVariable.h"
+#include "Interpret/Statement/StmtExpression.h"
 
 class Parser {
 private:

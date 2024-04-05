@@ -1,4 +1,5 @@
 #include "KFunction.h"
+#include "Return.h"
 
 KFunction::KFunction(StmtFunction *declaration, Environment *closure, bool isInitializer) : declaration(
         declaration), closure(closure), isInitializer(isInitializer) {}
@@ -15,7 +16,13 @@ TData KFunction::call(Environment* environment, std::vector<TData> arguments) {
         localEenvironment->define(declaration->getParams().at(i), arguments.at(i));
     }
 
-    declaration->getBody()->execute(localEenvironment);
+    try{
+        declaration->getBody()->execute(localEenvironment);
+    }
+    catch (Return returnValue){
+        return returnValue.getValue();
+    }
+
     // Pendiente atrapar el return;
 
     /*try {

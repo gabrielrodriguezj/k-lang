@@ -7,9 +7,10 @@
 
 class StmtReturn: public Statement{
 private:
-    Expression* expression;
+    Token* keyword;
+    Expression* value;
 public:
-    explicit StmtReturn(Expression *expression);
+    explicit StmtReturn(Token*, Expression*);
 
     void execute(Environment*) override;
 };

@@ -1,3 +1,4 @@
+#include <sstream>
 #include "ExprCallFunction.h"
 #include "../../Exceptions/RuntimeException.h"
 
@@ -13,11 +14,20 @@ TData ExprCallFunction::solve(Environment* environment) {
         args.push_back(result);
     }
 
+    // Check if it's callable
     if (!std::holds_alternative<KCallable*>(calleeResult.getValue()) ) {
         throw new RuntimeException("La expresion no corresponde a una llamada valida.");
     }
-
     KCallable *function = std::get<KCallable*>(calleeResult.getValue());
+
+    // check arity
+    if (arguments.size() != function->arity()) {
+        std::stringstream ss;
+        ss << "Se esperaron " << function->arity() << "argumentos pero se recibierion " << arguments.size();
+        throw RuntimeException(ss.str());
+    }
+
+
     return function->call(environment, args);
 }
 

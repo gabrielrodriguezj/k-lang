@@ -4,7 +4,7 @@
 #include "Parser.h"
 #include "Exceptions/ParserException.h"
 #include "Exceptions/ScannerException.h"
-#include "Inter/Interpreter.h"
+#include "Interpret/Interpreter.h"
 
 void ejecutarArchivo(std::string path);
 void repl();

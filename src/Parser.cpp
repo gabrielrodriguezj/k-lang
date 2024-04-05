@@ -3,28 +3,28 @@
 #include "Scanner.h"
 #include "Token/TokenUtil.h"
 #include "Exceptions/ParserException.h"
-#include "Inter/Expression/ExprLiteral.h"
-#include "Inter/Expression/ExprThis.h"
+#include "Interpret/Expression/ExprLiteral.h"
+#include "Interpret/Expression/ExprThis.h"
 #include "Token/NumberToken.h"
 #include "Token/StringToken.h"
-#include "Inter/Expression/ExprVariable.h"
+#include "Interpret/Expression/ExprVariable.h"
 #include "Token/IdToken.h"
-#include "Inter/Expression/ExprSuper.h"
-#include "Inter/Expression/ExprGrouping.h"
-#include "Inter/Expression/ExprCallFunction.h"
-#include "Inter/Expression/ExprGet.h"
-#include "Inter/Expression/ExprUnary.h"
-#include "Inter/Expression/ExprArithmetic.h"
-#include "Inter/Expression/ExprRelational.h"
-#include "Inter/Expression/ExprLogical.h"
-#include "Inter/Expression/ExprAssignment.h"
-#include "Inter/Expression/ExprSet.h"
-#include "Inter/Statement/Statement.h"
-#include "Inter/Statement/StmtClass.h"
-#include "Inter/Statement/StmtLoop.h"
-#include "Inter/Statement/StmtIf.h"
-#include "Inter/Statement/StmtPrint.h"
-#include "Inter/Statement/StmtReturn.h"
+#include "Interpret/Expression/ExprSuper.h"
+#include "Interpret/Expression/ExprGrouping.h"
+#include "Interpret/Expression/ExprCallFunction.h"
+#include "Interpret/Expression/ExprGet.h"
+#include "Interpret/Expression/ExprUnary.h"
+#include "Interpret/Expression/ExprArithmetic.h"
+#include "Interpret/Expression/ExprRelational.h"
+#include "Interpret/Expression/ExprLogical.h"
+#include "Interpret/Expression/ExprAssignment.h"
+#include "Interpret/Expression/ExprSet.h"
+#include "Interpret/Statement/Statement.h"
+#include "Interpret/Statement/StmtClass.h"
+#include "Interpret/Statement/StmtLoop.h"
+#include "Interpret/Statement/StmtIf.h"
+#include "Interpret/Statement/StmtPrint.h"
+#include "Interpret/Statement/StmtReturn.h"
 
 Parser::Parser(const std::string& source) {
     scanner = new Scanner(source);
@@ -370,9 +370,10 @@ Statement* Parser::printStatement() {
 
 Statement* Parser::returnStatement() {
     match(TokenName::RETURN);
+    Token* keyword = dynamic_cast<Token *>(previous);
     Expression* returnExpr = returnExpressionOptional();
     match(TokenName::SEMICOLON);
-    return new StmtReturn(returnExpr);
+    return new StmtReturn(keyword, returnExpr);
 }
 
 Expression* Parser::returnExpressionOptional() {
