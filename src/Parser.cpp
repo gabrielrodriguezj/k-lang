@@ -563,6 +563,8 @@ Expression* Parser::call2(Expression* expr) {
             throw new ParserException("Error. La funcion no puede tener mas de 255 argumentos");
         }
 
+        match(TokenName::RIGHT_PAREN);
+
         Expression* exprCall = new ExprCallFunction(expr, args);
         return call2(exprCall);
     }
