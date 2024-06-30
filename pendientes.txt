@@ -1,3 +1,4 @@
 // Implementar modo pánico como método de recuperación de errores
 // Evitar cosas como var a = a; --> inicialización circular.
 // Char el caso: 123E- | "numero"E+ | "numero"E
+// Implementar el "visit" antes de interpretar, es decir, antes de ejecutar el código revisar si la variable existe, etcc, esto sólo se realiza una vez, por ejemplo en un while sólo se debe realizar una vez y no cada vez que se ejecuta el while
