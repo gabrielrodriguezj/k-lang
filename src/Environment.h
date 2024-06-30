@@ -4,8 +4,8 @@
 
 #include <string>
 #include <map>
-#include "../Token/IdToken.h"
-#include "TData.h"
+#include "Token/IdToken.h"
+#include "Interpret/TData.h"
 
 class TData;
 

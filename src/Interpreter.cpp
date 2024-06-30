@@ -1,5 +1,5 @@
 #include "Interpreter.h"
-#include "../Exceptions/RuntimeException.h"
+#include "Exceptions/RuntimeException.h"
 
 Interpreter::Interpreter() {
     globals = new Environment(nullptr);

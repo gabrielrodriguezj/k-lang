@@ -1,6 +1,6 @@
 #include <sstream>
 #include "Environment.h"
-#include "../Exceptions/RuntimeException.h"
+#include "Exceptions/RuntimeException.h"
 
 Environment::Environment(Environment *enclosing) : enclosing(enclosing) {}
 
