@@ -3,6 +3,6 @@
 
 StmtPrint::StmtPrint(Expression *expression) : expression(expression) {}
 
-void StmtPrint::accept(Visitor *visitor) const {
-    //visitor->
+void StmtPrint::accept(Visitor *visitor) {
+    visitor->visitPrintStmt(this);
 }

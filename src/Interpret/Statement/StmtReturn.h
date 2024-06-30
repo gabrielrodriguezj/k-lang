@@ -12,7 +12,7 @@ private:
 public:
     explicit StmtReturn(Token*, Expression*);
 
-    void accept(Visitor *visitor) const override;
+    void accept(Visitor *visitor) override;
 };
 
 

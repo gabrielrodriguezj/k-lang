@@ -2,6 +2,6 @@
 
 StmtExpression::StmtExpression(Expression *expression) : expression(expression) {}
 
-void StmtExpression::accept(Visitor *visitor) const {
-    //visitor->visitExpressionStmt(this);
+void StmtExpression::accept(Visitor *visitor) {
+    visitor->visitExpressionStmt(this);
 }

@@ -11,7 +11,7 @@ private:
 public:
     explicit StmtExpression(Expression *expression);
 
-    void accept(Visitor *visitor) const override;
+    void accept(Visitor *visitor) override;
 };
 
 

@@ -3,6 +3,6 @@
 
 StmtLoop::StmtLoop(Expression *condition, Statement *body) : condition(condition), body(body) {}
 
-void StmtLoop::accept(Visitor *visitor) const {
-    //visitor->visitLoopStmt(this);
+void StmtLoop::accept(Visitor *visitor) {
+    visitor->visitLoopStmt(this);
 }

@@ -19,7 +19,7 @@ public:
     StmtBlock* getBody();
     IdToken* getName();
 
-    void accept(Visitor *visitor) const override;
+    void accept(Visitor *visitor) override;
 };
 
 

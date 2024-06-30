@@ -5,6 +5,6 @@ StmtIf::StmtIf(Expression *condition, Statement *thenBranch, Statement *elseBran
                                                                                       thenBranch(thenBranch),
                                                                                       elseBranch(elseBranch) {}
 
-void StmtIf::accept(Visitor *visitor) const {
-    //visitor->visitIfStmt(this);
+void StmtIf::accept(Visitor *visitor) {
+    visitor->visitIfStmt(this);
 }

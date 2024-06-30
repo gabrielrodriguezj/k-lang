@@ -14,7 +14,7 @@ private:
 public:
     explicit StmtBlock(const std::vector<Statement *> &statements);
 
-    void accept(Visitor *visitor) const override;
+    void accept(Visitor *visitor) override;
 };
 
 
