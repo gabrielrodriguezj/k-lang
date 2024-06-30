@@ -1,0 +1,3 @@
+// Implementar modo pánico como método de recuperación de errores
+// Evitar cosas como var a = a; --> inicialización circular.
+// Char el caso: 123E- | "numero"E+ | "numero"E
