@@ -34,3 +34,4 @@
 # Ide CLion
 .idea/
 cmake*/
+CMakeLists.txt

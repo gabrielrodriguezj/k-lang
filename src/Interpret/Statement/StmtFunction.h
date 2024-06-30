@@ -18,6 +18,8 @@ public:
     std::vector<IdToken*> getParams();
     StmtBlock* getBody();
     IdToken* getName();
+
+    void accept(Visitor *visitor) const override;
 };
 
 

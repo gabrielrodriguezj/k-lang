@@ -8,3 +8,7 @@ StmtClass::StmtClass(IdToken *name, ExprVariable *superclass, const std::vector<
 void StmtClass::execute(Environment* environment) {
     throw NotImplementedYetException("Not implemented yet");
 }
+
+void StmtClass::accept(Visitor *visitor) const {
+    visitor->visitClassStmt(this);
+}

@@ -7,8 +7,7 @@
 #include "Expression/Expression.h"
 #include "Statement/Statement.h"
 
-class Expression;
-class Statement;
+class Visitor;
 
 class Interpreter {
 private:

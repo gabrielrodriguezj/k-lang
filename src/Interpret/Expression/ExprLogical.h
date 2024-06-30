@@ -13,7 +13,7 @@ private:
 public:
     ExprLogical(Expression *left, Token *oper, Expression *right);
 
-    TData solve(Environment*) override;
+    TData solve(Environment *environment) override;
 };
 
 

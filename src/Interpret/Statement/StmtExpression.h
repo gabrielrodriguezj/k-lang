@@ -3,7 +3,6 @@
 
 
 #include "Statement.h"
-#include "../Expression/Expression.h"
 
 class StmtExpression: public Statement{
 private:
@@ -12,6 +11,8 @@ public:
     explicit StmtExpression(Expression *expression);
 
     void execute(Environment*) override;
+
+    void accept(Visitor *visitor) const override;
 };
 
 

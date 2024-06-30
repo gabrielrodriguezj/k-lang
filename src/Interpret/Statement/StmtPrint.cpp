@@ -31,3 +31,7 @@ void StmtPrint::execute(Environment* environment) {
         }
     }
 }
+
+void StmtPrint::accept(Visitor *visitor) const {
+    visitor->visitPrintStmt(this);
+}

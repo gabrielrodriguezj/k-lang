@@ -13,6 +13,8 @@ public:
     explicit StmtReturn(Token*, Expression*);
 
     void execute(Environment*) override;
+
+    void accept(Visitor *visitor) const override;
 };
 
 

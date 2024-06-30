@@ -10,3 +10,7 @@ void StmtVariable::execute(Environment* environment) {
 
     environment->define(name, value);
 }
+
+void StmtVariable::accept(Visitor *visitor) const {
+    visitor->visitVarStmt(this);
+}

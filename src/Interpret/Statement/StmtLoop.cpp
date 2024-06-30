@@ -22,3 +22,7 @@ void StmtLoop::execute(Environment* environment) {
         resCondition = std::get<bool>(solCondition.getValue());
     }
 }
+
+void StmtLoop::accept(Visitor *visitor) const {
+    visitor->visitLoopStmt(this);
+}

@@ -23,3 +23,7 @@ void StmtIf::execute(Environment* environment) {
     }
 
 }
+
+void StmtIf::accept(Visitor *visitor) const {
+    visitor->visitIfStmt(this);
+}

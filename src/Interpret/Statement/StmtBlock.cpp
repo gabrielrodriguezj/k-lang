@@ -11,3 +11,7 @@ void StmtBlock::execute(Environment* environment) {
         statement->execute(local);
     }
 }
+
+void StmtBlock::accept(Visitor *visitor) const {
+    visitor->visitBlockStmt(this);
+}

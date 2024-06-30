@@ -12,6 +12,8 @@ public:
     explicit StmtPrint(Expression *expression);
 
     void execute(Environment*) override;
+
+    void accept(Visitor *visitor) const override;
 };
 
 

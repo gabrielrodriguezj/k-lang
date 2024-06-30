@@ -21,6 +21,8 @@ public:
               const std::vector<StmtVariable *> &variables);
 
     void execute(Environment*) override;
+
+    void accept(Visitor *visitor) const override;
 };
 
 

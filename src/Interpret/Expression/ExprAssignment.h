@@ -2,9 +2,10 @@
 #define K_LANG_EXPRASSIGNMENT_H
 
 
-#include "../../Token/Token.h"
 #include "Expression.h"
-#include "../../Token/IdToken.h"
+//#include "../../Token/IdToken.h"
+
+//class Visitor;
 
 class ExprAssignment: public Expression{
 private:

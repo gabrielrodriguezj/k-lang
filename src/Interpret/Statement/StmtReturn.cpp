@@ -12,3 +12,7 @@ void StmtReturn::execute(Environment* environment) {
 
     throw Return("Return", valueReturn);
 }
+
+void StmtReturn::accept(Visitor *visitor) const {
+    visitor->visitReturnStmt(this);
+}

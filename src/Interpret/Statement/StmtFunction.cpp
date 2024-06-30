@@ -22,3 +22,7 @@ StmtBlock* StmtFunction::getBody(){
 IdToken* StmtFunction::getName(){
     return name;
 }
+
+void StmtFunction::accept(Visitor *visitor) const {
+    visitor->visitFunctionStmt(this);
+}
