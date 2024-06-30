@@ -11,7 +11,7 @@ public:
     ExprLiteral(std::variant<std::monostate, int, double, bool, std::string>);
     ExprLiteral();
 
-    void accept(Visitor *visitor) const override;
+    void accept(Visitor *visitor) override;
 };
 
 

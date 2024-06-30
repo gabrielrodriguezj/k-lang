@@ -6,6 +6,6 @@ ExprCallFunction::ExprCallFunction(Expression *callee, Token* paren, std::vector
                                                                                             paren(paren),
                                                                                            arguments(arguments) {}
 
-void ExprCallFunction::accept(Visitor *visitor) const {
-
+void ExprCallFunction::accept(Visitor *visitor) {
+    visitor->visitCallExpr(this);
 }

@@ -3,6 +3,6 @@
 
 ExprThis::ExprThis(Token* keyword): keyword(keyword) {}
 
-void ExprThis::accept(Visitor *visitor) const {
-
+void ExprThis::accept(Visitor *visitor) {
+    visitor->visitThisExpr(this);
 }

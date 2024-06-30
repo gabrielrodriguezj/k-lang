@@ -12,7 +12,7 @@ private:
 public:
     ExprArithmetic(Expression *left, Token *oper, Expression *right);
 
-    void accept(Visitor *visitor) const override;
+    void accept(Visitor *visitor) override;
 };
 
 

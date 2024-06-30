@@ -11,7 +11,7 @@ private:
 public:
     explicit ExprSuper(Token *keyword, TToken *method);
 
-    void accept(Visitor *visitor) const override;
+    void accept(Visitor *visitor) override;
 };
 
 

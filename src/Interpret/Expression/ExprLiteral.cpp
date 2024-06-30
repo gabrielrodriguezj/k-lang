@@ -5,6 +5,6 @@ ExprLiteral::ExprLiteral(std::variant<std::monostate, int, double, bool, std::st
 }
 ExprLiteral::ExprLiteral(){}
 
-void ExprLiteral::accept(Visitor *visitor) const {
-
+void ExprLiteral::accept(Visitor *visitor) {
+    visitor->visitLiteralExpr(this);
 }

@@ -11,7 +11,7 @@ private:
 public:
     ExprCallFunction(Expression *callee, Token* paren, std::vector<Expression*> arguments);
 
-    void accept(Visitor *visitor) const override;
+    void accept(Visitor *visitor) override;
 };
 
 

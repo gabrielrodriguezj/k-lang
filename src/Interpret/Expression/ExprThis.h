@@ -10,7 +10,7 @@ private:
 public:
     ExprThis(Token* keyword);
 
-    void accept(Visitor *visitor) const override;
+    void accept(Visitor *visitor) override;
 };
 
 

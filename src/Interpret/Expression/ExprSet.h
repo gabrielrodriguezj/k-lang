@@ -12,7 +12,7 @@ private:
 public:
     ExprSet(Expression *object, Token *name, Expression *value);
 
-    void accept(Visitor *visitor) const override;
+    void accept(Visitor *visitor) override;
 };
 
 

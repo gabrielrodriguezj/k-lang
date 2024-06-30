@@ -2,6 +2,6 @@
 
 ExprArithmetic::ExprArithmetic(Expression *left, Token *oper, Expression *right) : left(left), oper(oper), right(right) {}
 
-void ExprArithmetic::accept(Visitor *visitor) const {
-
+void ExprArithmetic::accept(Visitor *visitor) {
+    visitor->visitArithmeticExpr(this);
 }

@@ -10,7 +10,7 @@ private:
 public:
     ExprAssignment(IdToken *name, Expression *expression);
 
-    void accept(Visitor *visitor) const override;
+    void accept(Visitor *visitor) override;
 };
 
 

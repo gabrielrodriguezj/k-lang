@@ -6,6 +6,6 @@ IdToken* ExprVariable::getName() {
     return name;
 }
 
-void ExprVariable::accept(Visitor *visitor) const {
-
+void ExprVariable::accept(Visitor *visitor) {
+    visitor->visitVariableExpr(this);
 }
