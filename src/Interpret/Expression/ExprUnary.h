@@ -3,7 +3,6 @@
 
 
 #include "Expression.h"
-#include "../../Token/Token.h"
 
 class ExprUnary: public Expression{
 private:
@@ -12,7 +11,7 @@ private:
 public:
     ExprUnary(Expression *left, Token *oper);
 
-    TData solve(Environment*) override;
+    void accept(Visitor *visitor) const override;
 };
 
 

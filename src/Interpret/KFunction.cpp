@@ -17,7 +17,7 @@ TData KFunction::call(Environment* environment, std::vector<TData> arguments) {
     }
 
     try{
-        declaration->getBody()->execute(localEenvironment);
+        //declaration->getBody()->execute(localEenvironment);
     }
     catch (Return returnValue){
         return returnValue.getValue();

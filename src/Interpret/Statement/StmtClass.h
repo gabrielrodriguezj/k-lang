@@ -20,8 +20,6 @@ public:
     StmtClass(IdToken *name, ExprVariable *superclass, const std::vector<StmtFunction *> &methods,
               const std::vector<StmtVariable *> &variables);
 
-    void execute(Environment*) override;
-
     void accept(Visitor *visitor) const override;
 };
 

@@ -18,7 +18,7 @@ void Semantic::resolve(const std::vector<Statement *> &statements) {
     }
 }
 
-void visitBlockStmt(StmtBlock stmt) {
+void visitBlockStmt(StmtBlock *stmt) {
     //beginScope();
     //resolve(stmt.statements);
     //endScope();

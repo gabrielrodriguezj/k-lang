@@ -20,6 +20,7 @@
 #include "Interpret/Expression/ExprAssignment.h"
 #include "Interpret/Expression/ExprSet.h"
 #include "Interpret/Statement/Statement.h"
+#include "Interpret/Statement/StmtBlock.h"
 #include "Interpret/Statement/StmtClass.h"
 #include "Interpret/Statement/StmtLoop.h"
 #include "Interpret/Statement/StmtIf.h"
@@ -219,7 +220,7 @@ Statement* Parser::statement() {
             return returnStatement();
             break;
         case TokenName::LEFT_BRACE:
-            return block();
+            //return block();
             break;
         default:
             std::stringstream ss;
@@ -227,6 +228,8 @@ Statement* Parser::statement() {
             ss<<"'. Linea: " << preanalysis->getLine();
             throw ParserException(ss.str());
     }
+
+    return nullptr;
 }
 
 StmtExpression* Parser::expressionStatement() {
@@ -247,7 +250,7 @@ Statement* Parser::forStatement() {
     // Syntactic sugar:
     if(increment != nullptr){
         std::vector<Statement*> newBody {body, new StmtExpression(increment)};
-        body = new StmtBlock(newBody);
+        //body = new StmtBlock(newBody);
     }
 
     if(condition == nullptr){
@@ -257,7 +260,7 @@ Statement* Parser::forStatement() {
 
     if (initializer != nullptr) {
         std::vector<Statement*> newBody {initializer, body};
-        body = new StmtBlock(newBody);
+        //body = new StmtBlock(newBody);
     }
 
     return body;

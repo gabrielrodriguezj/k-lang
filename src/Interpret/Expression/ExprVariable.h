@@ -3,16 +3,15 @@
 
 
 #include "Expression.h"
-#include "../../Token/IdToken.h"
 
 class ExprVariable: public Expression{
 private:
     IdToken* name;
 public:
     explicit ExprVariable(IdToken *name);
-
-    TData solve(Environment*) override;
     IdToken* getName();
+
+    void accept(Visitor *visitor) const override;
 };
 
 

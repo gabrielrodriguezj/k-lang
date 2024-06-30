@@ -14,3 +14,310 @@ char* readFile(std::string path){
 
     return buffer;
 }
+
+
+
+
+
+
+
+
+
+
+
+void StmtBlock::execute(Environment* environment) {
+    // Local environment for local variables
+    Environment* local = new Environment(environment);
+
+    for(Statement *statement : statements){
+        statement->execute(local);
+    }
+}
+
+void StmtClass::execute(Environment* environment) {
+    throw NotImplementedYetException("Not implemented yet");
+}
+
+void StmtExpression::execute(Environment* environment) {
+    //expression->solve(environment);
+}
+
+void StmtFunction::execute(Environment* environment) {
+    KFunction* function = new KFunction(this, environment, false);
+    TData dataFunction = TData(function);
+    environment->define(name, dataFunction);
+}
+
+void StmtIf::execute(Environment* environment) {
+    TData solCondition = condition->solve(environment);
+
+    if (!std::holds_alternative<bool>(solCondition.getValue())) {
+        throw RuntimeException("La condicion no es una expresion valida");
+    }
+
+    bool resCondition = std::get<bool>(solCondition.getValue());
+    if(resCondition){
+        thenBranch->execute(environment);
+        return;
+    }
+
+    if(elseBranch != nullptr){
+        elseBranch->execute(environment);
+    }
+
+}
+
+
+
+void StmtLoop::execute(Environment* environment) {
+    TData solCondition = condition->solve(environment);
+
+    if (!std::holds_alternative<bool>(solCondition.getValue())) {
+        throw RuntimeException("La condicion no es una expresion valida");
+    }
+
+    bool resCondition = std::get<bool>(solCondition.getValue());
+    while (resCondition){
+        body->execute(environment);
+
+        // Evaluate the condition after execute the body
+        solCondition = condition->solve(environment);
+        if (!std::holds_alternative<bool>(solCondition.getValue())) {
+            throw RuntimeException("La condicion no es una expresion valida");
+        }
+        resCondition = std::get<bool>(solCondition.getValue());
+    }
+}
+
+
+void StmtPrint::execute(Environment* environment) {
+    TData data = expression->solve(environment);
+    auto value = data.getValue();
+
+    if(std::holds_alternative<std::monostate>(value)){
+        std::cout<<"null"<<std::endl;
+    }
+    else if (std::holds_alternative<int>(value)) {
+        std::cout<<std::get<int>(value)<<std::endl;
+    }
+    else if (std::holds_alternative<double>(value)) {
+        std::cout<<std::get<double>(value)<<std::endl;
+    }
+    else if (std::holds_alternative<bool>(value)) {
+        bool boolValue = std::get<bool>(value);
+        std::cout<< (boolValue == 0 ? "false" : "true") <<std::endl;
+    }
+    else if (std::holds_alternative<std::string>(value)) {
+        std::cout<<std::get<std::string>(value)<<std::endl;
+    }
+    else if (std::holds_alternative<KCallable*>(value)) {
+        KCallable *callable = std::get<KCallable*>(value) ;
+        if(dynamic_cast<KFunction*>(callable)){
+            KFunction *function = dynamic_cast<KFunction*>(callable);
+            std::cout<<function->toString()<<std::endl;
+        }
+    }
+}
+
+
+
+void StmtReturn::execute(Environment* environment) {
+    TData valueReturn;
+
+    if(value != nullptr){
+        valueReturn = value->solve(environment);
+    }
+
+    throw Return("Return", valueReturn);
+}
+
+
+void StmtVariable::execute(Environment* environment) {
+    TData value;
+    if(initializer != nullptr){
+        //value = initializer->solve(environment);
+    }
+
+    environment->define(name, value);
+}
+
+
+
+
+
+
+
+
+
+
+TData ExprLiteral::solve(Environment* environment) {
+
+    if (std::holds_alternative<int>(value) ) {
+        int litVale = std::get<int>(value);
+        return TData(litVale);
+    }
+
+    if (std::holds_alternative<double>(value) ) {
+        double litVale = std::get<double>(value);
+        return TData(litVale);
+    }
+
+    if (std::holds_alternative<bool>(value) ) {
+        bool litVale = std::get<bool>(value);
+        return TData(litVale);
+    }
+
+    if (std::holds_alternative<std::string>(value) ) {
+        std::string litVale = std::get<std::string>(value);
+        return TData(litVale);
+    }
+
+    return TData();
+}
+
+
+TData ExprGrouping::solve(Environment* environment) {
+    return expression->solve(environment);
+}
+
+
+TData ExprArithmetic::solve(Environment* environment) {
+    TData valueLeft = left->solve(environment);
+    TData valueRight = right->solve(environment);
+
+    if(oper->getName() == TokenName::PLUS){
+        return valueLeft + valueRight;
+    }
+    if(oper->getName() == TokenName::MINUS){
+        return valueLeft - valueRight;
+    }
+    if(oper->getName() == TokenName::STAR){
+        return valueLeft * valueRight;
+    }
+    if(oper->getName() == TokenName::SLASH){
+        return valueLeft / valueRight;
+    }
+}
+
+
+TData ExprAssignment::solve(Environment* environment) {
+    TData value = expression->solve(environment);
+    environment->assign(name, value);
+    return TData();
+}
+
+
+
+TData ExprCallFunction::solve(Environment* environment) {
+    TData calleeResult = callee->solve(environment);
+
+    std::vector<TData> args;
+    for (Expression *argument: this->arguments) {
+        TData result = argument->solve(environment);
+        args.push_back(result);
+    }
+
+    // Check if it's callable
+    if (!std::holds_alternative<KCallable*>(calleeResult.getValue()) ) {
+        throw RuntimeException("La expresion no corresponde a una llamada valida.");
+    }
+    KCallable *function = std::get<KCallable*>(calleeResult.getValue());
+
+    // check arity
+    if (arguments.size() != function->arity()) {
+        std::stringstream ss;
+        ss << "Se esperaron " << function->arity() << "argumentos pero se recibierion " << arguments.size();
+        throw RuntimeException(ss.str());
+    }
+
+
+    return function->call(environment, args);
+}
+
+
+
+TData ExprGet::solve(Environment* environment) {
+    throw NotImplementedYetException("Not implemented yet");
+}
+
+
+
+TData ExprLogical::solve(Environment *environment) {
+    TData valueLeft = left->solve(environment);
+    TData valueRight = right->solve(environment);
+
+    if(oper->getName() == TokenName::OR){
+        return valueLeft || valueRight;
+    }
+
+    if(oper->getName() == TokenName::AND){
+        return valueLeft && valueRight;
+    }
+
+    return TData();
+}
+
+
+
+TData ExprRelational::solve(Environment* environment) {
+    TData valueLeft = left->solve(environment);
+    TData valueRight = right->solve(environment);
+
+    if(oper->getName() == TokenName::LESS){
+        return valueLeft < valueRight;
+    }
+    if(oper->getName() == TokenName::LESS_EQUAL){
+        return valueLeft <= valueRight;
+    }
+    if(oper->getName() == TokenName::GREATER){
+        return valueLeft > valueRight;
+    }
+    if(oper->getName() == TokenName::GREATER_EQUAL){
+        return valueLeft >= valueRight;
+    }
+    if(oper->getName() == TokenName::BANG_EQUAL){
+        return valueLeft != valueRight;
+    }
+    if(oper->getName() == TokenName::EQUAL_EQUAL){
+        return valueLeft == valueRight;
+    }
+}
+
+
+
+TData ExprSet::solve(Environment* environment) {
+    throw NotImplementedYetException("Not implemented yet");
+}
+
+
+
+TData ExprSuper::solve(Environment* environment) {
+    throw NotImplementedYetException("Not implemented yet");
+}
+
+
+
+TData ExprThis::solve(Environment* environment) {
+    throw NotImplementedYetException("Not implemented yet");
+}
+
+
+
+
+TData ExprUnary::solve(Environment* environment) {
+    TData valueLeft = left->solve(environment);
+
+    if(oper->getName() == TokenName::MINUS){
+        return -valueLeft;
+    }
+    if(oper->getName() == TokenName::BANG){
+        return !valueLeft;
+    }
+}
+
+
+
+TData ExprVariable::solve(Environment* environment) {
+    return environment->get(name);
+}
+

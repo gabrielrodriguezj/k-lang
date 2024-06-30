@@ -3,6 +3,6 @@
 
 ExprSet::ExprSet(Expression *object, Token *name, Expression *value) : object(object), name(name), value(value) {}
 
-TData ExprSet::solve(Environment* environment) {
-    throw NotImplementedYetException("Not implemented yet");
+void ExprSet::accept(Visitor *visitor) const {
+
 }

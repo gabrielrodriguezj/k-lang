@@ -2,9 +2,6 @@
 #define K_LANG_KCALLABLE_H
 
 #include <vector>
-#include "Interpreter.h"
-#include "TData.h"
-
 class TData;
 class Environment;
 

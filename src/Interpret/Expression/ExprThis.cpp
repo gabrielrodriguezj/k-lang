@@ -3,6 +3,6 @@
 
 ExprThis::ExprThis(Token* keyword): keyword(keyword) {}
 
-TData ExprThis::solve(Environment* environment) {
-    throw NotImplementedYetException("Not implemented yet");
+void ExprThis::accept(Visitor *visitor) const {
+
 }

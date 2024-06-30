@@ -12,7 +12,6 @@ private:
     Expression* initializer;
 public:
     StmtVariable(IdToken *name, Expression *initializer);
-    void execute(Environment*) override;
 
     void accept(Visitor *visitor) const override;
 };

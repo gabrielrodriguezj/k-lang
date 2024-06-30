@@ -12,7 +12,6 @@ private:
     Statement* elseBranch;
 public:
     StmtIf(Expression *condition, Statement *thenBranch, Statement *elseBranch);
-    void execute(Environment*) override;
 
     void accept(Visitor *visitor) const override;
 };

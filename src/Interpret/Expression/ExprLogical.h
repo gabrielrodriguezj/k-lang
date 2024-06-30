@@ -3,7 +3,6 @@
 
 
 #include "Expression.h"
-#include "../../Token/Token.h"
 
 class ExprLogical: public Expression{
 private:
@@ -13,7 +12,7 @@ private:
 public:
     ExprLogical(Expression *left, Token *oper, Expression *right);
 
-    TData solve(Environment *environment) override;
+    void accept(Visitor *visitor) const override;
 };
 
 

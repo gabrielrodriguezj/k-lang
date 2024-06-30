@@ -9,7 +9,7 @@ Interpreter::Interpreter() {
 void Interpreter::interpret(std::vector<Statement *> statements) {
     try {
         for (Statement *statement: statements) {
-            statement->execute(environment);
+            //statement->execute(environment);
         }
     }
     catch (RuntimeException e) {

@@ -1,13 +1,12 @@
 #ifndef K_LANG_INTERPRETER_H
 #define K_LANG_INTERPRETER_H
 
-
-#include <vector>
 #include "Environment.h"
-#include "Expression/Expression.h"
-#include "Statement/Statement.h"
+#include <vector>
 
-class Visitor;
+class Expression;
+class Statement;
+class Environment;
 
 class Interpreter {
 private:

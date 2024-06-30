@@ -3,7 +3,6 @@
 
 
 #include "Expression.h"
-#include "../../Token/Token.h"
 
 class ExprGet: public Expression{
 private:
@@ -11,10 +10,11 @@ private:
     Token* name;
 public:
     ExprGet(Expression *object, Token *name);
-    TData solve(Environment*) override;
 
     Expression* getObject();
     Token* getName();
+
+    void accept(Visitor *visitor) const override;
 };
 
 

@@ -9,7 +9,8 @@ private:
     Expression* expression;
 public:
     ExprGrouping(Expression*);
-    TData solve(Environment*) override;
+
+    void accept(Visitor *visitor) const override;
 };
 
 

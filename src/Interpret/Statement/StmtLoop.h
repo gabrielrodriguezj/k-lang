@@ -11,7 +11,6 @@ private:
     Statement* body;
 public:
     StmtLoop(Expression *condition, Statement *body);
-    void execute(Environment*) override;
 
     void accept(Visitor *visitor) const override;
 };

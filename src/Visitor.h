@@ -1,27 +1,27 @@
 #ifndef K_LANG_VISITOR_H
 #define K_LANG_VISITOR_H
 
-
-#include "Interpret/Expression/ExprAssignment.h"
-#include "Interpret/Expression/ExprArithmetic.h"
-#include "Interpret/Expression/ExprLogical.h"
-#include "Interpret/Expression/ExprRelational.h"
-#include "Interpret/Expression/ExprCallFunction.h"
-#include "Interpret/Expression/ExprGet.h"
-#include "Interpret/Expression/ExprGrouping.h"
-#include "Interpret/Expression/ExprLiteral.h"
-#include "Interpret/Expression/ExprSet.h"
-#include "Interpret/Expression/ExprSuper.h"
-#include "Interpret/Expression/ExprThis.h"
-#include "Interpret/Expression/ExprUnary.h"
-#include "Interpret/Expression/ExprVariable.h"
-#include "Interpret/Statement/StmtBlock.h"
-#include "Interpret/Statement/StmtClass.h"
-#include "Interpret/Statement/StmtExpression.h"
-#include "Interpret/Statement/StmtIf.h"
-#include "Interpret/Statement/StmtPrint.h"
-#include "Interpret/Statement/StmtReturn.h"
-#include "Interpret/Statement/StmtLoop.h"
+class ExprAssignment;
+class ExprArithmetic;
+class ExprLogical;
+class ExprRelational;
+class ExprCallFunction;
+class ExprGet;
+class ExprGrouping;
+class ExprLiteral;
+class ExprSet;
+class ExprSuper;
+class ExprThis;
+class ExprUnary;
+class ExprVariable;
+class StmtBlock;
+class StmtClass;
+class StmtExpression;
+class StmtFunction;
+class StmtIf;
+class StmtPrint;
+class StmtReturn;
+class StmtLoop;
 
 class Visitor {
 public:
@@ -47,7 +47,7 @@ public:
     virtual void visitLoopStmt(StmtLoop *stmt) const = 0;
     virtual void visitPrintStmt(StmtPrint *stmt) const = 0;
     virtual void visitReturnStmt(StmtReturn *stmt) const = 0;
-    virtual void visitVarStmt(StmtVariable *stmt) const = 0;
+    //virtual void visitVarStmt(StmtVariable *stmt) const = 0;
 
 };
 

@@ -4,7 +4,6 @@
 #include "Parser.h"
 #include "Exceptions/ParserException.h"
 #include "Exceptions/ScannerException.h"
-#include "Interpret/Interpreter.h"
 
 void ejecutarArchivo(std::string path);
 void repl();
@@ -52,8 +51,8 @@ void ejecutar(std::string source){
         if(res){
             std::vector<Statement*> statements = parser.getStatements();
 
-            Interpreter interpreter = Interpreter();
-            interpreter.interpret(statements);
+            //Interpreter interpreter = Interpreter();
+            //interpreter.interpret(statements);
         }
     }
     catch (ParserException e){

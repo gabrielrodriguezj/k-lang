@@ -1,11 +1,7 @@
 #ifndef K_LANG_EXPRASSIGNMENT_H
 #define K_LANG_EXPRASSIGNMENT_H
 
-
 #include "Expression.h"
-//#include "../../Token/IdToken.h"
-
-//class Visitor;
 
 class ExprAssignment: public Expression{
 private:
@@ -14,7 +10,7 @@ private:
 public:
     ExprAssignment(IdToken *name, Expression *expression);
 
-    TData solve(Environment*) override;
+    void accept(Visitor *visitor) const override;
 };
 
 

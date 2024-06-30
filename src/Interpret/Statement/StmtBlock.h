@@ -4,9 +4,8 @@
 
 #include <vector>
 #include "Statement.h"
-#include "../Environment.h"
 
-class visitor;
+class Visitor;
 
 class StmtBlock: public Statement{
 private:
@@ -14,8 +13,6 @@ private:
 
 public:
     explicit StmtBlock(const std::vector<Statement *> &statements);
-
-    void execute(Environment*) override;
 
     void accept(Visitor *visitor) const override;
 };

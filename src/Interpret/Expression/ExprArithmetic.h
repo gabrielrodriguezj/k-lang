@@ -3,7 +3,6 @@
 
 
 #include "Expression.h"
-#include "../../Token/Token.h"
 
 class ExprArithmetic: public Expression{
 private:
@@ -12,7 +11,8 @@ private:
     Expression* right;
 public:
     ExprArithmetic(Expression *left, Token *oper, Expression *right);
-    TData solve(Environment*) override;
+
+    void accept(Visitor *visitor) const override;
 };
 
 

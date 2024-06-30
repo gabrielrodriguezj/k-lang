@@ -10,7 +10,7 @@ private:
 public:
     ExprThis(Token* keyword);
 
-    TData solve(Environment*) override;
+    void accept(Visitor *visitor) const override;
 };
 
 

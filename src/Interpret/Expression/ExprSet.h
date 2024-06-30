@@ -3,7 +3,6 @@
 
 
 #include "Expression.h"
-#include "../../Token/Token.h"
 
 class ExprSet: public Expression {
 private:
@@ -13,7 +12,7 @@ private:
 public:
     ExprSet(Expression *object, Token *name, Expression *value);
 
-    TData solve(Environment*) override;
+    void accept(Visitor *visitor) const override;
 };
 
 

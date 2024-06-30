@@ -2,7 +2,7 @@
 #define K_LANG_SEMANTIC_H
 
 #include <iostream>
-#include "Visitor.h"
+#include "Interpret/Statement/Statement.h"
 
 class Semantic: public Visitor{
 public:

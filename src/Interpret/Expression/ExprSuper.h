@@ -3,7 +3,6 @@
 
 
 #include "Expression.h"
-#include "../../Token/TToken.h"
 
 class ExprSuper: public Expression{
 private:
@@ -12,7 +11,7 @@ private:
 public:
     explicit ExprSuper(Token *keyword, TToken *method);
 
-    TData solve(Environment*) override;
+    void accept(Visitor *visitor) const override;
 };
 
 

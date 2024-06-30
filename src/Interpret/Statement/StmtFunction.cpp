@@ -5,12 +5,6 @@ StmtFunction::StmtFunction(IdToken *name, const std::vector<IdToken *> &params, 
                                                                                                  params(params),
                                                                                                  body(body) {}
 
-void StmtFunction::execute(Environment* environment) {
-    KFunction* function = new KFunction(this, environment, false);
-    TData dataFunction = TData(function);
-    environment->define(name, dataFunction);
-}
-
 std::vector<IdToken *> StmtFunction::getParams() {
     return params;
 }
@@ -24,5 +18,5 @@ IdToken* StmtFunction::getName(){
 }
 
 void StmtFunction::accept(Visitor *visitor) const {
-    visitor->visitFunctionStmt(this);
+    //visitor->visitFunctionStmt(this);
 }

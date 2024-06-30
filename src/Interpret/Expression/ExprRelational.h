@@ -3,7 +3,6 @@
 
 
 #include "Expression.h"
-#include "../../Token/Token.h"
 
 class ExprRelational: public Expression{
 private:
@@ -13,7 +12,7 @@ private:
 public:
     ExprRelational(Expression *left, Token *oper, Expression *right);
 
-    TData solve(Environment*) override;
+    void accept(Visitor *visitor) const override;
 };
 
 
