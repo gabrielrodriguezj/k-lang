@@ -13,6 +13,12 @@ public:
     ExprLogical(Expression *left, Token *oper, Expression *right);
 
     void accept(Visitor *visitor) override;
+
+    Expression *getLeft() const;
+
+    Token *getOper() const;
+
+    Expression *getRight() const;
 };
 
 

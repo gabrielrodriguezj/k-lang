@@ -12,6 +12,10 @@ public:
     ExprUnary(Expression *left, Token *oper);
 
     void accept(Visitor *visitor) override;
+
+    Expression *getLeft() const;
+
+    Token *getOper() const;
 };
 
 

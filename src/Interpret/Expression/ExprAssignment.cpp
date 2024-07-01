@@ -6,3 +6,11 @@ void ExprAssignment::accept(Visitor *visitor) {
     visitor->visitAssignExpr(this);
 }
 
+IdToken *ExprAssignment::getName() const {
+    return name;
+}
+
+Expression *ExprAssignment::getExpression() const {
+    return expression;
+}
+

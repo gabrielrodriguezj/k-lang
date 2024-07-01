@@ -11,6 +11,10 @@ public:
     ExprAssignment(IdToken *name, Expression *expression);
 
     void accept(Visitor *visitor) override;
+
+    IdToken *getName() const;
+
+    Expression *getExpression() const;
 };
 
 
