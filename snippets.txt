@@ -14,14 +14,3 @@ char* readFile(std::string path){
 
     return buffer;
 }
-
-
-
-
-
-
-
-TData ExprVariable::solve(Environment* environment) {
-    return environment->get(name);
-}
-
