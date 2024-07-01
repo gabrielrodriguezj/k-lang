@@ -17,35 +17,35 @@ public:
     void interpret(std::vector<Statement*> statements);
 
 private:
-    void evaluate(Expression *expr);
+    TData evaluate(Expression *expr);
 
     void execute(Statement *stmt);
 
-    void visitAssignExpr(ExprAssignment *expr) override;
+    TData visitAssignExpr(ExprAssignment *expr) override;
 
-    void visitArithmeticExpr(ExprArithmetic *expr) override;
+    TData visitArithmeticExpr(ExprArithmetic *expr) override;
 
-    void visitCallExpr(ExprCallFunction *expr) override;
+    TData visitCallExpr(ExprCallFunction *expr) override;
 
-    void visitGetExpr(ExprGet *expr) override;
+    TData visitGetExpr(ExprGet *expr) override;
 
-    void visitGroupingExpr(ExprGrouping *expr) override;
+    TData visitGroupingExpr(ExprGrouping *expr) override;
 
-    void visitLiteralExpr(ExprLiteral *expr) override;
+    TData visitLiteralExpr(ExprLiteral *expr) override;
 
-    void visitLogicalExpr(ExprLogical *expr) override;
+    TData visitLogicalExpr(ExprLogical *expr) override;
 
-    void visitRelational(ExprRelational *expr) override;
+    TData visitRelational(ExprRelational *expr) override;
 
-    void visitSetExpr(ExprSet *expr) override;
+    TData visitSetExpr(ExprSet *expr) override;
 
-    void visitSuperExpr(ExprSuper *expr) override;
+    TData visitSuperExpr(ExprSuper *expr) override;
 
-    void visitThisExpr(ExprThis *expr) override;
+    TData visitThisExpr(ExprThis *expr) override;
 
-    void visitUnaryExpr(ExprUnary *expr) override;
+    TData visitUnaryExpr(ExprUnary *expr) override;
 
-    void visitVariableExpr(ExprVariable *expr) override;
+    TData visitVariableExpr(ExprVariable *expr) override;
 
     void visitBlockStmt(StmtBlock *stmt) override;
 

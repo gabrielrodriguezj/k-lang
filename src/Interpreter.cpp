@@ -28,7 +28,7 @@ void Interpreter::interpret(std::vector<Statement *> statements) {
     }
 }
 
-void Interpreter::evaluate(Expression *expr){
+TData Interpreter::evaluate(Expression *expr){
     expr->accept(this);
 }
 
@@ -36,55 +36,55 @@ void Interpreter::execute(Statement *statement){
     statement->accept(this);
 }
 
-void Interpreter::visitAssignExpr(ExprAssignment *expr) {
+TData Interpreter::visitAssignExpr(ExprAssignment *expr) {
 
 }
 
-void Interpreter::visitArithmeticExpr(ExprArithmetic *expr) {
+TData Interpreter::visitArithmeticExpr(ExprArithmetic *expr) {
 
 }
 
-void Interpreter::visitCallExpr(ExprCallFunction *expr) {
+TData Interpreter::visitCallExpr(ExprCallFunction *expr) {
 
 }
 
-void Interpreter::visitGetExpr(ExprGet *expr) {
+TData Interpreter::visitGetExpr(ExprGet *expr) {
 
 }
 
-void Interpreter::visitGroupingExpr(ExprGrouping *expr) {
+TData Interpreter::visitGroupingExpr(ExprGrouping *expr) {
 
 }
 
-void Interpreter::visitLiteralExpr(ExprLiteral *expr) {
+TData Interpreter::visitLiteralExpr(ExprLiteral *expr) {
 
 }
 
-void Interpreter::visitLogicalExpr(ExprLogical *expr) {
+TData Interpreter::visitLogicalExpr(ExprLogical *expr) {
 
 }
 
-void Interpreter::visitRelational(ExprRelational *expr) {
+TData Interpreter::visitRelational(ExprRelational *expr) {
 
 }
 
-void Interpreter::visitSetExpr(ExprSet *expr) {
+TData Interpreter::visitSetExpr(ExprSet *expr) {
 
 }
 
-void Interpreter::visitSuperExpr(ExprSuper *expr) {
+TData Interpreter::visitSuperExpr(ExprSuper *expr) {
 
 }
 
-void Interpreter::visitThisExpr(ExprThis *expr) {
+TData Interpreter::visitThisExpr(ExprThis *expr) {
 
 }
 
-void Interpreter::visitUnaryExpr(ExprUnary *expr) {
+TData Interpreter::visitUnaryExpr(ExprUnary *expr) {
 
 }
 
-void Interpreter::visitVariableExpr(ExprVariable *expr) {
+TData Interpreter::visitVariableExpr(ExprVariable *expr) {
 
 }
 
@@ -118,8 +118,7 @@ void Interpreter::visitFunctionStmt(StmtFunction *stmt) {
 }
 
 void Interpreter::visitIfStmt(StmtIf *stmt) {
-    //TData solCondition = evaluate(stmt->getCondition());
-    TData solCondition = TData(true);
+    TData solCondition = evaluate(stmt->getCondition());
 
     if (!std::holds_alternative<bool>(solCondition.getValue())) {
         throw RuntimeException("La condicion no es una expresion valida");
@@ -136,8 +135,7 @@ void Interpreter::visitIfStmt(StmtIf *stmt) {
 }
 
 void Interpreter::visitLoopStmt(StmtLoop *stmt) {
-    //TData solCondition = evaluate(stmt->getCondition());
-    TData solCondition = TData(true);
+    TData solCondition = evaluate(stmt->getCondition());
 
     if (!std::holds_alternative<bool>(solCondition.getValue())) {
         throw RuntimeException("La condicion no es una expresion valida");
@@ -159,8 +157,7 @@ void Interpreter::visitLoopStmt(StmtLoop *stmt) {
 
 void Interpreter::visitPrintStmt(StmtPrint *stmt) {
 
-    //TData data = evaluate(stmt->getExpression());
-    TData data = TData(true);
+    TData data = evaluate(stmt->getExpression());
     auto value = data.getValue();
 
     if(std::holds_alternative<std::monostate>(value)){
@@ -191,8 +188,7 @@ void Interpreter::visitPrintStmt(StmtPrint *stmt) {
 void Interpreter::visitReturnStmt(StmtReturn *stmt) {
     TData valueReturn;
     if(stmt->getValue() != nullptr){
-        //valueReturn = evaluate(stmt->getValue());
-        valueReturn = TData(true);
+        valueReturn = evaluate(stmt->getValue());
     }
 
     throw Return("Return", valueReturn);
@@ -202,8 +198,7 @@ void Interpreter::visitVarStmt(StmtVariable *stmt) {
     TData value;
 
     if(stmt->getInitializer() != nullptr){
-        //value = evaluate(stmt->getInitializer());
-        value = TData(true);
+        value = evaluate(stmt->getInitializer());
     }
 
     environment->define(stmt->getName(), value);
