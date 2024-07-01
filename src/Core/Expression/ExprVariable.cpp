@@ -6,6 +6,6 @@ IdToken* ExprVariable::getName() {
     return name;
 }
 
-void ExprVariable::accept(Visitor *visitor) {
-    visitor->visitVariableExpr(this);
+KData ExprVariable::accept(Visitor *visitor) {
+    return visitor->visitVariableExpr(this);
 }

@@ -10,7 +10,7 @@ private:
 public:
     ExprThis(Token* keyword);
 
-    void accept(Visitor *visitor) override;
+    KData accept(Visitor *visitor) override;
 };
 
 

@@ -2,8 +2,8 @@
 
 ExprArithmetic::ExprArithmetic(Expression *left, Token *oper, Expression *right) : left(left), oper(oper), right(right) {}
 
-void ExprArithmetic::accept(Visitor *visitor) {
-    visitor->visitArithmeticExpr(this);
+KData ExprArithmetic::accept(Visitor *visitor) {
+    return visitor->visitArithmeticExpr(this);
 }
 
 Expression *ExprArithmetic::getLeft() const {

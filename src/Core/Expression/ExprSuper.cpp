@@ -3,7 +3,7 @@
 
 ExprSuper::ExprSuper(Token *keyword, TToken *method) : keyword(keyword), method(method) {}
 
-void ExprSuper::accept(Visitor *visitor) {
-    visitor->visitSuperExpr(this);
+KData ExprSuper::accept(Visitor *visitor) {
+    return visitor->visitSuperExpr(this);
 }
 

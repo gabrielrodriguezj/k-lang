@@ -2,8 +2,8 @@
 
 ExprUnary::ExprUnary(Expression *left, Token *oper) : left(left), oper(oper) {}
 
-void ExprUnary::accept(Visitor *visitor) {
-    visitor->visitUnaryExpr(this);
+KData ExprUnary::accept(Visitor *visitor) {
+    return visitor->visitUnaryExpr(this);
 }
 
 Expression *ExprUnary::getLeft() const {

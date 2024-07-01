@@ -39,7 +39,7 @@ void Interpreter::interpret(std::vector<Statement *> statements) {
 }
 
 KData Interpreter::evaluate(Expression *expr){
-    expr->accept(this);
+    return expr->accept(this);
 }
 
 void Interpreter::execute(Statement *statement){

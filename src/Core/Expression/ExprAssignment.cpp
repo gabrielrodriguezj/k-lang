@@ -2,8 +2,8 @@
 
 ExprAssignment::ExprAssignment(IdToken *name, Expression *expression) : name(name), expression(expression) {}
 
-void ExprAssignment::accept(Visitor *visitor) {
-    visitor->visitAssignExpr(this);
+KData ExprAssignment::accept(Visitor *visitor) {
+    return visitor->visitAssignExpr(this);
 }
 
 IdToken *ExprAssignment::getName() const {

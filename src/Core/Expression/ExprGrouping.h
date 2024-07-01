@@ -10,7 +10,7 @@ private:
 public:
     ExprGrouping(Expression*);
 
-    void accept(Visitor *visitor) override;
+    KData accept(Visitor *visitor) override;
 
     Expression *getExpression() const;
 };

@@ -2,8 +2,8 @@
 
 ExprLogical::ExprLogical(Expression *left, Token *oper, Expression *right) : left(left), oper(oper), right(right) {}
 
-void ExprLogical::accept(Visitor *visitor) {
-    visitor->visitLogicalExpr(this);
+KData ExprLogical::accept(Visitor *visitor) {
+    return visitor->visitLogicalExpr(this);
 }
 
 Expression *ExprLogical::getLeft() const {

@@ -10,7 +10,7 @@
 
 class Expression {
 public:
-    virtual void accept(Visitor *visitor) = 0;
+    virtual KData accept(Visitor *visitor) = 0;
 };
 
 

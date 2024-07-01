@@ -3,6 +3,6 @@
 
 ExprThis::ExprThis(Token* keyword): keyword(keyword) {}
 
-void ExprThis::accept(Visitor *visitor) {
-    visitor->visitThisExpr(this);
+KData ExprThis::accept(Visitor *visitor) {
+    return visitor->visitThisExpr(this);
 }

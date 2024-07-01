@@ -14,7 +14,7 @@ public:
     Expression* getObject();
     Token* getName();
 
-    void accept(Visitor *visitor) override;
+    KData accept(Visitor *visitor) override;
 };
 
 

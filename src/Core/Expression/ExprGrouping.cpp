@@ -2,8 +2,8 @@
 
 ExprGrouping::ExprGrouping(Expression* expression) : expression(expression){}
 
-void ExprGrouping::accept(Visitor *visitor) {
-    visitor->visitGroupingExpr(this);
+KData ExprGrouping::accept(Visitor *visitor) {
+    return visitor->visitGroupingExpr(this);
 }
 
 Expression *ExprGrouping::getExpression() const {

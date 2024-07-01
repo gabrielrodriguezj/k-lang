@@ -11,7 +11,7 @@ private:
 public:
     ExprUnary(Expression *left, Token *oper);
 
-    void accept(Visitor *visitor) override;
+    KData accept(Visitor *visitor) override;
 
     Expression *getLeft() const;
 

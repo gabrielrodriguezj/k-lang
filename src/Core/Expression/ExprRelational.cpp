@@ -2,8 +2,8 @@
 
 ExprRelational::ExprRelational(Expression *left, Token *oper, Expression *right) : left(left), oper(oper), right(right) {}
 
-void ExprRelational::accept(Visitor *visitor) {
-    visitor->visitRelational(this);
+KData ExprRelational::accept(Visitor *visitor) {
+    return visitor->visitRelational(this);
 }
 
 
