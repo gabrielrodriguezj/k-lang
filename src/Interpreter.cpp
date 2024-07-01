@@ -7,6 +7,7 @@
 
 #include "Core/Statement/StmtBlock.h"
 #include "Core/Statement/StmtExpression.h"
+#include "Core/Statement/StmtFunction.h"
 #include "Core/Statement/StmtIf.h"
 #include "Core/Statement/StmtPrint.h"
 #include "Core/Statement/StmtReturn.h"
