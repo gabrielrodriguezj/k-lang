@@ -2,25 +2,25 @@
 #include "Interpreter.h"
 #include "Exceptions/RuntimeException.h"
 #include "Exceptions//NotImplementedYetException.h"
-#include "Interpret/KFunction.h"
-#include "Interpret/Return.h"
+#include "Core/KFunction.h"
+#include "Core/Return.h"
 
-#include "Interpret/Statement/StmtBlock.h"
-#include "Interpret/Statement/StmtExpression.h"
-#include "Interpret/Statement/StmtIf.h"
-#include "Interpret/Statement/StmtPrint.h"
-#include "Interpret/Statement/StmtReturn.h"
-#include "Interpret/Statement/StmtVariable.h"
-#include "Interpret/Statement/StmtLoop.h"
-#include "Interpret/Expression/ExprAssignment.h"
-#include "Interpret/Expression/ExprArithmetic.h"
-#include "Interpret/Expression/ExprCallFunction.h"
-#include "Interpret/Expression/ExprGrouping.h"
-#include "Interpret/Expression/ExprLiteral.h"
-#include "Interpret/Expression/ExprLogical.h"
-#include "Interpret/Expression/ExprRelational.h"
-#include "Interpret/Expression/ExprUnary.h"
-#include "Interpret/Expression/ExprVariable.h"
+#include "Core/Statement/StmtBlock.h"
+#include "Core/Statement/StmtExpression.h"
+#include "Core/Statement/StmtIf.h"
+#include "Core/Statement/StmtPrint.h"
+#include "Core/Statement/StmtReturn.h"
+#include "Core/Statement/StmtVariable.h"
+#include "Core/Statement/StmtLoop.h"
+#include "Core/Expression/ExprAssignment.h"
+#include "Core/Expression/ExprArithmetic.h"
+#include "Core/Expression/ExprCallFunction.h"
+#include "Core/Expression/ExprGrouping.h"
+#include "Core/Expression/ExprLiteral.h"
+#include "Core/Expression/ExprLogical.h"
+#include "Core/Expression/ExprRelational.h"
+#include "Core/Expression/ExprUnary.h"
+#include "Core/Expression/ExprVariable.h"
 
 Interpreter::Interpreter() {
     globals = new Environment();
@@ -38,7 +38,7 @@ void Interpreter::interpret(std::vector<Statement *> statements) {
     }
 }
 
-TData Interpreter::evaluate(Expression *expr){
+KData Interpreter::evaluate(Expression *expr){
     expr->accept(this);
 }
 
@@ -46,16 +46,16 @@ void Interpreter::execute(Statement *statement){
     statement->accept(this);
 }
 
-TData Interpreter::visitAssignExpr(ExprAssignment *expr) {
-    TData value = evaluate(expr->getExpression());
+KData Interpreter::visitAssignExpr(ExprAssignment *expr) {
+    KData value = evaluate(expr->getExpression());
     this->environment->assign(expr->getName(), value);
-    return TData();
+    return KData();
 }
 
-TData Interpreter::visitArithmeticExpr(ExprArithmetic *expr) {
+KData Interpreter::visitArithmeticExpr(ExprArithmetic *expr) {
 
-    TData valueLeft = evaluate(expr->getLeft());
-    TData valueRight = evaluate(expr->getRight());
+    KData valueLeft = evaluate(expr->getLeft());
+    KData valueRight = evaluate(expr->getRight());
 
     if(expr->getOper()->getName() == TokenName::PLUS){
         return valueLeft + valueRight;
@@ -70,15 +70,15 @@ TData Interpreter::visitArithmeticExpr(ExprArithmetic *expr) {
         return valueLeft / valueRight;
     }
 
-    return TData();
+    return KData();
 }
 
-TData Interpreter::visitCallExpr(ExprCallFunction *expr) {
-    TData calleeResult = evaluate(expr->getCallee());
+KData Interpreter::visitCallExpr(ExprCallFunction *expr) {
+    KData calleeResult = evaluate(expr->getCallee());
 
-    std::vector<TData> args;
+    std::vector<KData> args;
     for (Expression *argument: expr->getArguments()) {
-        TData result = evaluate(argument);
+        KData result = evaluate(argument);
         args.push_back(result);
     }
 
@@ -98,41 +98,41 @@ TData Interpreter::visitCallExpr(ExprCallFunction *expr) {
     return function->call(environment, args);
 }
 
-TData Interpreter::visitGetExpr(ExprGet *expr) {
+KData Interpreter::visitGetExpr(ExprGet *expr) {
     throw NotImplementedYetException("Not implemented yet");
 }
 
-TData Interpreter::visitGroupingExpr(ExprGrouping *expr) {
+KData Interpreter::visitGroupingExpr(ExprGrouping *expr) {
     return evaluate(expr->getExpression());
 }
 
-TData Interpreter::visitLiteralExpr(ExprLiteral *expr) {
+KData Interpreter::visitLiteralExpr(ExprLiteral *expr) {
     if (std::holds_alternative<int>(expr->getValue()) ) {
         int litVale = std::get<int>(expr->getValue());
-        return TData(litVale);
+        return KData(litVale);
     }
 
     if (std::holds_alternative<double>(expr->getValue()) ) {
         double litVale = std::get<double>(expr->getValue());
-        return TData(litVale);
+        return KData(litVale);
     }
 
     if (std::holds_alternative<bool>(expr->getValue()) ) {
         bool litVale = std::get<bool>(expr->getValue());
-        return TData(litVale);
+        return KData(litVale);
     }
 
     if (std::holds_alternative<std::string>(expr->getValue()) ) {
         std::string litVale = std::get<std::string>(expr->getValue());
-        return TData(litVale);
+        return KData(litVale);
     }
 
-    return TData();
+    return KData();
 }
 
-TData Interpreter::visitLogicalExpr(ExprLogical *expr) {
-    TData valueLeft = evaluate(expr->getLeft());
-    TData valueRight = evaluate(expr->getRight());
+KData Interpreter::visitLogicalExpr(ExprLogical *expr) {
+    KData valueLeft = evaluate(expr->getLeft());
+    KData valueRight = evaluate(expr->getRight());
 
     if(expr->getOper()->getName() == TokenName::OR){
         return valueLeft || valueRight;
@@ -142,12 +142,12 @@ TData Interpreter::visitLogicalExpr(ExprLogical *expr) {
         return valueLeft && valueRight;
     }
 
-    return TData();
+    return KData();
 }
 
-TData Interpreter::visitRelational(ExprRelational *expr) {
-    TData valueLeft = evaluate(expr->getLeft());
-    TData valueRight = evaluate(expr->getRight());
+KData Interpreter::visitRelational(ExprRelational *expr) {
+    KData valueLeft = evaluate(expr->getLeft());
+    KData valueRight = evaluate(expr->getRight());
 
     if(expr->getOper()->getName() == TokenName::LESS){
         return valueLeft < valueRight;
@@ -168,23 +168,23 @@ TData Interpreter::visitRelational(ExprRelational *expr) {
         return valueLeft == valueRight;
     }
 
-    return TData();
+    return KData();
 }
 
-TData Interpreter::visitSetExpr(ExprSet *expr) {
+KData Interpreter::visitSetExpr(ExprSet *expr) {
     throw NotImplementedYetException("Not implemented yet");
 }
 
-TData Interpreter::visitSuperExpr(ExprSuper *expr) {
+KData Interpreter::visitSuperExpr(ExprSuper *expr) {
     throw NotImplementedYetException("Not implemented yet");
 }
 
-TData Interpreter::visitThisExpr(ExprThis *expr) {
+KData Interpreter::visitThisExpr(ExprThis *expr) {
     throw NotImplementedYetException("Not implemented yet");
 }
 
-TData Interpreter::visitUnaryExpr(ExprUnary *expr) {
-    TData valueLeft = evaluate(expr->getLeft());
+KData Interpreter::visitUnaryExpr(ExprUnary *expr) {
+    KData valueLeft = evaluate(expr->getLeft());
 
     if(expr->getOper()->getName() == TokenName::MINUS){
         return -valueLeft;
@@ -193,10 +193,10 @@ TData Interpreter::visitUnaryExpr(ExprUnary *expr) {
         return !valueLeft;
     }
 
-    return TData();
+    return KData();
 }
 
-TData Interpreter::visitVariableExpr(ExprVariable *expr) {
+KData Interpreter::visitVariableExpr(ExprVariable *expr) {
     return this->environment->get(expr->getName());
 }
 
@@ -225,12 +225,12 @@ void Interpreter::visitExpressionStmt(StmtExpression *stmt) {
 
 void Interpreter::visitFunctionStmt(StmtFunction *stmt) {
     KFunction *function = new KFunction(stmt, environment, false);
-    TData dataFunction = TData(function);
+    KData dataFunction = KData(function);
     environment->define(stmt->getName(), dataFunction);
 }
 
 void Interpreter::visitIfStmt(StmtIf *stmt) {
-    TData solCondition = evaluate(stmt->getCondition());
+    KData solCondition = evaluate(stmt->getCondition());
 
     if (!std::holds_alternative<bool>(solCondition.getValue())) {
         throw RuntimeException("La condicion no es una expresion valida");
@@ -247,7 +247,7 @@ void Interpreter::visitIfStmt(StmtIf *stmt) {
 }
 
 void Interpreter::visitLoopStmt(StmtLoop *stmt) {
-    TData solCondition = evaluate(stmt->getCondition());
+    KData solCondition = evaluate(stmt->getCondition());
 
     if (!std::holds_alternative<bool>(solCondition.getValue())) {
         throw RuntimeException("La condicion no es una expresion valida");
@@ -259,7 +259,7 @@ void Interpreter::visitLoopStmt(StmtLoop *stmt) {
 
         // Evaluate the condition after execute the body
         //solCondition = evaluate(stmt->getCondition());
-        TData solCondition = TData(true);
+        KData solCondition = KData(true);
         if (!std::holds_alternative<bool>(solCondition.getValue())) {
             throw RuntimeException("La condicion no es una expresion valida");
         }
@@ -269,7 +269,7 @@ void Interpreter::visitLoopStmt(StmtLoop *stmt) {
 
 void Interpreter::visitPrintStmt(StmtPrint *stmt) {
 
-    TData data = evaluate(stmt->getExpression());
+    KData data = evaluate(stmt->getExpression());
     auto value = data.getValue();
 
     if(std::holds_alternative<std::monostate>(value)){
@@ -298,7 +298,7 @@ void Interpreter::visitPrintStmt(StmtPrint *stmt) {
 }
 
 void Interpreter::visitReturnStmt(StmtReturn *stmt) {
-    TData valueReturn;
+    KData valueReturn;
     if(stmt->getValue() != nullptr){
         valueReturn = evaluate(stmt->getValue());
     }
@@ -307,7 +307,7 @@ void Interpreter::visitReturnStmt(StmtReturn *stmt) {
 }
 
 void Interpreter::visitVarStmt(StmtVariable *stmt) {
-    TData value;
+    KData value;
 
     if(stmt->getInitializer() != nullptr){
         value = evaluate(stmt->getInitializer());

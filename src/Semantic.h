@@ -1,7 +1,7 @@
 #ifndef K_LANG_SEMANTIC_H
 #define K_LANG_SEMANTIC_H
 
-#include "Interpret/Statement/Statement.h"
+#include "Core/Statement/Statement.h"
 
 class Semantic: public Visitor{
 public:

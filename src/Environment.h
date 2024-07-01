@@ -5,21 +5,21 @@
 #include <string>
 #include <map>
 #include "Token/IdToken.h"
-#include "Interpret/TData.h"
+#include "Core/KData.h"
 
-class TData;
+class KData;
 
 class Environment {
 private:
     Environment* enclosing{};
-    std::map<std::string, TData> values;
+    std::map<std::string, KData> values;
 public:
     Environment();
     explicit Environment(Environment *enclosing);
 
-    TData get(IdToken*);
-    void assign(IdToken*, TData);
-    void define(IdToken*, TData);
+    KData get(IdToken*);
+    void assign(IdToken*, KData);
+    void define(IdToken*, KData);
 };
 
 

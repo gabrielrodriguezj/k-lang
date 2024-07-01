@@ -23,23 +23,23 @@ class StmtPrint;
 class StmtReturn;
 class StmtLoop;
 class StmtVariable;
-class TData;
+class KData;
 
 class Visitor {
 public:
-    virtual TData visitAssignExpr(ExprAssignment *expr) = 0;
-    virtual TData visitArithmeticExpr(ExprArithmetic *expr) = 0;
-    virtual TData visitCallExpr(ExprCallFunction *expr) = 0;
-    virtual TData visitGetExpr(ExprGet *expr) = 0;
-    virtual TData visitGroupingExpr(ExprGrouping *expr) = 0;
-    virtual TData visitLiteralExpr(ExprLiteral *expr) = 0;
-    virtual TData visitLogicalExpr(ExprLogical *expr) = 0;
-    virtual TData visitRelational(ExprRelational *expr) = 0;
-    virtual TData visitSetExpr(ExprSet *expr) = 0;
-    virtual TData visitSuperExpr(ExprSuper *expr) = 0;
-    virtual TData visitThisExpr(ExprThis *expr) = 0;
-    virtual TData visitUnaryExpr(ExprUnary *expr) = 0;
-    virtual TData visitVariableExpr(ExprVariable *expr) = 0;
+    virtual KData visitAssignExpr(ExprAssignment *expr) = 0;
+    virtual KData visitArithmeticExpr(ExprArithmetic *expr) = 0;
+    virtual KData visitCallExpr(ExprCallFunction *expr) = 0;
+    virtual KData visitGetExpr(ExprGet *expr) = 0;
+    virtual KData visitGroupingExpr(ExprGrouping *expr) = 0;
+    virtual KData visitLiteralExpr(ExprLiteral *expr) = 0;
+    virtual KData visitLogicalExpr(ExprLogical *expr) = 0;
+    virtual KData visitRelational(ExprRelational *expr) = 0;
+    virtual KData visitSetExpr(ExprSet *expr) = 0;
+    virtual KData visitSuperExpr(ExprSuper *expr) = 0;
+    virtual KData visitThisExpr(ExprThis *expr) = 0;
+    virtual KData visitUnaryExpr(ExprUnary *expr) = 0;
+    virtual KData visitVariableExpr(ExprVariable *expr) = 0;
 
     virtual void visitBlockStmt(StmtBlock *stmt) = 0;
     virtual void visitClassStmt(StmtClass *stmt) = 0;

@@ -3,8 +3,8 @@
 
 #include "Environment.h"
 #include "Visitor.h"
-#include "Interpret/Expression/Expression.h"
-#include "Interpret/Statement/Statement.h"
+#include "Core/Expression/Expression.h"
+#include "Core/Statement/Statement.h"
 #include <vector>
 
 class Interpreter : public Visitor{
@@ -17,35 +17,35 @@ public:
     void interpret(std::vector<Statement*> statements);
 
 private:
-    TData evaluate(Expression *expr);
+    KData evaluate(Expression *expr);
 
     void execute(Statement *stmt);
 
-    TData visitAssignExpr(ExprAssignment *expr) override;
+    KData visitAssignExpr(ExprAssignment *expr) override;
 
-    TData visitArithmeticExpr(ExprArithmetic *expr) override;
+    KData visitArithmeticExpr(ExprArithmetic *expr) override;
 
-    TData visitCallExpr(ExprCallFunction *expr) override;
+    KData visitCallExpr(ExprCallFunction *expr) override;
 
-    TData visitGetExpr(ExprGet *expr) override;
+    KData visitGetExpr(ExprGet *expr) override;
 
-    TData visitGroupingExpr(ExprGrouping *expr) override;
+    KData visitGroupingExpr(ExprGrouping *expr) override;
 
-    TData visitLiteralExpr(ExprLiteral *expr) override;
+    KData visitLiteralExpr(ExprLiteral *expr) override;
 
-    TData visitLogicalExpr(ExprLogical *expr) override;
+    KData visitLogicalExpr(ExprLogical *expr) override;
 
-    TData visitRelational(ExprRelational *expr) override;
+    KData visitRelational(ExprRelational *expr) override;
 
-    TData visitSetExpr(ExprSet *expr) override;
+    KData visitSetExpr(ExprSet *expr) override;
 
-    TData visitSuperExpr(ExprSuper *expr) override;
+    KData visitSuperExpr(ExprSuper *expr) override;
 
-    TData visitThisExpr(ExprThis *expr) override;
+    KData visitThisExpr(ExprThis *expr) override;
 
-    TData visitUnaryExpr(ExprUnary *expr) override;
+    KData visitUnaryExpr(ExprUnary *expr) override;
 
-    TData visitVariableExpr(ExprVariable *expr) override;
+    KData visitVariableExpr(ExprVariable *expr) override;
 
     void visitBlockStmt(StmtBlock *stmt) override;
 

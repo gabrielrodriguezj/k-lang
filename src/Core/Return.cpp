@@ -1,6 +1,6 @@
 #include "Return.h"
 
-Return::Return(const std::string & message, TData value) : message(message), value(value) {
+Return::Return(const std::string & message, KData value) : message(message), value(value) {
 
 }
 
@@ -8,6 +8,6 @@ const char *Return::what() const throw() {
     return exception::what();
 }
 
-TData Return::getValue(){
+KData Return::getValue(){
     return value;
 }

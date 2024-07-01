@@ -4,17 +4,17 @@
 
 #include <exception>
 #include <string>
-#include "TData.h"
+#include "KData.h"
 
 class Return : public std::exception{
 
 private:
     std::string message;
-    TData value;
+    KData value;
 public:
-    Return (const std::string &, TData);
+    Return (const std::string &, KData);
     const char* what() const throw();
-    TData getValue();
+    KData getValue();
 };
 
 

@@ -8,7 +8,7 @@ int KFunction::arity() {
     return declaration->getParams().size();
 }
 
-TData KFunction::call(Environment* environment, std::vector<TData> arguments) {
+KData KFunction::call(Environment* environment, std::vector<KData> arguments) {
 
     Environment* localEenvironment = new Environment(closure);
 
@@ -35,7 +35,7 @@ TData KFunction::call(Environment* environment, std::vector<TData> arguments) {
     if (isInitializer) return closure.getAt(0, "this");
     return null;*/
 
-    return TData();
+    return KData();
 }
 
 std::string KFunction::toString() {
