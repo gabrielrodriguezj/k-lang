@@ -5,7 +5,7 @@ ExprLiteral::ExprLiteral(std::variant<std::monostate, int, double, bool, std::st
 }
 ExprLiteral::ExprLiteral(){}
 
-KData ExprLiteral::accept(Visitor *visitor) {
+KData ExprLiteral::accept(VisitorExpression *visitor) {
     return visitor->visitLiteralExpr(this);
 }
 

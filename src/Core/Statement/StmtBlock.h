@@ -5,7 +5,7 @@
 #include <vector>
 #include "Statement.h"
 
-class Visitor;
+class VisitorExpression;
 
 class StmtBlock: public Statement{
 private:
@@ -14,7 +14,7 @@ private:
 public:
     explicit StmtBlock(const std::vector<Statement *> &statements);
 
-    void accept(Visitor *visitor) override;
+    void accept(VisitorStatement *visitor) override;
 
     std::vector<Statement *> getStatements();
 };

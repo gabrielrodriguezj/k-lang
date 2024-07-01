@@ -13,7 +13,7 @@ private:
 public:
     StmtIf(Expression *condition, Statement *thenBranch, Statement *elseBranch);
 
-    void accept(Visitor *visitor) override;
+    void accept(VisitorStatement *visitor) override;
 
     Expression *getCondition() const;
 

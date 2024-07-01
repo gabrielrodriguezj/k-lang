@@ -5,7 +5,7 @@
 #include <vector>
 #include "Statement.h"
 
-class Visitor;
+class VisitorExpression;
 
 
 class StmtFunction: public Statement{
@@ -19,7 +19,7 @@ public:
     StmtBlock* getBody();
     IdToken* getName();
 
-    void accept(Visitor *visitor) override;
+    void accept(VisitorStatement *visitor) override;
 };
 
 

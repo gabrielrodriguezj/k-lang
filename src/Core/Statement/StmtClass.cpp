@@ -5,6 +5,6 @@ StmtClass::StmtClass(IdToken *name, ExprVariable *superclass, const std::vector<
                      const std::vector<StmtVariable *> &variables) : name(name), superclass(superclass), methods(methods),
                                                                    variables(variables) {}
 
-void StmtClass::accept(Visitor *visitor) {
+void StmtClass::accept(VisitorStatement *visitor) {
     visitor->visitClassStmt(this);
 }

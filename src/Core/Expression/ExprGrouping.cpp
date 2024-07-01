@@ -2,7 +2,7 @@
 
 ExprGrouping::ExprGrouping(Expression* expression) : expression(expression){}
 
-KData ExprGrouping::accept(Visitor *visitor) {
+KData ExprGrouping::accept(VisitorExpression *visitor) {
     return visitor->visitGroupingExpr(this);
 }
 

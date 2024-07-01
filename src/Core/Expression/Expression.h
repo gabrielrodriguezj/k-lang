@@ -6,11 +6,11 @@
 #include <vector>
 #include "../KData.h"
 #include "../../Core/Token/IdToken.h"
-#include "../../Visitor.h"
+#include "../../VisitorExpression.h"
 
 class Expression {
 public:
-    virtual KData accept(Visitor *visitor) = 0;
+    virtual KData accept(VisitorExpression *visitor) = 0;
 };
 
 

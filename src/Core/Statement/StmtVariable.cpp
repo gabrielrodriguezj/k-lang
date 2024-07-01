@@ -2,7 +2,7 @@
 
 StmtVariable::StmtVariable(IdToken *name, Expression *initializer) : name(name), initializer(initializer) {}
 
-void StmtVariable::accept(Visitor *visitor) {
+void StmtVariable::accept(VisitorStatement *visitor) {
     visitor->visitVarStmt(this);
 }
 

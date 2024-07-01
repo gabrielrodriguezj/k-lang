@@ -11,6 +11,6 @@ Token* ExprGet::getName(){
     return name;
 }
 
-KData ExprGet::accept(Visitor *visitor) {
+KData ExprGet::accept(VisitorExpression *visitor) {
     return visitor->visitGetExpr(this);
 }

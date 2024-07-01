@@ -10,7 +10,7 @@ private:
 public:
     ExprAssignment(IdToken *name, Expression *expression);
 
-    KData accept(Visitor *visitor) override;
+    KData accept(VisitorExpression *visitor) override;
 
     IdToken *getName() const;
 

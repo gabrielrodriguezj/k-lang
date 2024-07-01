@@ -2,7 +2,7 @@
 
 ExprLogical::ExprLogical(Expression *left, Token *oper, Expression *right) : left(left), oper(oper), right(right) {}
 
-KData ExprLogical::accept(Visitor *visitor) {
+KData ExprLogical::accept(VisitorExpression *visitor) {
     return visitor->visitLogicalExpr(this);
 }
 

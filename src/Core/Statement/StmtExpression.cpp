@@ -2,7 +2,7 @@
 
 StmtExpression::StmtExpression(Expression *expression) : expression(expression) {}
 
-void StmtExpression::accept(Visitor *visitor) {
+void StmtExpression::accept(VisitorStatement *visitor) {
     visitor->visitExpressionStmt(this);
 }
 

@@ -12,7 +12,7 @@ private:
 public:
     ExprSet(Expression *object, Token *name, Expression *value);
 
-    KData accept(Visitor *visitor) override;
+    KData accept(VisitorExpression *visitor) override;
 };
 
 

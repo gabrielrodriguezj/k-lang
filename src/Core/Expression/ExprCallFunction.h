@@ -11,7 +11,7 @@ private:
 public:
     ExprCallFunction(Expression *callee, Token* paren, std::vector<Expression*> arguments);
 
-    KData accept(Visitor *visitor) override;
+    KData accept(VisitorExpression *visitor) override;
 
     Expression *getCallee() const;
 

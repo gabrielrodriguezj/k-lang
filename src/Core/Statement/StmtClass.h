@@ -19,7 +19,7 @@ public:
     StmtClass(IdToken *name, ExprVariable *superclass, const std::vector<StmtFunction *> &methods,
               const std::vector<StmtVariable *> &variables);
 
-    void accept(Visitor *visitor) override;
+    void accept(VisitorStatement *visitor) override;
 };
 
 

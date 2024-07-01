@@ -3,6 +3,6 @@
 
 ExprSet::ExprSet(Expression *object, Token *name, Expression *value) : object(object), name(name), value(value) {}
 
-KData ExprSet::accept(Visitor *visitor) {
+KData ExprSet::accept(VisitorExpression *visitor) {
     return visitor->visitSetExpr(this);
 }

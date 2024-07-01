@@ -3,7 +3,7 @@
 
 StmtReturn::StmtReturn(Token *keyword, Expression *value) : keyword(keyword), value(value) {}
 
-void StmtReturn::accept(Visitor *visitor) {
+void StmtReturn::accept(VisitorStatement *visitor) {
     visitor->visitReturnStmt(this);
 }
 

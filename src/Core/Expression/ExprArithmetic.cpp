@@ -2,7 +2,7 @@
 
 ExprArithmetic::ExprArithmetic(Expression *left, Token *oper, Expression *right) : left(left), oper(oper), right(right) {}
 
-KData ExprArithmetic::accept(Visitor *visitor) {
+KData ExprArithmetic::accept(VisitorExpression *visitor) {
     return visitor->visitArithmeticExpr(this);
 }
 

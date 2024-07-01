@@ -6,7 +6,7 @@ ExprCallFunction::ExprCallFunction(Expression *callee, Token* paren, std::vector
                                                                                             paren(paren),
                                                                                            arguments(arguments) {}
 
-KData ExprCallFunction::accept(Visitor *visitor) {
+KData ExprCallFunction::accept(VisitorExpression *visitor) {
     return visitor->visitCallExpr(this);
 }
 

@@ -11,7 +11,7 @@ private:
 public:
     explicit ExprSuper(Token *keyword, TToken *method);
 
-    KData accept(Visitor *visitor) override;
+    KData accept(VisitorExpression *visitor) override;
 };
 
 

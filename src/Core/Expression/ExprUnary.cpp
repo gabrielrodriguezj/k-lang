@@ -2,7 +2,7 @@
 
 ExprUnary::ExprUnary(Expression *left, Token *oper) : left(left), oper(oper) {}
 
-KData ExprUnary::accept(Visitor *visitor) {
+KData ExprUnary::accept(VisitorExpression *visitor) {
     return visitor->visitUnaryExpr(this);
 }
 

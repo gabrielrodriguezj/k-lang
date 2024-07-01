@@ -11,7 +11,7 @@ public:
     explicit ExprVariable(IdToken *name);
     IdToken* getName();
 
-    KData accept(Visitor *visitor) override;
+    KData accept(VisitorExpression *visitor) override;
 };
 
 

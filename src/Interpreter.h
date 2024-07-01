@@ -2,12 +2,13 @@
 #define K_LANG_INTERPRETER_H
 
 #include "Environment.h"
-#include "Visitor.h"
+#include "VisitorExpression.h"
 #include "Core/Expression/Expression.h"
 #include "Core/Statement/Statement.h"
+#include "VisitorStatement.h"
 #include <vector>
 
-class Interpreter : public Visitor{
+class Interpreter : public VisitorExpression, VisitorStatement{
 private:
     Environment* globals;
     Environment* environment;

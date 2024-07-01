@@ -13,7 +13,7 @@ private:
 public:
     StmtVariable(IdToken *name, Expression *initializer);
 
-    void accept(Visitor *visitor) override;
+    void accept(VisitorStatement *visitor) override;
 
     IdToken *getName() const;
 

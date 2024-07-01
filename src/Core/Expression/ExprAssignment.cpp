@@ -2,7 +2,7 @@
 
 ExprAssignment::ExprAssignment(IdToken *name, Expression *expression) : name(name), expression(expression) {}
 
-KData ExprAssignment::accept(Visitor *visitor) {
+KData ExprAssignment::accept(VisitorExpression *visitor) {
     return visitor->visitAssignExpr(this);
 }
 

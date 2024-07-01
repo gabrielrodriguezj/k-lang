@@ -2,11 +2,11 @@
 #define K_LANG_STATEMENT_H
 
 #include "../../Environment.h"
-#include "../../Visitor.h"
+#include "../../VisitorStatement.h"
 
 class Statement {
 public:
-    virtual void accept(Visitor *visitor) = 0;
+    virtual void accept(VisitorStatement *visitor) = 0;
 };
 
 

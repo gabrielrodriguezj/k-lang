@@ -2,7 +2,7 @@
 
 StmtBlock::StmtBlock(const std::vector<Statement *> &statements) : statements(statements) {}
 
-void StmtBlock::accept(Visitor *visitor) {
+void StmtBlock::accept(VisitorStatement *visitor) {
     visitor->visitBlockStmt(this);
 }
 

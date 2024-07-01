@@ -17,6 +17,6 @@ IdToken* StmtFunction::getName(){
     return name;
 }
 
-void StmtFunction::accept(Visitor *visitor) {
+void StmtFunction::accept(VisitorStatement *visitor) {
     visitor->visitFunctionStmt(this);
 }

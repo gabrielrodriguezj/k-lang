@@ -3,7 +3,7 @@
 
 StmtLoop::StmtLoop(Expression *condition, Statement *body) : condition(condition), body(body) {}
 
-void StmtLoop::accept(Visitor *visitor) {
+void StmtLoop::accept(VisitorStatement *visitor) {
     visitor->visitLoopStmt(this);
 }
 

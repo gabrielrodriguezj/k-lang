@@ -12,7 +12,7 @@ private:
 public:
     ExprLogical(Expression *left, Token *oper, Expression *right);
 
-    KData accept(Visitor *visitor) override;
+    KData accept(VisitorExpression *visitor) override;
 
     Expression *getLeft() const;
 

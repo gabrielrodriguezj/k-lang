@@ -12,7 +12,7 @@ private:
 public:
     StmtLoop(Expression *condition, Statement *body);
 
-    void accept(Visitor *visitor) override;
+    void accept(VisitorStatement *visitor) override;
 
     Expression *getCondition() const;
 
