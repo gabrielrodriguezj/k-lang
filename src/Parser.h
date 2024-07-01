@@ -4,7 +4,6 @@
 
 #include <string>
 #include <vector>
-#include "Token/TToken.h"
 #include "Scanner.h"
 #include "Core/Expression/Expression.h"
 #include "Core/Statement/Statement.h"
@@ -12,6 +11,7 @@
 #include "Core/Statement/StmtFunction.h"
 #include "Core/Statement/StmtVariable.h"
 #include "Core/Statement/StmtExpression.h"
+#include "Core/Token/IdToken.h"
 
 class Parser {
 private:

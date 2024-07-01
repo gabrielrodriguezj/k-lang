@@ -1,9 +1,9 @@
 #include <sstream>
 #include "Scanner.h"
-#include "Token/Token.h"
-#include "Token/IdToken.h"
-#include "Token/StringToken.h"
-#include "Token/NumberToken.h"
+#include "Core/Token/Token.h"
+#include "Core/Token/IdToken.h"
+#include "Core/Token/StringToken.h"
+#include "Core/Token/NumberToken.h"
 #include "Exceptions/ScannerException.h"
 
 Scanner::Scanner(const std::string &source) : source(source) {

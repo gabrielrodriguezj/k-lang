@@ -4,7 +4,7 @@
 
 #include <string>
 #include <cctype>
-#include "Token/TToken.h"
+#include "Core/Token/TToken.h"
 
 class Scanner {
 private:
