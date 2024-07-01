@@ -2,10 +2,10 @@
 #define K_LANG_INTERPRETER_H
 
 #include "Environment.h"
-#include "VisitorExpression.h"
+#include "Core/Expression/VisitorExpression.h"
 #include "Core/Expression/Expression.h"
 #include "Core/Statement/Statement.h"
-#include "VisitorStatement.h"
+#include "Core/Statement/VisitorStatement.h"
 #include <vector>
 
 class Interpreter : public VisitorExpression, VisitorStatement{

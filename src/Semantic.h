@@ -2,8 +2,8 @@
 #define K_LANG_SEMANTIC_H
 
 #include "Core/Statement/Statement.h"
-#include "VisitorExpression.h"
-#include "VisitorStatement.h"
+#include "Core/Expression/VisitorExpression.h"
+#include "Core/Statement/VisitorStatement.h"
 
 
 class Semantic: public VisitorExpression, VisitorStatement{

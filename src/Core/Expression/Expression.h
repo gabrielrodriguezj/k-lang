@@ -6,7 +6,7 @@
 #include <vector>
 #include "../KData.h"
 #include "../../Core/Token/IdToken.h"
-#include "../../VisitorExpression.h"
+#include "VisitorExpression.h"
 
 class Expression {
 public:
