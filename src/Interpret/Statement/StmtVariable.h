@@ -14,6 +14,10 @@ public:
     StmtVariable(IdToken *name, Expression *initializer);
 
     void accept(Visitor *visitor) override;
+
+    IdToken *getName() const;
+
+    Expression *getInitializer() const;
 };
 
 

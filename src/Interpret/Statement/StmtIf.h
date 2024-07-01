@@ -14,6 +14,12 @@ public:
     StmtIf(Expression *condition, Statement *thenBranch, Statement *elseBranch);
 
     void accept(Visitor *visitor) override;
+
+    Expression *getCondition() const;
+
+    Statement *getThenBranch() const;
+
+    Statement *getElseBranch() const;
 };
 
 

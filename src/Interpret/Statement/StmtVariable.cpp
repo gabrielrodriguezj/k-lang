@@ -5,3 +5,11 @@ StmtVariable::StmtVariable(IdToken *name, Expression *initializer) : name(name),
 void StmtVariable::accept(Visitor *visitor) {
     visitor->visitVarStmt(this);
 }
+
+IdToken *StmtVariable::getName() const {
+    return name;
+}
+
+Expression *StmtVariable::getInitializer() const {
+    return initializer;
+}

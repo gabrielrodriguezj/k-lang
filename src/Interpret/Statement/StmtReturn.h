@@ -13,6 +13,10 @@ public:
     explicit StmtReturn(Token*, Expression*);
 
     void accept(Visitor *visitor) override;
+
+    Token *getKeyword() const;
+
+    Expression *getValue() const;
 };
 
 

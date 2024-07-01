@@ -12,6 +12,8 @@ public:
     explicit StmtExpression(Expression *expression);
 
     void accept(Visitor *visitor) override;
+
+    Expression *getExpression();
 };
 
 

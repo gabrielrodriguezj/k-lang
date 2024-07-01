@@ -2,6 +2,10 @@
 #include "Environment.h"
 #include "Exceptions/RuntimeException.h"
 
+Environment::Environment() {
+    enclosing = nullptr;
+}
+
 Environment::Environment(Environment *enclosing) : enclosing(enclosing) {}
 
 TData Environment::get(IdToken* name ) {

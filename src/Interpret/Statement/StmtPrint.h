@@ -12,6 +12,8 @@ public:
     explicit StmtPrint(Expression *expression);
 
     void accept(Visitor *visitor) override;
+
+    Expression *getExpression() const;
 };
 
 

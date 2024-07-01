@@ -14,7 +14,9 @@ private:
     Environment* enclosing{};
     std::map<std::string, TData> values;
 public:
+    Environment();
     explicit Environment(Environment *enclosing);
+
     TData get(IdToken*);
     void assign(IdToken*, TData);
     void define(IdToken*, TData);

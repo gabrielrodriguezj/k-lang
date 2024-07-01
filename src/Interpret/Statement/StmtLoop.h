@@ -13,6 +13,10 @@ public:
     StmtLoop(Expression *condition, Statement *body);
 
     void accept(Visitor *visitor) override;
+
+    Expression *getCondition() const;
+
+    Statement *getBody() const;
 };
 
 

@@ -8,3 +8,15 @@ StmtIf::StmtIf(Expression *condition, Statement *thenBranch, Statement *elseBran
 void StmtIf::accept(Visitor *visitor) {
     visitor->visitIfStmt(this);
 }
+
+Expression *StmtIf::getCondition() const {
+    return condition;
+}
+
+Statement *StmtIf::getThenBranch() const {
+    return thenBranch;
+}
+
+Statement *StmtIf::getElseBranch() const {
+    return elseBranch;
+}
