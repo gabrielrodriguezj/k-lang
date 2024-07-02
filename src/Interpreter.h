@@ -14,11 +14,14 @@ private:
 public:
     Interpreter();
     void interpret(std::vector<Statement*> statements);
+    void resolve(Expression*, int);
 
 private:
     KData evaluate(Expression *expr);
 
     void execute(Statement *stmt);
+
+    KData lookUpVariable(IdToken*, Expression*);
 
     KData visitAssignExpr(ExprAssignment *expr) override;
 

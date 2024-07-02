@@ -8,7 +8,7 @@ Environment::Environment() {
 
 Environment::Environment(Environment *enclosing) : enclosing(enclosing) {}
 
-KData Environment::get(IdToken* name ) {
+KData Environment::get(IdToken* name) {
     // check if key is present
     if(values.find(name->getIdentifier()) != values.end()){
         KData data= values[name->getIdentifier()];
@@ -23,6 +23,23 @@ KData Environment::get(IdToken* name ) {
     std::stringstream ss;
     ss << "Identificador '" << name->getIdentifier() << "' no definido";
     throw RuntimeException(ss.str());
+}
+
+KData Environment::getAt(int distance, std::string name) {
+    return ancestor(distance)->values[name];
+}
+
+void Environment::assignAt(int distance, IdToken *name, KData value) {
+    ancestor(distance)->values[name->getIdentifier()] = value;
+}
+
+Environment* Environment::ancestor(int distance) {
+    Environment* environment = this;
+    for (int i = 0; i < distance; i++) {
+        environment = environment->enclosing;
+    }
+
+    return environment;
 }
 
 void Environment::assign(IdToken* name, KData value) {

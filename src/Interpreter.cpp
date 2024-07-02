@@ -39,6 +39,10 @@ void Interpreter::interpret(std::vector<Statement *> statements) {
     }
 }
 
+void Interpreter::resolve(Expression *expr, int depth) {
+    locals[expr] = depth;
+}
+
 KData Interpreter::evaluate(Expression *expr){
     return expr->accept(this);
 }
@@ -47,10 +51,28 @@ void Interpreter::execute(Statement *statement){
     statement->accept(this);
 }
 
+KData Interpreter::lookUpVariable(IdToken *name, Expression *expr) {
+    bool containsExpr = locals.contains(expr);
+    if (containsExpr) {
+        int distance = locals[expr];
+        return environment-> getAt(distance, name->getIdentifier());
+    } else {
+        return globals->get(name);
+    }
+}
+
 KData Interpreter::visitAssignExpr(ExprAssignment *expr) {
     KData value = evaluate(expr->getExpression());
-    this->environment->assign(expr->getName(), value);
-    return KData();
+
+    bool containsExpr = locals.contains(expr);
+    if (containsExpr) {
+        int distance = locals[expr];
+        environment->assignAt(distance, expr->getName(), value);
+    } else {
+        globals->assign(expr->getName(), value);
+    }
+
+    return value;
 }
 
 KData Interpreter::visitArithmeticExpr(ExprArithmetic *expr) {
@@ -198,7 +220,8 @@ KData Interpreter::visitUnaryExpr(ExprUnary *expr) {
 }
 
 KData Interpreter::visitVariableExpr(ExprVariable *expr) {
-    return this->environment->get(expr->getName());
+    return lookUpVariable(expr->getName(), expr);
+    // return this->environment->get(expr->getName());
 }
 
 void Interpreter::visitBlockStmt(StmtBlock *stmt) {

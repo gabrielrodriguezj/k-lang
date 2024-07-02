@@ -13,11 +13,15 @@ class Environment {
 private:
     Environment* enclosing{};
     std::map<std::string, KData> values;
+    Environment* ancestor(int);
 public:
     Environment();
     explicit Environment(Environment *enclosing);
 
     KData get(IdToken*);
+    KData getAt(int distance, std::string);
+    void assignAt(int, IdToken*, KData);
+
     void assign(IdToken*, KData);
     void define(IdToken*, KData);
 };

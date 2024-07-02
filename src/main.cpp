@@ -4,10 +4,15 @@
 #include "Parser.h"
 #include "Exceptions/ParserException.h"
 #include "Exceptions/ScannerException.h"
+#include "Semantic.h"
+#include "Interpreter.h"
+#include "Exceptions/SemanticException.h"
+#include "Exceptions/NotImplementedYetException.h"
+#include "Exceptions/RuntimeException.h"
 
-void ejecutarArchivo(std::string path);
-void repl();
-void ejecutar(std::string source);
+void ejecutarArchivo(std::string, Interpreter*);
+void repl(Interpreter*);
+void ejecutar(std::string source, Interpreter*);
 
 int main(int argc, char **argv) {
     if(argc > 2) {
@@ -16,21 +21,23 @@ int main(int argc, char **argv) {
         // Convención defininida en el archivo "system.h" de UNIX
         exit(64);
     } else if(argc == 2){
-        ejecutarArchivo(argv[1]);
+        Interpreter *interpreter = new Interpreter();
+        ejecutarArchivo(argv[1], interpreter);
     } else{
-        repl();
+        Interpreter *interpreter = new Interpreter();
+        repl(interpreter);
     }
 }
 
-void ejecutarArchivo(std::string path) {
+void ejecutarArchivo(std::string path, Interpreter *interpreter) {
 
     std::ifstream fs{ path };
     std::string source((std::istreambuf_iterator<char>(fs)),
                     std::istreambuf_iterator<char>());
-    ejecutar(source);
+    ejecutar(source, interpreter);
 }
 
-void repl() {
+void repl(Interpreter *interpreter) {
     std::string linea;
     for(;;) {
 
@@ -38,12 +45,12 @@ void repl() {
         std::cout << " ";
         std::cin >> linea;
         if(!linea.empty()) {
-            ejecutar(linea);
+            ejecutar(linea, interpreter);
         }
     }
 }
 
-void ejecutar(std::string source){
+void ejecutar(std::string source, Interpreter *interpreter){
     Parser parser = Parser(source);
     try {
         bool res = parser.parse();
@@ -51,14 +58,26 @@ void ejecutar(std::string source){
         if(res){
             std::vector<Statement*> statements = parser.getStatements();
 
-            //Interpreter interpreter = Interpreter();
+            Semantic resolver = Semantic(interpreter);
+            resolver.analyse(statements);
+
+
             //interpreter.interpret(statements);
         }
+    }
+    catch (ScannerException e){
+        std::cout<< e.what();
     }
     catch (ParserException e){
         std::cout<< e.what();
     }
-    catch (ScannerException e){
+    catch (SemanticException e){
+        std::cout<< e.what();
+    }
+    catch (NotImplementedYetException e){
+        std::cout<< e.what();
+    }
+    catch (RuntimeException e){
         std::cout<< e.what();
     }
 }
