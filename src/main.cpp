@@ -32,9 +32,14 @@ int main(int argc, char **argv) {
 void ejecutarArchivo(std::string path, Interpreter *interpreter) {
 
     std::ifstream fs{ path };
-    std::string source((std::istreambuf_iterator<char>(fs)),
-                    std::istreambuf_iterator<char>());
-    ejecutar(source, interpreter);
+    if(fs.fail()){
+        std::cout<<"Archivo no encotrado";
+    }
+    else{
+        std::string source((std::istreambuf_iterator<char>(fs)),
+                           std::istreambuf_iterator<char>());
+        ejecutar(source, interpreter);
+    }
 }
 
 void repl(Interpreter *interpreter) {
@@ -61,8 +66,7 @@ void ejecutar(std::string source, Interpreter *interpreter){
             Semantic resolver = Semantic(interpreter);
             resolver.analyse(statements);
 
-
-            //interpreter.interpret(statements);
+            interpreter->interpret(statements);
         }
     }
     catch (ScannerException e){
